@@ -12,7 +12,6 @@ namespace PolyTest.Tests.Core
     public class BlahTest
     {
 
-
         [TestMethod]
         public void FirstTest()
         {
@@ -66,23 +65,51 @@ namespace PolyTest.Tests.Core
             // Arrange
             var sut = new FakeSut();
             "Starting with IntProperty = 5".AsStartingPoint(() => new DummyItem(5))
-                .Arrange("setting it to 4", d => { d.IntProperty = 4; }, 
+                .Arrange("setting it to 4", d => { d.IntProperty = 4; },
                     andThen => andThen.IgnoringRoot()
                         .With(new Mutation<DummyItem>("setting bool to false", d => { d.BoolProperty = false; }))
                         .With(new Mutation<DummyItem>("setting bool to true", d => { d.BoolProperty = true; }))
                 )
                 .Arrange("setting it to 3", d => { d.IntProperty = 3; })
-             // Act
+                // Act
             .Act(it =>
                      {
                          sut.HasIt(it);
                          return it;
                      })
-            // Assert
+                // Assert
             .Assert((str, val) => Assert.AreEqual(true, val.BoolProperty, str));
         }
 
+        [TestMethod]
+        public void CompositeTest()
+        {
+            // Arrange
+            var sut = new FakeSut();
 
+            var rootStartingAt5 = new TestRoot<DummyItem>("Starting with IntProperty = 5", () => new DummyItem(5));
+
+            rootStartingAt5.Add(new TestLeaf<DummyItem>(rootStartingAt5, "setting it to 4", d => { d.IntProperty = 4; }));
+            rootStartingAt5.Add(new TestLeaf<DummyItem>(rootStartingAt5, "setting it to 3", d => { d.IntProperty = 3; }));
+
+            var adding2 = new TestComposite<DummyItem>(rootStartingAt5, "adding 2", d => { d.IntProperty = d.IntProperty + 2; }, includeInEnumeration:true);
+            adding2.Add(new TestLeaf<DummyItem>(adding2, "removing 1", d => { d.IntProperty = d.IntProperty - 1; }));
+            adding2.Add(new TestLeaf<DummyItem>(adding2, "removing 3", d => { d.IntProperty = d.IntProperty - 3; }));
+
+            rootStartingAt5.Add(adding2);
+
+            rootStartingAt5.Walk((testCaseDescription, arrange) =>
+                                                   {
+                                                       var initial = arrange();
+                                                       var actual = sut.DoIt(initial);
+                                                       AssertIsNotFive(actual, testCaseDescription);
+                                                   });
+
+
+            // Act
+
+            // Assert
+        }
 
         #region Sut to test our tests (sic)
 
@@ -124,12 +151,168 @@ namespace PolyTest.Tests.Core
         #endregion
     }
 
+    public interface ITestComponent<T> : ITestCase<T>
+    {
+        IEnumerable<ITestCase<T>> Enumerate();
+    }
+
+    public interface ITestCase<T>
+    {
+        String Description { get; }
+        T Arrange();
+    }
+
+    public interface ITestComposite<T> : ITestComponent<T>
+    {
+        void Add(ITestComponent<T> child);
+    }
+
+    public abstract class TestCompositeBase<T> : TestComponentBase<T>, ITestComposite<T>
+    {
+        private readonly List<ITestComponent<T>> _children;
+
+        protected TestCompositeBase(ITestComposite<T> parent, string description, bool includeInEnumeration)
+            : base(parent, description)
+        {
+            IncludeSelfInEnumeration = includeInEnumeration;
+            _children = new List<ITestComponent<T>>();
+        }
+
+        protected bool IncludeSelfInEnumeration { get; set; }
+
+        public void Add(ITestComponent<T> child)
+        {
+            _children.Add(child);
+        }
+
+        public override IEnumerable<ITestCase<T>> Enumerate()
+        {
+            if (IncludeSelfInEnumeration)
+            {
+                yield return this;
+            }
+            foreach (var testComponent in _children)
+            {
+                foreach (var testCase in testComponent.Enumerate())
+                {
+                    yield return testCase;
+                }
+            }
+        }
+    }
+
+    public class TestRoot<T> : TestCompositeBase<T>
+    {
+        private readonly Func<T> _setup;
+
+        public TestRoot(string description, Func<T> setup)
+            : base(null, description, false)
+        {
+            _setup = setup;
+        }
+
+        public void Walk(Action<string, Func<T>> action)
+        {
+            foreach (var testCase in this.Enumerate())
+            {
+                action(testCase.Description, () => testCase.Arrange());
+            }
+        }
+
+        public override T Arrange()
+        {
+            return _setup();
+        }
+    }
+
+    public abstract class TestComponentBase<T> : ITestComponent<T>
+    {
+        private readonly ITestComposite<T> _parent;
+        private readonly string _nodeDescription;
+
+        protected TestComponentBase(ITestComposite<T> parent, string nodeDescription)
+        {
+            if (nodeDescription == null) throw new ArgumentNullException("nodeDescription");
+            _parent = parent;
+            _nodeDescription = nodeDescription;
+        }
+
+        public virtual string Description
+        {
+            get
+            {
+                if (Parent == null)
+                {
+                    return this.NodeDescription;
+                }
+                else
+                {
+                    return Parent.Description + " AND " + this.NodeDescription;
+                }
+
+            }
+        }
+
+        public string NodeDescription
+        {
+            get { return _nodeDescription; }
+        }
+
+        protected ITestComposite<T> Parent { get { return _parent; } }
+
+        public abstract IEnumerable<ITestCase<T>> Enumerate();
+        public abstract T Arrange();
+    }
+
+    public class TestComposite<T> : TestCompositeBase<T>
+    {
+        private readonly Action<T> _mutation;
+
+        public TestComposite(ITestComposite<T> parent, string description, Action<T> mutation, bool includeInEnumeration)
+            : base(parent, description, includeInEnumeration)
+        {
+            _mutation = mutation;
+        }
+
+        public override T Arrange()
+        {
+            var startFrom = Parent.Arrange();
+            _mutation(startFrom);
+            return startFrom;
+        }
+    }
+
+    public class TestLeaf<T> : TestComponentBase<T>
+    {
+        private readonly Action<T> _mutation;
+
+        public TestLeaf(ITestComposite<T> parent, string description, Action<T> mutation)
+            : base(parent, description)
+        {
+            _mutation = mutation;
+            if (description == null) throw new ArgumentNullException("description");
+            if (mutation == null) throw new ArgumentNullException("mutation");
+        }
+
+        public override IEnumerable<ITestCase<T>> Enumerate()
+        {
+            yield return this;
+        }
+
+        public override T Arrange()
+        {
+            var startFrom = Parent.Arrange();
+            _mutation(startFrom);
+            return startFrom;
+        }
+    }
+
     public static class PolyTestExtensions
     {
         public static IInitialStateCollectionFromStartingPoint<T> AsStartingPoint<T>(this string description, Func<T> initializationMethod)
         {
             // TODO : invent description with reflection ?
-            var start =  new StartingPoint<T>(description, initializationMethod);
+            var start = new StartingPoint<T>(description, initializationMethod);
             return new InitialStateCollectionFromStartingPoint<T>(start);
         }
 
@@ -143,7 +326,7 @@ namespace PolyTest.Tests.Core
 
         public static IInitialStateCollectionFromStartingPoint<T> Arrange<T>(this IInitialStateCollectionFromStartingPoint<T> collection,
                                                    string mutationDescription, Action<T> modification,
-                                                    Func<MutationList<T>, MutationList<T>> nested )
+                                                    Func<MutationList<T>, MutationList<T>> nested)
         {
             var commonMutationToApplyToAllNested = new Mutation<T>(mutationDescription, modification);
 
@@ -154,7 +337,7 @@ namespace PolyTest.Tests.Core
                 collection.Add(mutation);
             }
             return collection;
-        } 
+        }
 
         public static IIndividualTestExecutionInformationCollection<TResult> Act<T, TResult>(
             this IInitialStateCollectionFromStartingPoint<T> startingPoints,
@@ -186,7 +369,7 @@ namespace PolyTest.Tests.Core
         {
             _mutations.Add(mutationToAdd);
             return this;
-        } 
+        }
 
         public IEnumerable<IMutation<T>> Compose(IMutation<T> root)
         {
@@ -233,9 +416,9 @@ namespace PolyTest.Tests.Core
 
     public interface IInitialStateCollectionFromStartingPoint<T> : IStateCollection<T>
     {
-        IInitialization<T> StartingPoint { get; } 
+        IInitialization<T> StartingPoint { get; }
         void Add(IMutation<T> mutation);
-        
+
     }
 
     public class InitialStateCollectionFromStartingPoint<T> : IInitialStateCollectionFromStartingPoint<T>
