@@ -51,7 +51,8 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Core\ITestCase.cs" />
-    <Compile Include="InitialStates\BlahTest.cs" />
+    <Compile Include="InitialStates\Fluent\InitialStateFluentTest.cs" />
+    <Compile Include="InitialStates\InitialStateTest.cs" />
     <Compile Include="Composites\CompositeTest.cs" />
     <Compile Include="Core\IMutation.cs" />
     <Compile Include="InitialStates\InitialStateElements.cs" />
@@ -63,7 +64,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestUtils\TestAssets.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="TODO.txt" />
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
