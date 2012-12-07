@@ -5,14 +5,6 @@ using System.Text;
 
 namespace PolyTest.Tests.InitialStates
 {
-
-
-    public interface IMutation<T>
-    {
-        string Description { get; }
-        void Apply(T source);
-    }
-
     public interface IIndividualTestExecutionInformationCollection<TResult>
     {
         void ForEach(Action<string, TResult> assertion);
@@ -64,29 +56,6 @@ namespace PolyTest.Tests.InitialStates
         }
     }
 
-
-
-    public class Mutation<T> : IMutation<T>
-    {
-        private readonly string _mutationDescription;
-        private readonly Action<T> _modificationToMake;
-
-        public Mutation(string mutationDescription, Action<T> modificationToMake)
-        {
-            _mutationDescription = mutationDescription;
-            _modificationToMake = modificationToMake;
-        }
-
-        public string Description
-        {
-            get { return _mutationDescription; }
-        }
-
-        public void Apply(T source)
-        {
-            _modificationToMake(source);
-        }
-    }
 
     /// <summary>
     /// An initial state that is reached by applying a series of mutations from an initial state

@@ -11,7 +11,7 @@ namespace PolyTest.Tests.Composites
     public interface ITestComponent<T> : ITestCase<T>
     {
         IEnumerable<ITestCase<T>> Enumerate();
-        String NodeDescription { get; }
+        //String NodeDescription { get; }
     }
 
     /// <summary>
@@ -31,18 +31,14 @@ namespace PolyTest.Tests.Composites
     public abstract class TestComponentBase<T> : ITestComponent<T>
     {
         private readonly ITestComposite<T> _parent;
-        private readonly string _nodeDescription;
 
         /// <summary>
         /// Create a TestComponent
         /// </summary>
         /// <param name="parent">the parent of this node (can be null)</param>
-        /// <param name="nodeDescription">the description for this node</param>
-        protected TestComponentBase(ITestComposite<T> parent, string nodeDescription)
+        protected TestComponentBase(ITestComposite<T> parent)
         {
-            if (nodeDescription == null) throw new ArgumentNullException("nodeDescription");
             _parent = parent;
-            _nodeDescription = nodeDescription;
         }
 
         /// <summary>
@@ -54,11 +50,11 @@ namespace PolyTest.Tests.Composites
             {
                 if (Parent == null)
                 {
-                    return this._nodeDescription;
+                    return this.NodeDescription;
                 }
                 else
                 {
-                    return Parent.Description + " AND " + this._nodeDescription;
+                    return Parent.Description + " AND " + this.NodeDescription;
                 }
             }
         }
@@ -76,7 +72,7 @@ namespace PolyTest.Tests.Composites
             yield return this;
         }
 
-        public string NodeDescription { get { return _nodeDescription; } }
+        protected abstract string NodeDescription { get; }
 
         /// <summary>
         /// TestCase setup for this component
@@ -98,10 +94,9 @@ namespace PolyTest.Tests.Composites
         /// Creates a composite
         /// </summary>
         /// <param name="parent">the parent of this node</param>
-        /// <param name="description">description for this node</param>
         /// <param name="includeInEnumeration">when enumerating/walking over the tree, should this node be included, or should it just enumerate over its children ?</param>
-        protected TestCompositeBase(ITestComposite<T> parent, string description, bool includeInEnumeration)
-            : base(parent, description)
+        protected TestCompositeBase(ITestComposite<T> parent,bool includeInEnumeration)
+            : base(parent)
         {
             IncludeSelfInEnumeration = includeInEnumeration;
             _children = new List<ITestComponent<T>>();
@@ -143,6 +138,7 @@ namespace PolyTest.Tests.Composites
     /// <typeparam name="T"></typeparam>
     public class TestRoot<T> : TestCompositeBase<T>
     {
+        private readonly string _description;
         private readonly Func<T> _setup;
 
         /// <summary>
@@ -151,10 +147,17 @@ namespace PolyTest.Tests.Composites
         /// <param name="description">the descritpion of the initial condition</param>
         /// <param name="setup">how to obtain the initial element that is used as a base for all tests</param>
         public TestRoot(string description, Func<T> setup)
-            : base(null, description, false /* do not enumerate over self by default*/)
+            : base(null, false /* do not enumerate over self by default*/)
         {
+            if (description == null) throw new ArgumentNullException("description");
             if (setup == null) throw new ArgumentNullException("setup");
+            _description = description;
             _setup = setup;
+        }
+
+        protected override string NodeDescription
+        {
+            get { return _description; }
         }
 
         /// <summary>
@@ -173,21 +176,25 @@ namespace PolyTest.Tests.Composites
     /// <typeparam name="T"></typeparam>
     public class TestComposite<T> : TestCompositeBase<T>
     {
-        private readonly Action<T> _mutation;
+        private readonly IMutation<T> _mutation;
 
         /// <summary>
         /// Creates a TestComposite 
         /// </summary>
         /// <param name="parent">the parent for this component</param>
-        /// <param name="description">description for this node</param>
         /// <param name="mutation">which mutation this element introduces</param>
         /// <param name="includeInEnumeration">should this node be considered a test case, or is it just a way of grouping the children ?</param>
-        public TestComposite(ITestComposite<T> parent, string description, Action<T> mutation, bool includeInEnumeration)
-            : base(parent, description, includeInEnumeration)
+        public TestComposite(ITestComposite<T> parent, IMutation<T> mutation , bool includeInEnumeration)
+            : base(parent, includeInEnumeration)
         {
             if (parent == null) throw new ArgumentNullException("parent");
             if (mutation == null) throw new ArgumentNullException("mutation");
             _mutation = mutation;
+        }
+
+        protected override string NodeDescription
+        {
+            get { return _mutation.Description; }
         }
 
         /// <summary>
@@ -197,7 +204,7 @@ namespace PolyTest.Tests.Composites
         public override T Arrange()
         {
             var startFrom = Parent.Arrange();
-            _mutation(startFrom);
+            _mutation.Apply(startFrom);
             return startFrom;
         }
     }
@@ -208,20 +215,25 @@ namespace PolyTest.Tests.Composites
     /// <typeparam name="T"></typeparam>
     public class TestLeaf<T> : TestComponentBase<T>
     {
-        private readonly Action<T> _mutation;
+        private readonly IMutation<T> _mutation;
 
-        public TestLeaf(ITestComposite<T> parent, string description, Action<T> mutation)
-            : base(parent, description)
+        public TestLeaf(ITestComposite<T> parent, IMutation<T> mutation )
+            : base(parent)
         {
             if (parent == null) throw new ArgumentNullException("parent");
             if (mutation == null) throw new ArgumentNullException("mutation");
             _mutation = mutation;
         }
 
+        protected override string NodeDescription
+        {
+            get { return _mutation.Description; }
+        }
+
         public override T Arrange()
         {
             var startFrom = Parent.Arrange();
-            _mutation(startFrom);
+            _mutation.Apply(startFrom);
             return startFrom;
         }
     }
