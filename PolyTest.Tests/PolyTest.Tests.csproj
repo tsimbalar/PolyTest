@@ -50,13 +50,17 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Core\BlahTest.cs" />
+    <Compile Include="InitialStates\BlahTest.cs" />
+    <Compile Include="Composites\CompositeTest.cs" />
+    <Compile Include="InitialStates\InitialStateElements.cs" />
+    <Compile Include="InitialStates\Fluent\InitialStateFluent.cs" />
+    <Compile Include="Composites\TestCompositeExtensions.cs" />
+    <Compile Include="Composites\TestTreeElements.cs" />
     <Compile Include="Fluent\UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestUtils\TestAssets.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="TestUtils\" />
-  </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
