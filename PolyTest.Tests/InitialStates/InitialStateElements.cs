@@ -7,25 +7,6 @@ namespace PolyTest.Tests.InitialStates
 {
 
 
-    /// <summary>
-    /// Represents a way of preparing an instance of <typeparamref name="T"/> prior to a test
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public interface IInitialization<T>
-    {
-        /// <summary>
-        /// Initialize an instance of <typeparamref name="T"/> for testing
-        /// </summary>
-        /// <returns></returns>
-        T Prepare();
-
-        /// <summary>
-        /// A human-driendly description of the state we reach with this Initialization
-        /// </summary>
-        string Description { get; }
-    }
-
-
     public interface IMutation<T>
     {
         string Description { get; }
@@ -44,7 +25,7 @@ namespace PolyTest.Tests.InitialStates
 
     public interface IInitialStateCollection<T> : IStateCollection<T>
     {
-        void Add(IInitialization<T> state);
+        void Add(ITestCase<T> state);
     }
 
     public interface IIndividualTestExecutionInformation<TResult>
@@ -61,7 +42,7 @@ namespace PolyTest.Tests.InitialStates
     /// The starting point of a test. Represents the root element of type <typeparamref name="T"/> on which we apply variations for testing
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class StartingPoint<T> : IInitialization<T>
+    public class StartingPoint<T> : ITestCase<T>
     {
         private readonly string _description;
         private readonly Func<T> _factoryMethod;
@@ -77,7 +58,7 @@ namespace PolyTest.Tests.InitialStates
             get { return _description; }
         }
 
-        public T Prepare()
+        public T Arrange()
         {
             return _factoryMethod();
         }
@@ -110,20 +91,20 @@ namespace PolyTest.Tests.InitialStates
     /// <summary>
     /// An initial state that is reached by applying a series of mutations from an initial state
     /// </summary>
-    public class SequentialMutations<T> : IInitialization<T>
+    public class SequentialMutations<T> : ITestCase<T>
     {
-        private readonly IInitialization<T> _initialization;
+        private readonly ITestCase<T> _initialization;
         private readonly List<IMutation<T>> _mutations;
 
-        public SequentialMutations(IInitialization<T> initialization, params IMutation<T>[] mutations)
+        public SequentialMutations(ITestCase<T> initialization, params IMutation<T>[] mutations)
         {
             _initialization = initialization;
             _mutations = mutations.ToList();
         }
 
-        public T Prepare()
+        public T Arrange()
         {
-            var start = _initialization.Prepare();
+            var start = _initialization.Arrange();
             foreach (var mutation in _mutations)
             {
                 mutation.Apply(start);
@@ -148,15 +129,15 @@ namespace PolyTest.Tests.InitialStates
 
     internal class InitialStateCollection<T> : IInitialStateCollection<T>
     {
-        private List<IInitialization<T>> _setups;
+        private List<ITestCase<T>> _setups;
 
         public InitialStateCollection()
         {
-            _setups = new List<IInitialization<T>>();
+            _setups = new List<ITestCase<T>>();
         }
 
 
-        public void Add(IInitialization<T> state)
+        public void Add(ITestCase<T> state)
         {
             _setups.Add(state);
         }
@@ -168,7 +149,7 @@ namespace PolyTest.Tests.InitialStates
                     _setups.Select(
                         (initial, idx) =>
                         new IndividualTestExecutionInformation<TResult>(idx, initial.Description,
-                                                                        testMethod(initial.Prepare()))));
+                                                                        testMethod(initial.Arrange()))));
         }
     }
 

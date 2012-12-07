@@ -5,17 +5,6 @@ namespace PolyTest.Tests.Composites
 {
 
     /// <summary>
-    /// What is a test case ? 
-    /// Just a description and an initial state
-    /// </summary>
-    /// <typeparam name="T">The type that is initialized by the testcase</typeparam>
-    public interface ITestCase<T>
-    {
-        String Description { get; }
-        T Arrange();
-    }
-
-    /// <summary>
     /// The component that is the common part of every element in the tree
     /// </summary>
     /// <typeparam name="T">the type that the test cases initialize</typeparam>

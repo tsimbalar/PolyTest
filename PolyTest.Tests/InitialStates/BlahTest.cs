@@ -60,10 +60,10 @@ namespace PolyTest.Tests.InitialStates
         {
             // Arrange
             var sut = new TestAssets.FakeSut();
-            "Starting with IntProperty = 5".AsStartingPoint(() => new TestAssets.DummyItem(5))
+            "Starting with IntProperty = 5".AsStartingPoint(() => new TestAssets.DummyItem(5, true))
                 .Arrange("setting it to 4", d => { d.IntProperty = 4; },
                     andThen => andThen.IgnoringRoot()
-                        .With(new Mutation<TestAssets.DummyItem>("setting bool to false", d => { d.BoolProperty = false; }))
+                        //.With(new Mutation<TestAssets.DummyItem>("setting bool to false", d => { d.BoolProperty = false; }))
                         .With(new Mutation<TestAssets.DummyItem>("setting bool to true", d => { d.BoolProperty = true; }))
                 )
                 .Arrange("setting it to 3", d => { d.IntProperty = 3; })

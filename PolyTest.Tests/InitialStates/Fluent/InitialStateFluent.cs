@@ -110,7 +110,7 @@ namespace PolyTest.Tests.InitialStates.Fluent
 
     public interface IInitialStateCollectionFromStartingPoint<T> : IStateCollection<T>
     {
-        IInitialization<T> StartingPoint { get; }
+        ITestCase<T> StartingPoint { get; }
         void Add(IMutation<T> mutation);
 
     }
@@ -118,16 +118,16 @@ namespace PolyTest.Tests.InitialStates.Fluent
 
     public class InitialStateCollectionFromStartingPoint<T> : IInitialStateCollectionFromStartingPoint<T>
     {
-        private readonly IInitialization<T> _startingPoint;
+        private readonly ITestCase<T> _startingPoint;
         private readonly InitialStateCollection<T> _internalCollection;
 
-        public InitialStateCollectionFromStartingPoint(IInitialization<T> startingPoint)
+        public InitialStateCollectionFromStartingPoint(ITestCase<T> startingPoint)
         {
             _startingPoint = startingPoint;
             _internalCollection = new InitialStateCollection<T>();
         }
 
-        public IInitialization<T> StartingPoint { get { return _startingPoint; } }
+        public ITestCase<T> StartingPoint { get { return _startingPoint; } }
 
         public void Add(IMutation<T> mutation)
         {

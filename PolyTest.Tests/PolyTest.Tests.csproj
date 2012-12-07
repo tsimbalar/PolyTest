@@ -50,6 +50,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Core\ITestCase.cs" />
     <Compile Include="InitialStates\BlahTest.cs" />
     <Compile Include="Composites\CompositeTest.cs" />
     <Compile Include="InitialStates\InitialStateElements.cs" />

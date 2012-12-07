@@ -14,10 +14,10 @@ namespace PolyTest.Tests.TestUtils
 
         public class DummyItem
         {
-            public DummyItem(int initial)
+            public DummyItem(int initial, bool initialBool = true)
             {
                 IntProperty = initial;
-                BoolProperty = false;
+                BoolProperty = initialBool;
             }
 
             public int IntProperty { get; set; }
