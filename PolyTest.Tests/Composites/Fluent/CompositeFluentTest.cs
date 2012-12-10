@@ -33,11 +33,11 @@ namespace PolyTest.Tests.Composites.Fluent
                                 .Consider("remove 2", d => { d.IntProperty -= 2; })
                         )
                  )
-                 .Walk((descr, arrange) =>
+                 .Walk((state) =>
                             {
-                                var init = arrange();
+                                var init = state.Arrange();
                                 sut.DoIt(init);
-                                TestAssets.AssertIsNotFive(init.IntProperty, descr);
+                                TestAssets.AssertIsNotFive(init.IntProperty, state.Description);
                             })
                  ;
         }

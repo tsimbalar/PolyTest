@@ -7,12 +7,12 @@ namespace PolyTest.Tests.Composites
     /// </summary>
     public static class TestCompositeExtensions
     {
-        public static void Walk<T>(this ITestComponent<T> component, Action<string, Func<T>> action)
+        public static void Walk<T>(this ITestComponent<T> component, Action<ITestCase<T>> action)
         {
             foreach (var testCase in component.Enumerate())
             {
                 ITestCase<T> currentCase = testCase; // copy of the loop variable because it is referenced in a closure
-                action(testCase.Description, currentCase.Arrange);
+                action(currentCase);
             }
         }
     }

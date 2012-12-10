@@ -31,11 +31,11 @@ namespace PolyTest.Tests.Composites
 
             //Assert.AreEqual("", String.Join("\n", rootStartingAt5.Enumerate().ToList().Select(t => t.Description)));
 
-            rootStartingAt5.Walk((testCaseDescription, arrange) =>
+            rootStartingAt5.Walk((start) =>
             {
-                var initial = arrange();
+                var initial = start.Arrange();
                 var actual = sut.DoIt(initial);
-                TestAssets.AssertIsNotFive(actual, testCaseDescription);
+                TestAssets.AssertIsNotFive(actual, start.Description);
             });
 
 

@@ -11,7 +11,6 @@ namespace PolyTest.Tests.Composites
     public interface ITestComponent<T> : ITestCase<T>
     {
         IEnumerable<ITestCase<T>> Enumerate();
-        //String NodeDescription { get; }
     }
 
     /// <summary>
