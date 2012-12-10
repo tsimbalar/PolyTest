@@ -34,7 +34,7 @@ namespace PolyTest.Tests.InitialStates
     /// The starting point of a test. Represents the root element of type <typeparamref name="T"/> on which we apply variations for testing
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class StartingPoint<T> : ITestCase<T>
+    internal class StartingPoint<T> : ITestCase<T>
     {
         private readonly string _description;
         private readonly Func<T> _factoryMethod;
@@ -60,7 +60,7 @@ namespace PolyTest.Tests.InitialStates
     /// <summary>
     /// An initial state that is reached by applying a series of mutations from an initial state
     /// </summary>
-    public class SequentialMutations<T> : ITestCase<T>
+    internal class SequentialMutations<T> : ITestCase<T>
     {
         private readonly ITestCase<T> _initialization;
         private readonly List<IMutation<T>> _mutations;
@@ -145,7 +145,7 @@ namespace PolyTest.Tests.InitialStates
 
 
 
-    public class IndividualTestExecutionInformation<TResult> : IIndividualTestExecutionInformation<TResult>
+    internal class IndividualTestExecutionInformation<TResult> : IIndividualTestExecutionInformation<TResult>
     {
         public IndividualTestExecutionInformation(int index, string description, TResult resultValue)
         {

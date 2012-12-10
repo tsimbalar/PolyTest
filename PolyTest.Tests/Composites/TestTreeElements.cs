@@ -32,7 +32,7 @@ namespace PolyTest.Tests.Composites
     /// Provides access to Parent for subclasses
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public abstract class TestComponentBase<T> : ITestComponent<T>
+    internal abstract class TestComponentBase<T> : ITestComponent<T>
     {
         private readonly ITestComposite<T> _parent;
 
@@ -90,7 +90,7 @@ namespace PolyTest.Tests.Composites
     /// Takes care of adding children and enumerating over its children
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public abstract class TestCompositeBase<T> : TestComponentBase<T>, ITestComposite<T>
+    internal abstract class TestCompositeBase<T> : TestComponentBase<T>, ITestComposite<T>
     {
         private readonly List<ITestComponent<T>> _children;
 
@@ -140,7 +140,7 @@ namespace PolyTest.Tests.Composites
     /// The root of the tree of testcases
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class TestRoot<T> : TestCompositeBase<T>
+    internal class TestRoot<T> : TestCompositeBase<T>
     {
         private readonly string _description;
         private readonly Func<T> _setup;
@@ -178,7 +178,7 @@ namespace PolyTest.Tests.Composites
     /// TestComposite, that is, a node with a collection of nodes, where each child node provide a mutation to apply to the parent
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class TestComposite<T> : TestCompositeBase<T>
+    internal class TestComposite<T> : TestCompositeBase<T>
     {
         private readonly IMutation<T> _mutation;
 
@@ -217,7 +217,7 @@ namespace PolyTest.Tests.Composites
     /// The bottom element of the tree, a test case with no children
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class TestLeaf<T> : TestComponentBase<T>
+    internal class TestLeaf<T> : TestComponentBase<T>
     {
         private readonly IMutation<T> _mutation;
 
