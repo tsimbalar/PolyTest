@@ -18,16 +18,15 @@ namespace PolyTest.Tests.Composites.Fluent
                  .Consider("add 2", d => { d.IntProperty = d.IntProperty + 2; })
                  .Consider("add 4", d => { d.IntProperty = d.IntProperty + 4; })
                  .Consider("add 1", d => { d.IntProperty++; },
-                    opt => opt
+                    opt => opt.IncludeSelf()
                         .Consider("add 13", d => { d.IntProperty = d.IntProperty + 13; })
                         .Consider("remove 3", d => { d.IntProperty = d.IntProperty - 3; })
                  )
-                 .GoThrough("add 0", d => { },
-                    opt => opt
-                        .IgnoreSelf()
+                 .Consider("add 0", d => { },
+                    opt => opt.IgnoreSelf()
                         .Consider("add 1", d => { d.IntProperty++; })
                         .Consider("remove 1", d => { d.IntProperty = d.IntProperty - 1; })
-                        .GoThrough("add 3", d => { d.IntProperty += 3; },
+                        .Consider("add 3", d => { d.IntProperty += 3; },
                             opt2 => opt2
                                 .Consider("add 4", d => { d.IntProperty += 4; })
                                 .Consider("remove 2", d => { d.IntProperty -= 2; })
@@ -61,7 +60,7 @@ namespace PolyTest.Tests.Composites.Fluent
     {
         ITestCompositeFluent<T> Consider(IMutation<T> mutation);
 
-        ITestCompositeFluent<T> GoThrough(IMutation<T> mutation,
+        ITestCompositeFluent<T> Consider(IMutation<T> mutation,
                                           bool includeMutationInTestCase,
                                           Func<ITestCompositeNestedFluent<T>, ITestCompositeFluent<T>> nestedAdd);
     }
@@ -110,7 +109,7 @@ namespace PolyTest.Tests.Composites.Fluent
             return this;
         }
 
-        public ITestCompositeFluent<T> GoThrough(IMutation<T> mutation, bool includeMutationInTestCase, Func<ITestCompositeNestedFluent<T>, ITestCompositeFluent<T>> nestedAdd)
+        public ITestCompositeFluent<T> Consider(IMutation<T> mutation, bool includeMutationInTestCase, Func<ITestCompositeNestedFluent<T>, ITestCompositeFluent<T>> nestedAdd)
         {
             ITestCompositeNestedFluent<T> composite = new TestCompositeFluentNestedWrapper<T>(new TestComposite<T>(this, mutation, includeInEnumeration: includeMutationInTestCase));
             var updatedComposite = nestedAdd(composite);
@@ -149,18 +148,11 @@ namespace PolyTest.Tests.Composites.Fluent
             return tree.Consider(new Mutation<T>(mutationDescr, mutationAction));
         }
 
-        public static ITestCompositeFluent<T> GoThrough<T>(this ITestCompositeFluent<T> tree,
-            string mutationDescription, Action<T> mutationAction,
-            Func<ITestCompositeNestedFluent<T>, ITestCompositeFluent<T>> nestedAdd)
-        {
-            return tree.GoThrough(new Mutation<T>(mutationDescription, mutationAction), false, nestedAdd);
-        }
-
         public static ITestCompositeFluent<T> Consider<T>(this ITestCompositeFluent<T> tree,
             string mutationDescription, Action<T> mutationAction,
             Func<ITestCompositeNestedFluent<T>, ITestCompositeFluent<T>> nestedAdd)
         {
-            return tree.GoThrough(new Mutation<T>(mutationDescription, mutationAction), true, nestedAdd);
+            return tree.Consider(new Mutation<T>(mutationDescription, mutationAction), true, nestedAdd);
         }
     }
 }
