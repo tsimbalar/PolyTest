@@ -20,6 +20,11 @@ namespace PolyTest.Tests.Composites
     public interface ITestComposite<T> : ITestComponent<T>
     {
         void Add(ITestComponent<T> child);
+
+        /// <summary>
+        /// Indicates whether the Enumerate() method returns an element for this node, or if it should just return its children
+        /// </summary>
+        bool IncludeSelfInEnumeration { get; set; }
     }
 
     /// <summary>
@@ -105,7 +110,7 @@ namespace PolyTest.Tests.Composites
         /// <summary>
         /// Indicates whether the Enumerate() method returns an element for this node, or if it should just return its children
         /// </summary>
-        protected bool IncludeSelfInEnumeration { get; set; }
+        public bool IncludeSelfInEnumeration { get; set; }
 
         public void Add(ITestComponent<T> child)
         {
