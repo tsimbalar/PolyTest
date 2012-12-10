@@ -50,6 +50,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Composites\Fluent\CompositeFluent.cs" />
     <Compile Include="Composites\Fluent\CompositeFluentTest.cs" />
     <Compile Include="Core\ITestCase.cs" />
     <Compile Include="InitialStates\Fluent\InitialStateFluentTest.cs" />
