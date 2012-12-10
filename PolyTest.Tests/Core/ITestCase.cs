@@ -7,7 +7,7 @@ namespace PolyTest.Tests
     /// Just a description and an initial state
     /// </summary>
     /// <typeparam name="T">The type that is initialized by the testcase</typeparam>
-    public interface ITestCase<T>
+    public interface ITestCase<out T>
     {
         /// <summary>
         /// A human-driendly description of the state we reach with this Initialization

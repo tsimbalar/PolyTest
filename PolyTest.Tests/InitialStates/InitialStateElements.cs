@@ -5,7 +5,7 @@ using System.Text;
 
 namespace PolyTest.Tests.InitialStates
 {
-    public interface IIndividualTestExecutionInformationCollection<TResult>
+    public interface IIndividualTestExecutionInformationCollection<out TResult>
     {
         void ForEach(Action<string, TResult> assertion);
     }
@@ -20,7 +20,7 @@ namespace PolyTest.Tests.InitialStates
         void Add(ITestCase<T> state);
     }
 
-    public interface IIndividualTestExecutionInformation<TResult>
+    public interface IIndividualTestExecutionInformation<out TResult>
     {
 
         int Index { get; }
@@ -98,7 +98,7 @@ namespace PolyTest.Tests.InitialStates
 
     internal class InitialStateCollection<T> : IInitialStateCollection<T>
     {
-        private List<ITestCase<T>> _setups;
+        private readonly List<ITestCase<T>> _setups;
 
         public InitialStateCollection()
         {
