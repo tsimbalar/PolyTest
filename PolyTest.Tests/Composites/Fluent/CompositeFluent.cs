@@ -18,13 +18,15 @@ namespace PolyTest.Tests.Composites.Fluent
         }
     }
 
-    public interface ITestCompositeFluent<T> : ITestComposite<T>
+    public interface ITestCompositeFluent<T>
     {
         ITestCompositeFluent<T> Consider(IMutation<T> mutation);
 
         ITestCompositeFluent<T> Consider(IMutation<T> mutation,
                                           bool includeMutationInTestCase,
                                           Func<ITestCompositeNestedFluent<T>, ITestCompositeFluent<T>> nestedAdd);
+
+        void Walk(Action<ITestTreeNode<T>> action);
     }
 
     public interface ITestCompositeNestedFluent<T> : ITestCompositeFluent<T>
@@ -67,19 +69,56 @@ namespace PolyTest.Tests.Composites.Fluent
 
         public ITestCompositeFluent<T> Consider(IMutation<T> mutation)
         {
-            this.Add(new TestComposite<T>(this, mutation, true));
+            this._wrapped.Add(new TestComposite<T>(this._wrapped, mutation, true));
             return this;
         }
 
         public ITestCompositeFluent<T> Consider(IMutation<T> mutation, bool includeMutationInTestCase, Func<ITestCompositeNestedFluent<T>, ITestCompositeFluent<T>> nestedAdd)
         {
-            ITestCompositeNestedFluent<T> composite = new TestCompositeFluentNestedWrapper<T>(new TestComposite<T>(this, mutation, includeInEnumeration: includeMutationInTestCase));
+            ITestCompositeNestedFluent<T> composite = new TestCompositeFluentNestedWrapper<T>(new TestComposite<T>(this._wrapped, mutation, includeInEnumeration: includeMutationInTestCase));
             var updatedComposite = nestedAdd(composite);
 
-            this.Add(updatedComposite);
+            this._wrapped.Add(((TestCompositeFluentWrapper<T>)updatedComposite)._wrapped);
 
             return this;
         }
+
+        public void Walk(Action<ITestTreeNode<T>> action)
+        {
+            foreach (var testCase in _wrapped.Enumerate().Select((tc, i) => new { index = i, test = tc }))
+            {
+                action(new TestTreeNode<T>(testCase.index, testCase.test));
+            }
+        }
+    }
+
+    internal class TestTreeNode<T> : ITestTreeNode<T>
+    {
+        private readonly int _index;
+        private readonly ITestCase<T> _testCase;
+
+        public TestTreeNode(int index, ITestCase<T> testCase)
+        {
+            if (testCase == null) throw new ArgumentNullException("testCase");
+            _index = index;
+            _testCase = testCase;
+        }
+
+        public string Description { get { return _testCase.Description; } }
+
+        public int Index
+        {
+            get { return _index; }
+        }
+
+        public T Arrange()
+        {
+            return _testCase.Arrange();
+        }
+    }
+
+    public interface ITestTreeNode<T> : ITestCase<T>
+    {
     }
 
     internal class TestCompositeFluentNestedWrapper<T> : TestCompositeFluentWrapper<T>, ITestCompositeNestedFluent<T>

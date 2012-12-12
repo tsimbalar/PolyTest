@@ -11,6 +11,8 @@ namespace PolyTest.Tests.Composites
     public interface ITestComponent<out T> : ITestCase<T>
     {
         IEnumerable<ITestCase<T>> Enumerate();
+
+        IEnumerable<ITestComponent<T>> Children { get; }
     }
 
     /// <summary>
@@ -26,29 +28,30 @@ namespace PolyTest.Tests.Composites
         bool IncludeSelfInEnumeration { get; set; }
     }
 
-    /// <summary>
-    /// Default implementation of ITestComponent
-    /// Generates Description based on parent description + this node's description
-    /// Provides access to Parent for subclasses
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    internal abstract class TestComponentBase<T> : ITestComponent<T>
+    internal abstract class TestTreeBase<T> : ITestComponent<T>
     {
         private readonly ITestComposite<T> _parent;
+        private readonly IList<ITestComponent<T>> _children ;
 
         /// <summary>
         /// Create a TestComponent
         /// </summary>
         /// <param name="parent">the parent of this node (can be null)</param>
-        protected TestComponentBase(ITestComposite<T> parent)
+        protected TestTreeBase(ITestComposite<T> parent)
         {
             _parent = parent;
+            _children = new List<ITestComponent<T>>();
         }
+        /// <summary>
+        /// The parent of this component (can be null)
+        /// </summary>
+        protected ITestComposite<T> Parent { get { return _parent; } }
+
 
         /// <summary>
         /// The Description for this element. Based on the parent's description (if there is a parent) and this node's description
         /// </summary>
-        public virtual string Description
+        public string Description
         {
             get
             {
@@ -63,26 +66,45 @@ namespace PolyTest.Tests.Composites
             }
         }
 
-        /// <summary>
-        /// The parent of this component (can be null)
-        /// </summary>
-        protected ITestComposite<T> Parent { get { return _parent; } }
+        protected abstract string NodeDescription { get; }
 
-        /// <summary>
-        /// Enumerate over the test cases of this component 
-        /// </summary>
-        public virtual IEnumerable<ITestCase<T>> Enumerate()
+        public IEnumerable<ITestComponent<T>> Children { get { return _children; } }
+
+        protected void Add(ITestComponent<T> child)
         {
-            yield return this;
+            _children.Add(child);
         }
 
-        protected abstract string NodeDescription { get; }
+        /// <summary>
+        /// Indicates whether the Enumerate() method returns an element for this node, or if it should just return its children
+        /// </summary>
+        public abstract bool IncludeSelfInEnumeration { get; }
+
+        /// <summary>
+        /// Enumerate over all the test cases, including the children and itself if IncludeSelfInEnumeration is true
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<ITestCase<T>> Enumerate()
+        {
+            if (IncludeSelfInEnumeration)
+            {
+                yield return this;
+            }
+            foreach (var testComponent in Children)
+            {
+                foreach (var testCase in testComponent.Enumerate())
+                {
+                    yield return testCase;
+                }
+            }
+        }
 
         /// <summary>
         /// TestCase setup for this component
         /// </summary>
         /// <returns></returns>
         public abstract T Arrange();
+
     }
 
     /// <summary>
@@ -90,49 +112,38 @@ namespace PolyTest.Tests.Composites
     /// Takes care of adding children and enumerating over its children
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    internal abstract class TestCompositeBase<T> : TestComponentBase<T>, ITestComposite<T>
+    internal abstract class TestCompositeBase<T> : TestTreeBase<T>, ITestComposite<T>
     {
-        private readonly List<ITestComponent<T>> _children;
+        private bool _includeSelfInEnumeration;
 
         /// <summary>
         /// Creates a composite
         /// </summary>
         /// <param name="parent">the parent of this node</param>
         /// <param name="includeInEnumeration">when enumerating/walking over the tree, should this node be included, or should it just enumerate over its children ?</param>
-        protected TestCompositeBase(ITestComposite<T> parent,bool includeInEnumeration)
+        protected TestCompositeBase(ITestComposite<T> parent, bool includeInEnumeration)
             : base(parent)
         {
-            IncludeSelfInEnumeration = includeInEnumeration;
-            _children = new List<ITestComponent<T>>();
+            _includeSelfInEnumeration = includeInEnumeration;
+        }
+
+        public new void Add(ITestComponent<T> child)
+        {
+            base.Add(child);
         }
 
         /// <summary>
         /// Indicates whether the Enumerate() method returns an element for this node, or if it should just return its children
         /// </summary>
-        public bool IncludeSelfInEnumeration { get; set; }
-
-        public void Add(ITestComponent<T> child)
+        public override bool IncludeSelfInEnumeration
         {
-            _children.Add(child);
+            get { return _includeSelfInEnumeration; }
         }
 
-        /// <summary>
-        /// Enumerate over all the test cases, including the children and itself if IncludeSelfInEnumeration is true
-        /// </summary>
-        /// <returns></returns>
-        public override IEnumerable<ITestCase<T>> Enumerate()
+        bool ITestComposite<T>.IncludeSelfInEnumeration
         {
-            if (IncludeSelfInEnumeration)
-            {
-                yield return this;
-            }
-            foreach (var testComponent in _children)
-            {
-                foreach (var testCase in testComponent.Enumerate())
-                {
-                    yield return testCase;
-                }
-            }
+            get { return _includeSelfInEnumeration; }
+            set { _includeSelfInEnumeration = value; }
         }
     }
 
@@ -188,7 +199,7 @@ namespace PolyTest.Tests.Composites
         /// <param name="parent">the parent for this component</param>
         /// <param name="mutation">which mutation this element introduces</param>
         /// <param name="includeInEnumeration">should this node be considered a test case, or is it just a way of grouping the children ?</param>
-        public TestComposite(ITestComposite<T> parent, IMutation<T> mutation , bool includeInEnumeration)
+        public TestComposite(ITestComposite<T> parent, IMutation<T> mutation, bool includeInEnumeration)
             : base(parent, includeInEnumeration)
         {
             if (parent == null) throw new ArgumentNullException("parent");
@@ -217,11 +228,11 @@ namespace PolyTest.Tests.Composites
     /// The bottom element of the tree, a test case with no children
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    internal class TestLeaf<T> : TestComponentBase<T>
+    internal class TestLeaf<T> : TestTreeBase<T>, ITestComponent<T>
     {
         private readonly IMutation<T> _mutation;
 
-        public TestLeaf(ITestComposite<T> parent, IMutation<T> mutation )
+        public TestLeaf(ITestComposite<T> parent, IMutation<T> mutation)
             : base(parent)
         {
             if (parent == null) throw new ArgumentNullException("parent");
@@ -232,6 +243,11 @@ namespace PolyTest.Tests.Composites
         protected override string NodeDescription
         {
             get { return _mutation.Description; }
+        }
+
+        public override bool IncludeSelfInEnumeration
+        {
+            get { return true; }
         }
 
         public override T Arrange()
