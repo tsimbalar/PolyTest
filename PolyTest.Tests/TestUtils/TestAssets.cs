@@ -42,7 +42,7 @@ namespace PolyTest.Tests.TestUtils
         /// <summary>
         /// Stupid custom Assert method
         /// </summary>
-        public static void AssertIsNotFive(int actual, string extraInfo)
+        public static void AssertIsNotFive(int actual, string extraInfo = null)
         {
             Assert.AreNotEqual(5, actual, extraInfo);
         }
