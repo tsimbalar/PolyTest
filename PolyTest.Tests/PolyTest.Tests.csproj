@@ -52,6 +52,9 @@
   <ItemGroup>
     <Compile Include="Composites\Fluent\CompositeFluent.cs" />
     <Compile Include="Composites\Fluent\CompositeFluentTest.cs" />
+    <Compile Include="Composites\Fluent\Magic\MagicExtensions.cs" />
+    <Compile Include="Composites\Fluent\Magic\ReflectionHelper.cs" />
+    <Compile Include="Composites\Fluent\RealExampleWithFluentTest.cs" />
     <Compile Include="Core\ITestCase.cs" />
     <Compile Include="InitialStates\Fluent\InitialStateFluentTest.cs" />
     <Compile Include="InitialStates\InitialStateTest.cs" />

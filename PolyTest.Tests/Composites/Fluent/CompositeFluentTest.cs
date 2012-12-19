@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PolyTest.Tests.TestUtils;
 using System.Linq;
+using PolyTest.Tests.Composites.Fluent.Magic;
 
 namespace PolyTest.Tests.Composites.Fluent
 {
@@ -41,6 +42,7 @@ namespace PolyTest.Tests.Composites.Fluent
                             })
                  ;
         }
+
 
         [TestMethod]
         public void FluentTestWithResults()
@@ -105,12 +107,37 @@ namespace PolyTest.Tests.Composites.Fluent
                         )
                  )
                  .Walk(
-                     act: d=> sut.DoIt(d),
-                     assert: i=> TestAssets.AssertIsNotFive(i) 
+                     act: d => sut.DoIt(d),
+                     assert: i => TestAssets.AssertIsNotFive(i)
                      )
 
                 .AssertIsNotFailed()
                  ;
+
+        }
+
+
+
+        [TestMethod]
+        public void FluentTestWithReflection()
+        {
+            // Arrange
+            var sut = new TestAssets.FakeSut();
+
+            TestTree.From("starting with 5", () => new TestAssets.DummyItem(5))
+                    .With(d => d.IntProperty, 6)
+                    .With(d => d.IntProperty, 3,
+                        opt => opt.IncludeSelf()
+                            .Consider("add 13", d => { d.IntProperty = d.IntProperty + 13; })
+                            .Consider("remove 3", d => { d.IntProperty = d.IntProperty - 3; })
+                            .With(d => d.BoolProperty, false)
+                )
+                .Walk(act: d => sut.DoIt(d), assert: a =>
+                                                         {
+                                                             TestAssets.AssertIsNotFive(a);
+                                                             Assert.AreEqual(true, a);
+                                                         })
+                .AssertIsNotFailed();
 
         }
     }
