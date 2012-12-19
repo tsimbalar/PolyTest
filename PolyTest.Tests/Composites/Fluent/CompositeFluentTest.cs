@@ -45,6 +45,7 @@ namespace PolyTest.Tests.Composites.Fluent
 
 
         [TestMethod]
+        [Ignore]
         public void FluentTestWithResults()
         {
             // Arrange
@@ -103,7 +104,7 @@ namespace PolyTest.Tests.Composites.Fluent
                             opt2 => opt2
                                 .Consider("add 4", d => { d.IntProperty += 4; })
                                 .Consider("remove 2", d => { d.IntProperty -= 2; })
-                                .Consider("remove 3", d => { d.IntProperty -= 3; })
+                                //.Consider("remove 3", d => { d.IntProperty -= 3; })
                         )
                  )
                  .Walk(
@@ -119,6 +120,7 @@ namespace PolyTest.Tests.Composites.Fluent
 
 
         [TestMethod]
+        [Ignore]
         public void FluentTestWithReflection()
         {
             // Arrange
