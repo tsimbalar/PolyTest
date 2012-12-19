@@ -67,6 +67,7 @@
     <Compile Include="Core\Mutation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestUtils\TestAssets.cs" />
+    <Compile Include="WithoutPolyTest\WithoutPolyTestTest.cs" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
