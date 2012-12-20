@@ -6,7 +6,7 @@ Unit-testing tool for tests based on [one bad attribute](http://xunitpatterns.co
 
 When testing things such as validation of inputs, it is rather common to have to test different combinations of invalid inputs against our System Under Test (SUT). 
 
-For example, imagine that you have a method `Validate()` taking into account an argument of type `Input`. It should return a "valid" result if `Input.Name` is not null and non-empty and also `Input.Age` is greater than 0. Testing this logic would result in test code that looks like this :
+For example, imagine that our SUT is a class `Validator`which has a method `Validate()` accepting an argument of type `Input`. It should return a "valid" result if `Input.Name` is not null and non-empty and also `Input.Age` is greater than 0. Testing this logic would result in test code that looks like this :
 
 ```csharp
 [TestMethod]
@@ -53,6 +53,7 @@ public void Validate_with_input_with_Age_minus_one_must_be_invalid()
     AssertIsInvalid(validationResult, "input with Age -1 should be invalid");
 }
 ```
+(the signature of `MakeSUT` is something like `private static Validator MakeSUT()` )
 
 The problem with that approach is that, as the validation conditions get trickier and combine conditions on several properties of the input, your test code gets messier and messier: whenever a new condition is introduced on property `Input.XXX`, you have to fix all the other tests so that the initial condition sets up Input with a valid value of `XXX`. 
 

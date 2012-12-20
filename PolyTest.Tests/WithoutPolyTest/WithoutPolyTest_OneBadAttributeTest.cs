@@ -74,7 +74,7 @@ namespace PolyTest.Tests.WithoutPolyTest
 
         #region Test Helper Methods
 
-        private Input MakeValidInput()
+        private static Input MakeValidInput()
         {
             return new Input
             {
@@ -83,17 +83,17 @@ namespace PolyTest.Tests.WithoutPolyTest
             };
         }
 
-        private Validator MakeSUT()
+        private static Validator MakeSUT()
         {
             return new Validator();
         }
 
-        private void AssertIsInvalid(ValidationResult validationResult, string description)
+        private static void AssertIsInvalid(ValidationResult validationResult, string description)
         {
             Assert.AreEqual(false, validationResult.IsSuccess, description);
         }
 
-        private void AssertIsValid(ValidationResult validationResult, string description)
+        private static void AssertIsValid(ValidationResult validationResult, string description)
         {
             Assert.AreEqual(true, validationResult.IsSuccess, description);
         }

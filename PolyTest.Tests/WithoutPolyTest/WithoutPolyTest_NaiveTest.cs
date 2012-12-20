@@ -60,12 +60,12 @@ namespace PolyTest.Tests.WithoutPolyTest
 
         #region Test Helper Methods
 
-        private Validator MakeSUT()
+        private static Validator MakeSUT()
         {
             return new Validator();
         }
 
-        private void AssertIsInvalid(ValidationResult validationResult, string description)
+        private static void AssertIsInvalid(ValidationResult validationResult, string description)
         {
             Assert.AreEqual(false, validationResult.IsSuccess, description);
         }
