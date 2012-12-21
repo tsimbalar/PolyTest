@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace PolyTest.Tests.InitialStates
+namespace PolyTest.StartFrom
 {
     public interface IIndividualTestExecutionInformationCollection<out TResult>
     {

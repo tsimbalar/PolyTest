@@ -1,5 +1,4 @@
 using System;
-using PolyTest.Tests.Composites;
 
 namespace PolyTest.Tree
 {

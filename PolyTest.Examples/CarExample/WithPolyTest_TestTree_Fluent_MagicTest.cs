@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PolyTest.Examples.CarExample.Models;
 using PolyTest.Tree.Fluent;
 using PolyTest.Tree.Fluent.Magic;
 
-namespace PolyTest.Tests.Composites.Fluent
+namespace PolyTest.Examples.CarExample
 {
     [TestClass]
-    public class RealExampleWithFluentTest
+    public class WithPolyTest_TestTree_Fluent_MagicTest
     {
 
         [TestMethod]
@@ -63,71 +60,5 @@ namespace PolyTest.Tests.Composites.Fluent
             c.Engine = new DieselEngine();
             return c;
         }
-    }
-
-
-
-    public class CarValidator
-    {
-        public bool Validate(Car car)
-        {
-            var isValid = true;
-            if (car.NumberOfDoors <= 0) isValid = false;
-            if (car.BrandName == null) return false;
-            if (string.IsNullOrWhiteSpace(car.ModelName)) isValid = false;
-
-            if (car.NeedsEngine)
-            {
-                if (car.Engine == null) isValid = false;
-                else
-                {
-                    // validate engine
-                    if (!ValidateEngine(car.Engine)) isValid = false;
-                }
-
-            }
-            else
-            {
-                if (car.Engine != null) isValid = false; // if NeedsEngine is false, Engine must be null
-            }
-            return isValid;
-        }
-
-        private bool ValidateEngine(Engine engine)
-        {
-            return true;
-        }
-    }
-
-    public class Car
-    {
-        public Car()
-        {
-            Wheels = new List<Wheel>();
-            NeedsEngine = true;
-        }
-
-        public string BrandName { get; set; }
-        public string ModelName { get; set; }
-        public int NumberOfDoors { get; set; }
-        public bool NeedsEngine { get; set; }
-        public Engine Engine { get; set; }
-        public IList<Wheel> Wheels { get; set; }
-    }
-
-    internal class DieselEngine : Engine
-    {
-    }
-
-    public class Wheel
-    {
-        public Wheel(Car car, int index)
-        {
-
-        }
-    }
-
-    public class Engine
-    {
     }
 }

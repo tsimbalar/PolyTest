@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CF45C706-3D27-48B6-9561-2ACC99CB83FB}</ProjectGuid>
+    <ProjectGuid>{0B6D70A8-0DF4-4B1D-AF8B-6E74AF36A6DE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PolyTest.Tests</RootNamespace>
-    <AssemblyName>PolyTest.Tests</AssemblyName>
+    <RootNamespace>PolyTest.Examples</RootNamespace>
+    <AssemblyName>PolyTest.Examples</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -50,21 +50,27 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Composites\Fluent\CompositeFluentTest.cs" />
-    <Compile Include="InitialStates\Fluent\InitialStateFluentTest.cs" />
-    <Compile Include="InitialStates\InitialStateTest.cs" />
-    <Compile Include="Composites\CompositeTest.cs" />
+    <Compile Include="CarExample\Models\Car.cs" />
+    <Compile Include="CarExample\Models\CarValidator.cs" />
+    <Compile Include="CarExample\Models\DieselEngine.cs" />
+    <Compile Include="CarExample\Models\Engine.cs" />
+    <Compile Include="CarExample\Models\Wheel.cs" />
+    <Compile Include="InputValidationExample\Models\Input.cs" />
+    <Compile Include="InputValidationExample\Models\Validator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestUtils\DummyAssert.cs" />
-    <Compile Include="TestUtils\DummyItem.cs" />
-    <Compile Include="TestUtils\FakeSut.cs" />
+    <Compile Include="CarExample\WithPolyTest_TestTree_Fluent_MagicTest.cs" />
+    <Compile Include="InputValidationExample\Models\ValidationResult.cs" />
+    <Compile Include="InputValidationExample\WithoutPolyTest_NaiveTest.cs" />
+    <Compile Include="InputValidationExample\WithoutPolyTest_OneBadAttributeTest.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\PolyTest\PolyTest.csproj">
-      <Project>{73a9e45f-c2f0-4c1f-ae95-8cc3c57a50a0}</Project>
+      <Project>{73A9E45F-C2F0-4C1F-AE95-8CC3C57A50A0}</Project>
       <Name>PolyTest</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="WithoutPolyTest\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

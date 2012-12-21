@@ -44,6 +44,8 @@
     <Compile Include="ITestCase.cs" />
     <Compile Include="Mutation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StartFrom\Fluent\InitialStateFluent.cs" />
+    <Compile Include="StartFrom\InitialStateElements.cs" />
     <Compile Include="Tree\Fluent\CompositeFluent.cs" />
     <Compile Include="Tree\Fluent\Magic\MagicExtensions.cs" />
     <Compile Include="Tree\Fluent\Magic\ReflectionHelper.cs" />

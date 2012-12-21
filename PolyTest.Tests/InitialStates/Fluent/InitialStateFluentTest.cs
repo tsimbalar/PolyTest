@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PolyTest.StartFrom.Fluent;
 using PolyTest.Tests.TestUtils;
 
 namespace PolyTest.Tests.InitialStates.Fluent
@@ -16,12 +17,12 @@ namespace PolyTest.Tests.InitialStates.Fluent
         public void FluentFlatTest()
         {
             // Arrange
-            var sut = new TestAssets.FakeSut();
-            "Starting with IntProperty = 5".AsStartingPoint(() => new TestAssets.DummyItem(5))
+            var sut = new FakeSut();
+            "Starting with IntProperty = 5".AsStartingPoint(() => new DummyItem(5))
                 .Arrange("setting it to 4", d => { d.IntProperty = 4; })
                 .Arrange("setting it to 3", d => { d.IntProperty = 3; })
             .Act(it => sut.DoIt(it))
-            .Assert((str, val) => TestAssets.AssertIsNotFive(val, str));
+            .Assert((str, val) => DummyAssert.AssertIsNotFive(val, str));
 
             // Act
 
@@ -33,12 +34,12 @@ namespace PolyTest.Tests.InitialStates.Fluent
         public void FluentNestedTest()
         {
             // Arrange
-            var sut = new TestAssets.FakeSut();
-            "Starting with IntProperty = 5".AsStartingPoint(() => new TestAssets.DummyItem(5, true))
+            var sut = new FakeSut();
+            "Starting with IntProperty = 5".AsStartingPoint(() => new DummyItem(5, true))
                 .Arrange("setting it to 4", d => { d.IntProperty = 4; },
                     andThen => andThen.IgnoringRoot()
-                        //.WithChange(new Mutation<TestAssets.DummyItem>("setting bool to false", d => { d.BoolProperty = false; }))
-                        .With(new Mutation<TestAssets.DummyItem>("setting bool to true", d => { d.BoolProperty = true; }))
+                        //.WithChange(new Mutation<DummyItem>("setting bool to false", d => { d.BoolProperty = false; }))
+                        .With(new Mutation<DummyItem>("setting bool to true", d => { d.BoolProperty = true; }))
                 )
                 .Arrange("setting it to 3", d => { d.IntProperty = 3; })
                 // Act

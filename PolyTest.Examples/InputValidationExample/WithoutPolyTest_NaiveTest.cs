@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using PolyTest.Examples.InputValidationExample.Models;
 
-namespace PolyTest.Tests.WithoutPolyTest
+namespace PolyTest.Examples.InputValidationExample
 {
     /// <summary>
     /// Naive tests on the validation of Input.

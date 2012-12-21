@@ -15,9 +15,9 @@ namespace PolyTest.Tests.Composites.Fluent
         public void FluentTest()
         {
             // Arrange
-            var sut = new TestAssets.FakeSut();
+            var sut = new FakeSut();
 
-            TestTree.From("starting with 5", () => new TestAssets.DummyItem(5))
+            TestTree.From("starting with 5", () => new DummyItem(5))
                  .Consider("add 2", d => { d.IntProperty = d.IntProperty + 2; })
                  .Consider("add 4", d => { d.IntProperty = d.IntProperty + 4; })
                  .Consider("add 1", d => { d.IntProperty++; },
@@ -39,7 +39,7 @@ namespace PolyTest.Tests.Composites.Fluent
                             {
                                 var init = state.Arrange();
                                 sut.DoIt(init);
-                                TestAssets.AssertIsNotFive(init.IntProperty, state.Description);
+                                DummyAssert.AssertIsNotFive(init.IntProperty, state.Description);
                             })
                  ;
         }
@@ -50,9 +50,9 @@ namespace PolyTest.Tests.Composites.Fluent
         public void FluentTestWithResults()
         {
             // Arrange
-            var sut = new TestAssets.FakeSut();
+            var sut = new FakeSut();
             var results =
-            TestTree.From("starting with 5", () => new TestAssets.DummyItem(5))
+            TestTree.From("starting with 5", () => new DummyItem(5))
                  .Consider("add 2", d => { d.IntProperty = d.IntProperty + 2; })
                  .Consider("add 4", d => { d.IntProperty = d.IntProperty + 4; })
                  .Consider("add 1", d => { d.IntProperty++; },
@@ -88,8 +88,8 @@ namespace PolyTest.Tests.Composites.Fluent
         public void FluentTestWithResultsTestResult()
         {
             // Arrange
-            var sut = new TestAssets.FakeSut();
-            TestTree.From("starting with 5", () => new TestAssets.DummyItem(5))
+            var sut = new FakeSut();
+            TestTree.From("starting with 5", () => new DummyItem(5))
                  .Consider("add 2", d => { d.IntProperty = d.IntProperty + 2; })
                  .Consider("add 4", d => { d.IntProperty = d.IntProperty + 4; })
                  .Consider("add 1", d => { d.IntProperty++; },
@@ -110,7 +110,7 @@ namespace PolyTest.Tests.Composites.Fluent
                  )
                  .Walk(
                      act: d => sut.DoIt(d),
-                     assert: i => TestAssets.AssertIsNotFive(i)
+                     assert: i => DummyAssert.AssertIsNotFive(i)
                      )
 
                 .AssertIsNotFailed()
@@ -125,9 +125,9 @@ namespace PolyTest.Tests.Composites.Fluent
         public void FluentTestWithReflection()
         {
             // Arrange
-            var sut = new TestAssets.FakeSut();
+            var sut = new FakeSut();
 
-            TestTree.From("starting with 5", () => new TestAssets.DummyItem(5))
+            TestTree.From("starting with 5", () => new DummyItem(5))
                     .With(d => d.IntProperty, 6)
                     .With(d => d.IntProperty, 3,
                         opt => opt.IncludeSelf()
@@ -137,7 +137,7 @@ namespace PolyTest.Tests.Composites.Fluent
                 )
                 .Walk(act: d => sut.DoIt(d), assert: a =>
                                                          {
-                                                             TestAssets.AssertIsNotFive(a);
+                                                             DummyAssert.AssertIsNotFive(a);
                                                              Assert.AreEqual(true, a);
                                                          })
                 .AssertIsNotFailed();

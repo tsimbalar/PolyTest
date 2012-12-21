@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
-namespace PolyTest.Tests.InitialStates.Fluent
+namespace PolyTest.StartFrom.Fluent
 {
     public static class PolyTestExtensions
     {

@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Other", "Other", "{102B78E9
 		TODO.md = TODO.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PolyTest.Examples", "PolyTest.Examples\PolyTest.Examples.csproj", "{0B6D70A8-0DF4-4B1D-AF8B-6E74AF36A6DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{CF45C706-3D27-48B6-9561-2ACC99CB83FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF45C706-3D27-48B6-9561-2ACC99CB83FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF45C706-3D27-48B6-9561-2ACC99CB83FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B6D70A8-0DF4-4B1D-AF8B-6E74AF36A6DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B6D70A8-0DF4-4B1D-AF8B-6E74AF36A6DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B6D70A8-0DF4-4B1D-AF8B-6E74AF36A6DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B6D70A8-0DF4-4B1D-AF8B-6E74AF36A6DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

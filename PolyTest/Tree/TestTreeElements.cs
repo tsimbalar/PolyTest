@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PolyTest.Tests.Composites
+namespace PolyTest.Tree
 {
 
     /// <summary>
