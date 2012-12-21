@@ -6,42 +6,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace PolyTest.Tree.Fluent
 {
-
-    public static class TestTree
-    {
-        /// <summary>
-        /// Entry point for the Fluent interface
-        /// </summary>
-        public static ITestCompositeFluent<T> From<T>(string initialStateDescription, Func<T> setup)
-        {
-            return new TestCompositeFluentWrapper<T>(new TestRoot<T>(initialStateDescription, setup));
-        }
-    }
-
-    public interface ITestCompositeFluent<T>
-    {
-        ITestCompositeFluent<T> Consider(IMutation<T> mutation);
-
-        ITestCompositeFluent<T> Consider(IMutation<T> mutation,
-                                          bool includeMutationInTestCase,
-                                          Func<ITestCompositeNestedFluent<T>, ITestCompositeFluent<T>> nestedAdd);
-
-        void Walk(Action<ITestTreeNode<T>> action);
-        IEnumerable<TResult> Walk<TResult>(Func<ITestTreeNode<T>, TResult> tranformation);
-
-        ITestExecutionReport<T> Walk<TResult>(Func<T, TResult> act, Action<TResult> assert );
-    }
-
-
-
-
-
-    public interface ITestCompositeNestedFluent<T> : ITestCompositeFluent<T>
-    {
-        ITestCompositeNestedFluent<T> IgnoreSelf();
-        ITestCompositeNestedFluent<T> IncludeSelf();
-    }
-
     internal class TestCompositeFluentWrapper<T> : ITestCompositeFluent<T>
     {
         private readonly ITestComposite<T> _wrapped;
@@ -115,15 +79,6 @@ namespace PolyTest.Tree.Fluent
             }
             return report;
         }
-    }
-
-    public interface ITestExecutionReport<T>
-    {
-        int Count { get; }
-        IEnumerable<ITestResult<T>> All { get; }
-        IEnumerable<ITestResult<T>> Passed { get; }
-        IEnumerable<ITestResult<T>> Failed { get; }
-        void AssertIsNotFailed();
     }
 
     internal class TestExecutionReport<T> : ITestExecutionReport<T>
@@ -237,11 +192,6 @@ namespace PolyTest.Tree.Fluent
         }
     }
 
-    public interface ITestTreeNode<T> : ITestCase<T>
-    {
-        //ITestResult<T, TResult> Test<TResult>(Func<T, TResult> act, Action<TResult> assert);
-    }
-
     internal class TestResult
     {
         internal static TestResult<T, TResult> ArrangeFailed<T, TResult>(ITestTreeNode<T> testTreeNode, Exception exception)
@@ -265,20 +215,6 @@ namespace PolyTest.Tree.Fluent
         }
     }
 
-    public interface ITestResult<T>
-    {
-        object Result { get; }
-        ITestTreeNode<T> TreeNode { get; }
-        bool IsSuccess { get; }
-        bool HasResult { get; }
-        string ResultMessage { get; }
-    }
-
-    public interface ITestResult<T, out TResult> : ITestResult<T>
-    {
-        new TResult Result { get; }
-    }
-
     public abstract class TestResult<T> : ITestResult<T>
     {
         private readonly ITestTreeNode<T> _testTreeNode;
@@ -288,7 +224,7 @@ namespace PolyTest.Tree.Fluent
         private readonly Exception _actException;
         private readonly Exception _assertException;
 
-        public TestResult(ITestTreeNode<T> testTreeNode,
+        protected TestResult(ITestTreeNode<T> testTreeNode,
             bool hasResult,
             object result = null,
             Exception arrangeException = null,
@@ -407,22 +343,6 @@ namespace PolyTest.Tree.Fluent
         {
             this.IncludeSelfInEnumeration = true;
             return this;
-        }
-    }
-
-    public static class TestComponentExtensions
-    {
-        public static ITestCompositeFluent<T> Consider<T>(this ITestCompositeFluent<T> tree,
-            string mutationDescr, Action<T> mutationAction)
-        {
-            return tree.Consider(new Mutation<T>(mutationDescr, mutationAction));
-        }
-
-        public static ITestCompositeFluent<T> Consider<T>(this ITestCompositeFluent<T> tree,
-            string mutationDescription, Action<T> mutationAction,
-            Func<ITestCompositeNestedFluent<T>, ITestCompositeFluent<T>> nestedAdd)
-        {
-            return tree.Consider(new Mutation<T>(mutationDescription, mutationAction), true, nestedAdd);
         }
     }
 }

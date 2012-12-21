@@ -9,7 +9,7 @@ namespace PolyTest.Tree.Fluent.Magic
     /// <summary>
     /// Utility methods to play with Reflection (usually findout the name of a property from a lambda etc)
     /// </summary>
-    public static class ReflectionHelper
+    internal static class ReflectionHelper
     {
 
 
@@ -20,7 +20,7 @@ namespace PolyTest.Tree.Fluent.Magic
         /// <summary>
         /// Get the  fully qualified name of a property (Root.Nested.SomeProperty)
         /// </summary>
-        public static string GetFullPropertyName<T, TProperty>(Expression<Func<T, TProperty>> exp)
+        internal static string GetFullPropertyName<T, TProperty>(Expression<Func<T, TProperty>> exp)
         {
             MemberExpression memberExp;
             if (!TryFindMemberExpression(exp.Body, out memberExp)) return string.Empty;
@@ -80,7 +80,7 @@ namespace PolyTest.Tree.Fluent.Magic
         /// Sets the value of a property (possibly nested) of a root object
         /// For instance Set((Bazar) theBazar, b=> b.Bidule.Machin, 42)
         /// </summary>
-        public static void Set<TRoot, TValue>(TRoot root, Expression<Func<TRoot, TValue>> func, TValue value)
+        internal static void Set<TRoot, TValue>(TRoot root, Expression<Func<TRoot, TValue>> func, TValue value)
         {
             MemberExpression mex = func.Body as MemberExpression;
             if (mex == null) throw new ArgumentException();

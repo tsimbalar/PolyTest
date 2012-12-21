@@ -33,11 +33,7 @@
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IMutation.cs" />
@@ -47,10 +43,23 @@
     <Compile Include="StartFrom\Fluent\InitialStateFluent.cs" />
     <Compile Include="StartFrom\InitialStateElements.cs" />
     <Compile Include="Tree\Fluent\CompositeFluent.cs" />
+    <Compile Include="Tree\Fluent\ITestCompositeFluent.cs" />
+    <Compile Include="Tree\Fluent\ITestCompositeNestedFluent.cs" />
+    <Compile Include="Tree\Fluent\ITestExecutionReport.cs" />
+    <Compile Include="Tree\Fluent\ITestResult.cs" />
+    <Compile Include="Tree\Fluent\ITestTreeNode.cs" />
     <Compile Include="Tree\Fluent\Magic\MagicExtensions.cs" />
     <Compile Include="Tree\Fluent\Magic\ReflectionHelper.cs" />
+    <Compile Include="Tree\Fluent\TestComponentExtensions.cs" />
+    <Compile Include="Tree\Fluent\TestTree.cs" />
+    <Compile Include="Tree\ITestComponent.cs" />
+    <Compile Include="Tree\ITestComposite.cs" />
+    <Compile Include="Tree\TestComposite.cs" />
+    <Compile Include="Tree\TestCompositeBase.cs" />
     <Compile Include="Tree\TestCompositeExtensions.cs" />
-    <Compile Include="Tree\TestTreeElements.cs" />
+    <Compile Include="Tree\TestRoot.cs" />
+    <Compile Include="Tree\TestTreeBase.cs" />
+    <Compile Include="Tree\TestLeaf.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
