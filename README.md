@@ -3,6 +3,7 @@ PolyTest
 
 Unit-testing tool for tests based on [one bad attribute](http://xunitpatterns.com/Derived%20Value.html#One Bad Attribute "One Bad Attribute pattern - xUnit Test Patterns") pattern.
 
+## One Bad Attribute ##
 
 When testing things such as validation of inputs, it is rather common to have to test different combinations of invalid inputs against our System Under Test (SUT). 
 
@@ -139,7 +140,34 @@ and would probably change depending on the specifications of the Validation.
 
 Note that we also cover the validity of the valid case, as it allows to prove that, in some conditions, the validation does indeed succeed.
 
+Introducing "One Bad Attribute" makes the code a bit easier to maintain as we have now centralized the knowledge of what a valid input is. We use that knowledge as a starting point to than test conditions that should invalidate that valid input. This means that in each test, only the invalidation is described, making the code of each test method a bit shorter and more focuesed on its task.
 
+We have one test method for each valid case and for each invalid case. The Test execution reports should therefore pinpoint pretty precisely what caused a test failure. 
+
+But ...
+
+## Shortcomings of One Bad Attribute "by the book" ##
+
+... the code from the previous examples suffers from several symptoms, usually recognized as "Code Smells", mostly in the form of Code Duplication, hence breaking the DRY principle.
+
+All the test mehods are very similar in structure and follow the same format : 
+- create a valid input
+- invalidate it
+- call the SUT method
+- verify that it is indeed invalid
+
+The only change between each of those methods is the second part : "how to invalidate" the valid input.
+
+Moreover, the code may become a hassle to maintain during the refactoring of the codebase : a change in the name of one of the properties wouls mean : 
+- renaming the property
+- renaming the test to match the new name
+- changing the message in the Assert call.
+
+This is way too much work that should somehow be avoided. 
+
+**PolyTest** tries to help you solve that problem, letting you focus only on the important part "how to invalidate" the valid input. 
+
+PolyTest helps you create a list of "mutations" to apply to a root element and then apply them and test each of them.
 
 TO CONTINUE : 
 - include example applying that pattern
