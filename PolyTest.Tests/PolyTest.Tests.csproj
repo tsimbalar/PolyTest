@@ -50,26 +50,25 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Composites\Fluent\CompositeFluent.cs" />
     <Compile Include="Composites\Fluent\CompositeFluentTest.cs" />
-    <Compile Include="Composites\Fluent\Magic\MagicExtensions.cs" />
-    <Compile Include="Composites\Fluent\Magic\ReflectionHelper.cs" />
     <Compile Include="Composites\Fluent\RealExampleWithFluentTest.cs" />
-    <Compile Include="Core\ITestCase.cs" />
     <Compile Include="InitialStates\Fluent\InitialStateFluentTest.cs" />
     <Compile Include="InitialStates\InitialStateTest.cs" />
     <Compile Include="Composites\CompositeTest.cs" />
-    <Compile Include="Core\IMutation.cs" />
     <Compile Include="InitialStates\InitialStateElements.cs" />
     <Compile Include="InitialStates\Fluent\InitialStateFluent.cs" />
-    <Compile Include="Composites\TestCompositeExtensions.cs" />
-    <Compile Include="Composites\TestTreeElements.cs" />
-    <Compile Include="Core\Mutation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestUtils\TestAssets.cs" />
     <Compile Include="WithoutPolyTest\WithoutPolyTest_OneBadAttributeTest.cs" />
     <Compile Include="WithoutPolyTest\Example.cs" />
     <Compile Include="WithoutPolyTest\WithoutPolyTest_NaiveTest.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\PolyTest\PolyTest.csproj">
+      <Project>{73a9e45f-c2f0-4c1f-ae95-8cc3c57a50a0}</Project>
+      <Name>PolyTest</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

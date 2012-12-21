@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PolyTest.Tests.TestUtils;
+using PolyTest.Tree;
 
 namespace PolyTest.Tests.Composites
 {

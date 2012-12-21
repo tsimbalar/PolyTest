@@ -1,6 +1,6 @@
 using System;
 
-namespace PolyTest.Tests
+namespace PolyTest
 {
     /// <summary>
     /// What is a test case ? 

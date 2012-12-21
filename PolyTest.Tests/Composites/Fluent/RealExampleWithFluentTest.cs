@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using PolyTest.Tests.Composites.Fluent.Magic;
+using PolyTest.Tree.Fluent;
+using PolyTest.Tree.Fluent.Magic;
 
 namespace PolyTest.Tests.Composites.Fluent
 {

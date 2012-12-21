@@ -1,11 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace PolyTest.Tests.Composites.Fluent.Magic
+namespace PolyTest.Tree.Fluent.Magic
 {
     public static class MagicExtensions
     {

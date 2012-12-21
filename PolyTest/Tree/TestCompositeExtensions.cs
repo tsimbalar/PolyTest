@@ -1,6 +1,7 @@
-﻿using System;
+using System;
+using PolyTest.Tests.Composites;
 
-namespace PolyTest.Tests.Composites
+namespace PolyTest.Tree
 {
     /// <summary>
     /// Extensions to walk over the testcases of a tree of testcases, providing access to initialization method and description of the testcase

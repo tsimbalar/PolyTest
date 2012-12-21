@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace PolyTest.Tests.Composites.Fluent.Magic
+namespace PolyTest.Tree.Fluent.Magic
 {
 
     /// <summary>

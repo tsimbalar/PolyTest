@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 
-namespace PolyTest.Tests
+namespace PolyTest
 {
     /// <summary>
     /// Implementation of a Mutation simply based on a description and a method passed in the constructor

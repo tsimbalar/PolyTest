@@ -1,4 +1,4 @@
-﻿namespace PolyTest.Tests
+namespace PolyTest
 {
     public interface IMutation<in T>
     {

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PolyTest.Tests.TestUtils;
 using System.Linq;
-using PolyTest.Tests.Composites.Fluent.Magic;
+using PolyTest.Tree.Fluent;
+using PolyTest.Tree.Fluent.Magic;
 
 namespace PolyTest.Tests.Composites.Fluent
 {
