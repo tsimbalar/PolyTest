@@ -1,16 +1,15 @@
 using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PolyTest.Examples.InputValidationExample.Models;
+using Xunit;
 
 namespace PolyTest.Examples.InputValidationExample
 {
     /// <summary>
     /// Once we apply the One Bad Attribute pattern
     /// </summary>
-    [TestClass]
     public class WithoutPolyTest_OneBadAttributeTest
     {
-        [TestMethod]
+        [Fact]
         public void Validate_with_valid_input_must_be_valid()
         {
             // Arrange
@@ -24,7 +23,7 @@ namespace PolyTest.Examples.InputValidationExample
             AssertIsValid(validationResult, "valid case should be valid (duh!)");
         }
 
-        [TestMethod]
+        [Fact]
         public void Validate_with_input_with_null_Name_must_be_invalid()
         {
             // Arrange
@@ -39,7 +38,7 @@ namespace PolyTest.Examples.InputValidationExample
             AssertIsInvalid(validationResult, "input with null Name should be invalid");
         }
 
-        [TestMethod]
+        [Fact]
         public void Validate_with_input_with_empty_Name_must_be_invalid()
         {
             // Arrange
@@ -54,7 +53,7 @@ namespace PolyTest.Examples.InputValidationExample
             AssertIsInvalid(validationResult, "input with empty Name should be invalid");
         }
 
-        [TestMethod]
+        [Fact]
         public void Validate_with_input_with_Age_minus_one_must_be_invalid()
         {
             // Arrange
@@ -87,17 +86,17 @@ namespace PolyTest.Examples.InputValidationExample
 
         private static void AssertIsInvalid(ValidationResult validationResult, string description)
         {
-            Assert.AreEqual(false, validationResult.IsSuccess, description);
+            Assert.False(validationResult.IsSuccess, description);
         }
 
         private static void AssertIsValid(ValidationResult validationResult, string description)
         {
-            Assert.AreEqual(true, validationResult.IsSuccess, description);
+            Assert.True(validationResult.IsSuccess, description);
         }
 
         #endregion
 
-        
+
     }
 
 }

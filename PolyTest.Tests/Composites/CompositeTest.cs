@@ -1,14 +1,13 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using PolyTest.Tests.TestUtils;
+﻿using PolyTest.Tests.TestUtils;
 using PolyTest.Tree;
+using Xunit;
 
 namespace PolyTest.Tests.Composites
 {
-    [TestClass]
     public class CompositeTest
     {
 
-        [TestMethod]
+        [Fact]
         public void Can_use_Composite()
         {
             // Arrange

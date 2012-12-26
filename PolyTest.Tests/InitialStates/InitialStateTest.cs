@@ -1,14 +1,13 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using PolyTest.StartFrom;
+﻿using PolyTest.StartFrom;
 using PolyTest.Tests.TestUtils;
+using Xunit;
 
 namespace PolyTest.Tests.InitialStates
-{
-    [TestClass]
+{    
     public class InitialStateTest
     {
 
-        [TestMethod]
+        [Fact]
         public void FirstTest()
         {
             // Arrange

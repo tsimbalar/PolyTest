@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace PolyTest.Tree.Fluent
 {
@@ -112,7 +112,7 @@ namespace PolyTest.Tree.Fluent
                 {
                     message.AppendFormat("-{0}\n", testResult);
                 }
-                throw new AssertFailedException(message.ToString());
+                throw new TestExecutionAssertFailedException(message.ToString());
             }
             
         }
@@ -124,9 +124,19 @@ namespace PolyTest.Tree.Fluent
         }
     }
 
-    internal class TestExecutionAssertFailedException : AssertFailedException
+    internal class TestExecutionAssertFailedException : Exception
     {
-        
+        public TestExecutionAssertFailedException(string message) : base(message)
+        {
+        }
+
+        public TestExecutionAssertFailedException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
+
+        protected TestExecutionAssertFailedException(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+        }
     }
 
 
@@ -262,10 +272,10 @@ namespace PolyTest.Tree.Fluent
                 if (AssertFailed)
                 {
                     // differentiate between Assertion error and other exception
-                    if (AssertException is AssertFailedException)
-                    {
-                        return string.Format(AssertException.Message);
-                    }
+                    //if (AssertException is AssertFailedException)
+                    //{
+                    //    return string.Format(AssertException.Message);
+                    //}
                     return string.Format("{0} thrown during Assert : {1}", AssertException.GetType().Name, AssertException);
                 }
                 return null;

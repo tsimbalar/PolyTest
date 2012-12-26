@@ -1,17 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PolyTest.Tests.TestUtils;
 using System.Linq;
 using PolyTest.Tree.Fluent;
 using PolyTest.Tree.Fluent.Magic;
+using Xunit;
 
 namespace PolyTest.Tests.Composites.Fluent
 {
-    [TestClass]
     public class CompositeFluentTest
     {
-        [TestMethod]
+        [Fact]
         public void FluentTest()
         {
             // Arrange
@@ -45,8 +43,7 @@ namespace PolyTest.Tests.Composites.Fluent
         }
 
 
-        [TestMethod]
-        [Ignore]
+        [Fact]
         public void FluentTestWithResults()
         {
             // Arrange
@@ -81,10 +78,10 @@ namespace PolyTest.Tests.Composites.Fluent
                  ;
 
             var result = string.Join("\n", results);
-            Assert.AreEqual("", result);
+            Assert.Equal("", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void FluentTestWithResultsTestResult()
         {
             // Arrange
@@ -120,8 +117,7 @@ namespace PolyTest.Tests.Composites.Fluent
 
 
 
-        [TestMethod]
-        [Ignore]
+        [Fact]
         public void FluentTestWithReflection()
         {
             // Arrange
@@ -138,7 +134,6 @@ namespace PolyTest.Tests.Composites.Fluent
                 .Walk(act: d => sut.DoIt(d), assert: a =>
                                                          {
                                                              DummyAssert.AssertIsNotFive(a);
-                                                             Assert.AreEqual(true, a);
                                                          })
                 .AssertIsNotFailed();
 

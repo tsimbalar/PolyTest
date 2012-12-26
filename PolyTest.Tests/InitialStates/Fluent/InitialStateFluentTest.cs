@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using PolyTest.StartFrom.Fluent;
+﻿using PolyTest.StartFrom.Fluent;
 using PolyTest.Tests.TestUtils;
+using Xunit;
 
 namespace PolyTest.Tests.InitialStates.Fluent
 {
-    [TestClass]
     public class InitialStateFluentTest
     {
 
-        [TestMethod]
+        [Fact]
         public void FluentFlatTest()
         {
             // Arrange
@@ -30,7 +24,7 @@ namespace PolyTest.Tests.InitialStates.Fluent
 
         }
 
-        [TestMethod]
+        [Fact]
         public void FluentNestedTest()
         {
             // Arrange
@@ -49,7 +43,7 @@ namespace PolyTest.Tests.InitialStates.Fluent
                 return it;
             })
                 // Assert
-            .Assert((str, val) => Assert.AreEqual(true, val.BoolProperty, str));
+            .Assert((str, val) => Assert.True(val.BoolProperty, str));
         }
     }
 }

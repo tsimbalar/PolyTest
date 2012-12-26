@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿
+
+using Xunit;
 
 namespace PolyTest.Tests.TestUtils
 {
@@ -14,7 +11,7 @@ namespace PolyTest.Tests.TestUtils
         /// </summary>
         public static void AssertIsNotFive(int actual, string extraInfo = null)
         {
-            Assert.AreNotEqual(5, actual, extraInfo);
+            Assert.NotEqual(5, actual);
         }
 
     }

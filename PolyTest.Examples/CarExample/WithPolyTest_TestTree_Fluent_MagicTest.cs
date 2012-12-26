@@ -1,25 +1,24 @@
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PolyTest.Examples.CarExample.Models;
 using PolyTest.Tree.Fluent;
 using PolyTest.Tree.Fluent.Magic;
+using Xunit;
 
 namespace PolyTest.Examples.CarExample
 {
-    [TestClass]
     public class WithPolyTest_TestTree_Fluent_MagicTest
     {
 
-        [TestMethod]
+        [Fact]
         public void ValidCase()
         {
 
             var sut = new CarValidator();
-            Assert.AreEqual(true, sut.Validate(MakeValidCar()), "valid case should be valid (duh)");
+            Assert.True(sut.Validate(MakeValidCar()), "valid case should be valid (duh)");
 
         }
 
-        [TestMethod]
+        [Fact]
         public void ValidationExampleTest()
         {
             var sut = new CarValidator();
@@ -45,7 +44,7 @@ namespace PolyTest.Examples.CarExample
 
         private static void AssertIsInvalid(bool validationResult)
         {
-            Assert.AreEqual(false, validationResult, "Should be false to be considered invalid");
+            Assert.False(validationResult, "Should be false to be considered invalid");
         }
 
         private Car MakeValidCar()
