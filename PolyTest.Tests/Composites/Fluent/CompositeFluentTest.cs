@@ -43,7 +43,7 @@ namespace PolyTest.Tests.Composites.Fluent
         }
 
 
-        [Fact]
+        [Fact(Skip = "supposed to fail !")]
         public void FluentTestWithResults()
         {
             // Arrange
