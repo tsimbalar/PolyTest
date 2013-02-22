@@ -40,13 +40,13 @@ namespace PolyTest.Tree.Fluent
 
         public ITestCompositeFluent<T> Consider(IMutation<T> mutation)
         {
-            this._wrapped.Add(new TestComposite<T>(this._wrapped, mutation, true));
+            this._wrapped.Add(new TestComposite<T>(this._wrapped, mutation));
             return this;
         }
 
-        public ITestCompositeFluent<T> Consider(IMutation<T> mutation, bool includeMutationInTestCase, Func<ITestCompositeNestedFluent<T>, ITestCompositeFluent<T>> nestedAdd)
+        public ITestCompositeFluent<T> ConsiderWithSubCases(IMutation<T> mutation, Func<ITestCompositeNestedFluent<T>, ITestCompositeFluent<T>> nestedAdd)
         {
-            ITestCompositeNestedFluent<T> composite = new TestCompositeFluentNestedWrapper<T>(new TestComposite<T>(this._wrapped, mutation, includeInEnumeration: includeMutationInTestCase));
+            ITestCompositeNestedFluent<T> composite = new TestCompositeFluentNestedWrapper<T>(new TestComposite<T>(this._wrapped, mutation));
             var updatedComposite = nestedAdd(composite);
 
             this._wrapped.Add(((TestCompositeFluentWrapper<T>)updatedComposite)._wrapped);
@@ -343,16 +343,16 @@ namespace PolyTest.Tree.Fluent
         {
         }
 
-        public ITestCompositeNestedFluent<T> IgnoreSelf()
+        public ITestCompositeNestedFluent<T> IgnoreSelf(string reason = null)
         {
             this.IncludeSelfInEnumeration = false;
             return this;
         }
 
-        public ITestCompositeNestedFluent<T> IncludeSelf()
-        {
-            this.IncludeSelfInEnumeration = true;
-            return this;
-        }
+        //public ITestCompositeNestedFluent<T> IncludeSelf(string reason = null)
+        //{
+        //    this.IncludeSelfInEnumeration = true;
+        //    return this;
+        //}
     }
 }

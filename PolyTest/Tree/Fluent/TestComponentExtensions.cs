@@ -14,7 +14,7 @@ namespace PolyTest.Tree.Fluent
                                                           string mutationDescription, Action<T> mutationAction,
                                                           Func<ITestCompositeNestedFluent<T>, ITestCompositeFluent<T>> nestedAdd)
         {
-            return tree.Consider(new Mutation<T>(mutationDescription, mutationAction), true, nestedAdd);
+            return tree.ConsiderWithSubCases(new Mutation<T>(mutationDescription, mutationAction), nestedAdd);
         }
     }
 }

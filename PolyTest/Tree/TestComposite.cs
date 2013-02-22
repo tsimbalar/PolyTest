@@ -15,9 +15,8 @@ namespace PolyTest.Tree
         /// </summary>
         /// <param name="parent">the parent for this component</param>
         /// <param name="mutation">which mutation this element introduces</param>
-        /// <param name="includeInEnumeration">should this node be considered a test case, or is it just a way of grouping the children ?</param>
-        public TestComposite(ITestComposite<T> parent, IMutation<T> mutation, bool includeInEnumeration)
-            : base(parent, includeInEnumeration)
+        public TestComposite(ITestComposite<T> parent, IMutation<T> mutation)
+            : base(parent, true)
         {
             if (parent == null) throw new ArgumentNullException("parent");
             if (mutation == null) throw new ArgumentNullException("mutation");

@@ -18,12 +18,12 @@ namespace PolyTest.Tests.Composites
             rootStartingAt5.Add(new TestLeaf<DummyItem>(rootStartingAt5, new Mutation<DummyItem>("setting it to 4", d => { d.IntProperty = 4; })));
             rootStartingAt5.Add(new TestLeaf<DummyItem>(rootStartingAt5, new Mutation<DummyItem>("setting it to 3", d => { d.IntProperty = 3; })));
 
-            var adding2 = new TestComposite<DummyItem>(rootStartingAt5, new Mutation<DummyItem>("adding 2", d => { d.IntProperty = d.IntProperty + 2; }), includeInEnumeration: true);
+            var adding2 = new TestComposite<DummyItem>(rootStartingAt5, new Mutation<DummyItem>("adding 2", d => { d.IntProperty = d.IntProperty + 2; }));
             adding2.Add(new TestLeaf<DummyItem>(adding2, new Mutation<DummyItem>("removing 1", d => { d.IntProperty = d.IntProperty - 1; })));
             adding2.Add(new TestLeaf<DummyItem>(adding2, new Mutation<DummyItem>("removing 3", d => { d.IntProperty = d.IntProperty - 3; })));
             rootStartingAt5.Add(adding2);
 
-            var adding3 = new TestComposite<DummyItem>(rootStartingAt5, new Mutation<DummyItem>( "adding 3", d => { d.IntProperty = d.IntProperty + 3; }), includeInEnumeration: true);
+            var adding3 = new TestComposite<DummyItem>(rootStartingAt5, new Mutation<DummyItem>( "adding 3", d => { d.IntProperty = d.IntProperty + 3; }));
             adding2.Add(new TestLeaf<DummyItem>(adding3, new Mutation<DummyItem>("removing 2", d => { d.IntProperty = d.IntProperty - 2; })));
             adding2.Add(new TestLeaf<DummyItem>(adding3, new Mutation<DummyItem>("removing 4", d => { d.IntProperty = d.IntProperty - 4; })));
 

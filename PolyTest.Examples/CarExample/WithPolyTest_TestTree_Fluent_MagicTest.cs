@@ -22,22 +22,40 @@ namespace PolyTest.Examples.CarExample
         public void ValidationExampleTest()
         {
             var sut = new CarValidator();
-            TestTree.From("Valid Car", MakeValidCar)
+            TestTree.From("A car with all the proper attributes", 
+                            () => MakeValidCar())
                     .With(c => c.NumberOfDoors, 0)
                     .With(c => c.NumberOfDoors, -1)
                     .WithNull(c => c.BrandName)
-                    .WithNullOrWhitespace(c => c.ModelName )
-                    .With(c => c.NeedsEngine, false,
-                        fromThere=> fromThere.IgnoreSelf()
-                            .With(c=> c.Engine, new Engine())
+                    .WithNullOrWhitespace(c => c.ModelName)
+                    .WithFalse(c => c.NeedsEngine,
+                        fromThere => fromThere.IgnoreSelf("ignore case with only 'NeedsEngine = false'")
+                            .With(c => c.Engine, new Engine())
                     )
-                    .With(c => c.NeedsEngine, true,
-                        fromHere => fromHere.IgnoreSelf()
-                            .WithNull(c=> c.Engine)
+                    .WithTrue(c => c.NeedsEngine,
+                        fromHere => fromHere.IgnoreSelf("ignore case with only 'NeedsEngine = true'")
+                            .WithNull(c => c.Engine)
                     )
                     .Walk(
                         act: o => sut.Validate(o),
-                        assert: AssertIsInvalid)
+                        assert: actual => AssertIsInvalid(actual))
+                    .AssertIsNotFailed();
+
+        }
+
+        [Fact]
+        public void ValidationWheelsExampleTest()
+        {
+            var sut = new CarValidator();
+            TestTree.From("Valid Car", 
+                            () => MakeValidCar())
+                    .Consider("No wheels !",
+                                c => c.Wheels.Clear())
+                    .Consider("1 more wheel !",
+                                c => c.Wheels.Add(new Wheel(c,5)))
+                    .Walk(
+                        act: o => sut.Validate(o),
+                        assert: actual => AssertIsInvalid(actual))
                     .AssertIsNotFailed();
 
         }

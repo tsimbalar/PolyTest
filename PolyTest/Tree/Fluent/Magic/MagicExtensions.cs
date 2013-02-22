@@ -16,6 +16,20 @@ namespace PolyTest.Tree.Fluent.Magic
             return root.Consider(mutation);
         }
 
+        public static ITestCompositeFluent<T> WithTrue<T>(this ITestCompositeFluent<T> root,
+                                                          Expression<Func<T, bool>> propertyAccessor)
+        {
+
+            return root.With(propertyAccessor, true);
+        }
+
+        public static ITestCompositeFluent<T> WithFalse<T>(this ITestCompositeFluent<T> root,
+                                                          Expression<Func<T, bool>> propertyAccessor)
+        {
+
+            return root.With(propertyAccessor, false);
+        }
+
         public static ITestCompositeFluent<T> With<T, TProp>(this ITestCompositeFluent<T> root,
                                                                  Expression<Func<T, TProp>> propertyAccessor,
                                                                  TProp newValue,
@@ -23,8 +37,25 @@ namespace PolyTest.Tree.Fluent.Magic
                                                                      ITestCompositeFluent<T>> nestedAdd)
         {
             var mutation = MakeMutationWithReflection(propertyAccessor, newValue);
-            return root.Consider(mutation, true, nestedAdd);
+            return root.ConsiderWithSubCases(mutation, nestedAdd);
         }
+
+        public static ITestCompositeFluent<T> WithTrue<T>(this ITestCompositeFluent<T> root,
+                                                                 Expression<Func<T, bool>> propertyAccessor,
+                                                                 Func<ITestCompositeNestedFluent<T>,
+                                                                     ITestCompositeFluent<T>> nestedAdd)
+        {
+            return root.With(propertyAccessor, true, nestedAdd);
+        }
+
+        public static ITestCompositeFluent<T> WithFalse<T>(this ITestCompositeFluent<T> root,
+                                                                 Expression<Func<T, bool>> propertyAccessor,
+                                                                 Func<ITestCompositeNestedFluent<T>,
+                                                                     ITestCompositeFluent<T>> nestedAdd)
+        {
+            return root.With(propertyAccessor, false, nestedAdd);
+        }
+
 
         public static ITestCompositeFluent<T> WithNull<T, TProp>(this ITestCompositeFluent<T> root,
                                                                                 Expression<Func<T, TProp>>
@@ -54,7 +85,7 @@ namespace PolyTest.Tree.Fluent.Magic
             return result;
         }
 
-        
+
 
         private static IMutation<T> MakeMutationWithReflection<T, TProp>(Expression<Func<T, TProp>> propertyAccessor,
                                                                          TProp newValue)

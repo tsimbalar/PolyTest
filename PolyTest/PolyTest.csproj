@@ -38,6 +38,8 @@
     <Compile Include="IMutation.cs" />
     <Compile Include="ITestCase.cs" />
     <Compile Include="Mutation.cs" />
+    <Compile Include="Poly.cs" />
+    <Compile Include="PolyTestTree.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StartFrom\Fluent\InitialStateFluent.cs" />
     <Compile Include="StartFrom\InitialStateElements.cs" />

@@ -1,3 +1,5 @@
+using System.Linq;
+
 namespace PolyTest.Examples.CarExample.Models
 {
     public class CarValidator
@@ -23,6 +25,15 @@ namespace PolyTest.Examples.CarExample.Models
             {
                 if (car.Engine != null) isValid = false; // if NeedsEngine is false, Engine must be null
             }
+            if (!car.Wheels.Any())
+            {
+                isValid = false; // must have some wheels
+            }
+            if (car.Wheels.Count > 4)
+            {
+                isValid = false; // must have no more than 4 wheels
+            }
+
             return isValid;
         }
 

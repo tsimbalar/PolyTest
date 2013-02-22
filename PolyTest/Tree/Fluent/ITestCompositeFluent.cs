@@ -7,8 +7,7 @@ namespace PolyTest.Tree.Fluent
     {
         ITestCompositeFluent<T> Consider(IMutation<T> mutation);
 
-        ITestCompositeFluent<T> Consider(IMutation<T> mutation,
-                                         bool includeMutationInTestCase,
+        ITestCompositeFluent<T> ConsiderWithSubCases(IMutation<T> mutation,
                                          Func<ITestCompositeNestedFluent<T>, ITestCompositeFluent<T>> nestedAdd);
 
         void Walk(Action<ITestTreeNode<T>> action);

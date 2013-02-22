@@ -19,7 +19,7 @@ namespace PolyTest.Tests.Composites.Fluent
                  .Consider("add 2", d => { d.IntProperty = d.IntProperty + 2; })
                  .Consider("add 4", d => { d.IntProperty = d.IntProperty + 4; })
                  .Consider("add 1", d => { d.IntProperty++; },
-                    opt => opt.IncludeSelf()
+                    opt => opt
                         .Consider("add 13", d => { d.IntProperty = d.IntProperty + 13; })
                         .Consider("remove 3", d => { d.IntProperty = d.IntProperty - 3; })
                  )
@@ -53,7 +53,7 @@ namespace PolyTest.Tests.Composites.Fluent
                  .Consider("add 2", d => { d.IntProperty = d.IntProperty + 2; })
                  .Consider("add 4", d => { d.IntProperty = d.IntProperty + 4; })
                  .Consider("add 1", d => { d.IntProperty++; },
-                    opt => opt.IncludeSelf()
+                    opt => opt
                         .Consider("add 13", d => { d.IntProperty = d.IntProperty + 13; })
                         .Consider("remove 3", d => { d.IntProperty = d.IntProperty - 3; })
                  )
@@ -90,7 +90,7 @@ namespace PolyTest.Tests.Composites.Fluent
                  .Consider("add 2", d => { d.IntProperty = d.IntProperty + 2; })
                  .Consider("add 4", d => { d.IntProperty = d.IntProperty + 4; })
                  .Consider("add 1", d => { d.IntProperty++; },
-                    opt => opt.IncludeSelf()
+                    opt => opt
                         .Consider("add 13", d => { d.IntProperty = d.IntProperty + 13; })
                         .Consider("remove 3", d => { d.IntProperty = d.IntProperty - 3; })
                  )
@@ -102,7 +102,7 @@ namespace PolyTest.Tests.Composites.Fluent
                             opt2 => opt2
                                 .Consider("add 4", d => { d.IntProperty += 4; })
                                 .Consider("remove 2", d => { d.IntProperty -= 2; })
-                                //.Consider("remove 3", d => { d.IntProperty -= 3; })
+                                //.ConsiderWithSubCases("remove 3", d => { d.IntProperty -= 3; })
                         )
                  )
                  .Walk(
@@ -126,7 +126,7 @@ namespace PolyTest.Tests.Composites.Fluent
             TestTree.From("starting with 5", () => new DummyItem(5))
                     .With(d => d.IntProperty, 6)
                     .With(d => d.IntProperty, 3,
-                        opt => opt.IncludeSelf()
+                        opt => opt
                             .Consider("add 13", d => { d.IntProperty = d.IntProperty + 13; })
                             .Consider("remove 3", d => { d.IntProperty = d.IntProperty - 3; })
                             .With(d => d.BoolProperty, false)

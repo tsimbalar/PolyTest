@@ -13,6 +13,15 @@
         /// Creates a composite
         /// </summary>
         /// <param name="parent">the parent of this node</param>
+        protected TestCompositeBase(ITestComposite<T> parent)
+            : this(parent, true)
+        {
+        }
+
+        /// <summary>
+        /// Creates a composite
+        /// </summary>
+        /// <param name="parent">the parent of this node</param>
         /// <param name="includeInEnumeration">when enumerating/walking over the tree, should this node be included, or should it just enumerate over its children ?</param>
         protected TestCompositeBase(ITestComposite<T> parent, bool includeInEnumeration)
             : base(parent)

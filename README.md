@@ -7,7 +7,7 @@ Unit-testing tool for tests based on [one bad attribute](http://xunitpatterns.co
 
 When testing things such as validation of inputs, it is rather common to have to test different combinations of invalid inputs against our System Under Test (SUT). 
 
-For example, imagine that our SUT is a class `Validator`which has a method `Validate()` accepting an argument of type `Input`. It should return a "valid" result if `Input.Name` is not null and non-empty and also `Input.Age` is greater than 0. Testing this logic would result in test code that looks like this :
+For example, imagine that our SUT is a class `Validator` which has a method `Validate()` accepting an argument of type `Input`. It should return a "valid" result if `Input.Name` is not null and non-empty and also `Input.Age` is greater than 0. Testing this logic would result in test code that looks like this :
 
 ```csharp
 [TestMethod]
@@ -140,7 +140,7 @@ and would probably change depending on the specifications of the Validation.
 
 Note that we also cover the validity of the valid case, as it allows to prove that, in some conditions, the validation does indeed succeed.
 
-Introducing "One Bad Attribute" makes the code a bit easier to maintain as we have now centralized the knowledge of what a valid input is. We use that knowledge as a starting point to than test conditions that should invalidate that valid input. This means that in each test, only the invalidation is described, making the code of each test method a bit shorter and more focuesed on its task.
+Introducing "One Bad Attribute" makes the code a bit easier to maintain as we have now centralized the knowledge of what a valid input is. We use that knowledge as a starting point to then test conditions that should invalidate that valid input. This means that in each test, only the invalidation is described, making the code of each test method a bit shorter and more focused on its task.
 
 We have one test method for each valid case and for each invalid case. The Test execution reports should therefore pinpoint pretty precisely what caused a test failure. 
 
