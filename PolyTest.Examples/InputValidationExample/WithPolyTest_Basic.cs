@@ -33,11 +33,16 @@ namespace PolyTest.Examples.InputValidationExample
         {
             // Arrange
             var startingWithValid = Poly.TestRoot("Starting with valid input", () => MakeValidInput());
-            startingWithValid.AddChildren(Poly.Mutation<Input>("with null Name",  input=> input.Name = null));
-            startingWithValid.AddChildren(Poly.Mutation<Input>("with empty Name", input => input.Name = String.Empty));
-            startingWithValid.AddChildren(Poly.Mutation<Input>("with tab Name", input => input.Name = "\t"));
-            startingWithValid.AddChildren(Poly.Mutation<Input>("with space Name", input => input.Name = " "));
-            startingWithValid.AddChildren(Poly.Mutation<Input>("with Age -1", input => input.Age = -1));
+            startingWithValid.Add("with null Name", input =>
+                                    input.Name = null);
+            startingWithValid.Add("with empty Name", input =>
+                                    input.Name = String.Empty);
+            startingWithValid.Add("with tab Name", input =>
+                                    input.Name = "\t");
+            startingWithValid.Add("with space Name", input =>
+                                    input.Name = " ");
+            startingWithValid.Add("with Age -1", input =>
+                                    input.Age = -1);
 
             var sut = MakeSUT();
             startingWithValid.Walk((testcase) =>
@@ -55,12 +60,14 @@ namespace PolyTest.Examples.InputValidationExample
         public void Validate_with_invalidated_valid_Cheezburger_input_must_be_invalid()
         {
             // Arrange
-            var startingWithValid = Poly.TestRoot("Starting with valid input", () => MakeValidInput());
+            var startingWithValid = Poly.TestRoot("Starting with valid input", () =>
+                                                    MakeValidInput());
 
-            var hasCheezburger = startingWithValid.AddChildren(Poly.Mutation<Input>("with HasCheezburger true", d => { d.HasCheezburger = true; }));
+            var hasCheezburger = startingWithValid.Add("with HasCheezburger true", input =>
+                                                        input.HasCheezburger = true);
             hasCheezburger.IncludeSelfInEnumeration = false; // we don't care about the case with HasCheezburger true and Cheezburger not specified
-            hasCheezburger.AddChildren(Poly.Mutation<Input>("with no cheezburger",
-                                                            input => { input.Cheezburger = null; }));
+            hasCheezburger.Add("with no cheezburger", input =>
+                                    input.Cheezburger = null);
 
             var sut = MakeSUT();
             startingWithValid.Walk((testcase) =>
