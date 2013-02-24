@@ -39,7 +39,6 @@
     <Compile Include="ITestCase.cs" />
     <Compile Include="Mutation.cs" />
     <Compile Include="Poly.cs" />
-    <Compile Include="PolyTestTreeExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StartFrom\Fluent\InitialStateFluent.cs" />
     <Compile Include="StartFrom\InitialStateElements.cs" />
