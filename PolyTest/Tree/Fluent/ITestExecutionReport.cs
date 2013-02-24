@@ -1,8 +1,9 @@
+using System;
 using System.Collections.Generic;
 
 namespace PolyTest.Tree.Fluent
 {
-    public interface ITestExecutionReport<T>
+    public interface ITestExecutionReport<T> : IFluentInterface
     {
         int Count { get; }
         IEnumerable<ITestResult<T>> All { get; }

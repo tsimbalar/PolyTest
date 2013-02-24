@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace PolyTest.Tree.Fluent
 {
-    public interface ITestCompositeFluent<T>
+    public interface ITestCompositeFluent<T> : IFluentInterface
     {
         ITestCompositeFluent<T> Consider(IMutation<T> mutation);
 

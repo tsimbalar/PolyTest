@@ -55,6 +55,7 @@ namespace PolyTest.Examples.InputValidationExample
                 .Consider("with HasCheezburger true", input => input.HasCheezburger = true,
                     fromThere => fromThere.IgnoreSelf("we don't care about the case with HasCheezburger true and Cheezburger not specified")
                         .Consider("with no cheezburger", input => input.Cheezburger = null)
+ 
                 )
                 .Walk(
                     act: input => sut.Validate(input),
