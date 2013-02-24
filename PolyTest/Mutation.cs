@@ -6,7 +6,7 @@ namespace PolyTest
     /// Implementation of a Mutation simply based on a description and a method passed in the constructor
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class Mutation<T> : IMutation<T>
+    internal class Mutation<T> : IMutation<T>
     {
         private readonly string _mutationDescription;
         private readonly Action<T> _mutationToApply;
