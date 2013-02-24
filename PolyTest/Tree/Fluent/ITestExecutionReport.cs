@@ -8,6 +8,6 @@ namespace PolyTest.Tree.Fluent
         IEnumerable<ITestResult<T>> All { get; }
         IEnumerable<ITestResult<T>> Passed { get; }
         IEnumerable<ITestResult<T>> Failed { get; }
-        void AssertIsNotFailed();
+        void AssertAllPassed();
     }
 }

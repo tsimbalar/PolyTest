@@ -39,7 +39,7 @@ namespace PolyTest.Examples.CarExample
                     .Walk(
                         act: o => sut.Validate(o),
                         assert: actual => AssertIsInvalid(actual))
-                    .AssertIsNotFailed();
+                    .AssertAllPassed();
 
         }
 
@@ -56,7 +56,7 @@ namespace PolyTest.Examples.CarExample
                     .Walk(
                         act: o => sut.Validate(o),
                         assert: actual => AssertIsInvalid(actual))
-                    .AssertIsNotFailed();
+                    .AssertAllPassed();
 
         }
 

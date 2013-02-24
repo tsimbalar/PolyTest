@@ -37,7 +37,7 @@ namespace PolyTest.Tree.Fluent.Magic
                                                                      ITestCompositeFluent<T>> nestedAdd)
         {
             var mutation = MakeMutationWithReflection(propertyAccessor, newValue);
-            return root.ConsiderWithSubCases(mutation, nestedAdd);
+            return root.Consider(mutation, nestedAdd);
         }
 
         public static ITestCompositeFluent<T> WithTrue<T>(this ITestCompositeFluent<T> root,

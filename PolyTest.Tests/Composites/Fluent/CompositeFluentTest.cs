@@ -110,7 +110,7 @@ namespace PolyTest.Tests.Composites.Fluent
                      assert: i => DummyAssert.AssertIsNotFive(i)
                      )
 
-                .AssertIsNotFailed()
+                .AssertAllPassed()
                  ;
 
         }
@@ -135,7 +135,7 @@ namespace PolyTest.Tests.Composites.Fluent
                                                          {
                                                              DummyAssert.AssertIsNotFive(a);
                                                          })
-                .AssertIsNotFailed();
+                .AssertAllPassed();
 
         }
     }

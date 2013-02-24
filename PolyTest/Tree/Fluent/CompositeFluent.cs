@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -44,7 +45,7 @@ namespace PolyTest.Tree.Fluent
             return this;
         }
 
-        public ITestCompositeFluent<T> ConsiderWithSubCases(IMutation<T> mutation, Func<ITestCompositeNestedFluent<T>, ITestCompositeFluent<T>> nestedAdd)
+        public ITestCompositeFluent<T> Consider(IMutation<T> mutation, Func<ITestCompositeNestedFluent<T>, ITestCompositeFluent<T>> nestedAdd)
         {
             ITestCompositeNestedFluent<T> composite = new TestCompositeFluentNestedWrapper<T>(new TestComposite<T>(this._wrapped, mutation));
             var updatedComposite = nestedAdd(composite);
@@ -56,29 +57,36 @@ namespace PolyTest.Tree.Fluent
 
         public void Walk(Action<ITestTreeNode<T>> action)
         {
-            foreach (var testCase in _wrapped.Enumerate().Select((tc, i) => new { index = i, test = tc }))
+            foreach (var testTreeNode in this.AsEnumerable())
             {
-                action(new TestTreeNode<T>(testCase.index, testCase.test));
+                action(testTreeNode);
             }
         }
 
         public IEnumerable<TResult> Walk<TResult>(Func<ITestTreeNode<T>, TResult> transformation)
         {
-            foreach (var testCase in _wrapped.Enumerate().Select((tc, i) => new { index = i, test = tc }))
+            foreach (var testNode in this.AsEnumerable())
             {
-                yield return transformation(new TestTreeNode<T>(testCase.index, testCase.test));
+                yield return transformation(testNode);
             }
         }
 
         public ITestExecutionReport<T> Walk<TResult>(Func<T, TResult> act, Action<TResult> assert)
         {
             var report = new TestExecutionReport<T>();
-            foreach (var testCase in _wrapped.Enumerate().Select((tc, i) => new { index = i, test = tc }))
+            foreach (var testCase in this.AsEnumerable())
             {
-                report.Add((new TestTreeNode<T>(testCase.index, testCase.test)).Test(act, assert));
+                report.Add(((TestTreeNode<T>)testCase).TestInternal(act, assert));
             }
             return report;
         }
+
+        public IEnumerable<ITestTreeNode<T>> AsEnumerable()
+        {
+            var resultEnumerable = _wrapped.Enumerate().Select((tc, i) => new TestTreeNode<T>(i, tc));
+            return resultEnumerable;
+        }
+
     }
 
     internal class TestExecutionReport<T> : ITestExecutionReport<T>
@@ -100,7 +108,7 @@ namespace PolyTest.Tree.Fluent
         public IEnumerable<ITestResult<T>> All { get { return _results.AsReadOnly(); } }
         public IEnumerable<ITestResult<T>> Passed { get { return All.Where(t => t.IsSuccess); } }
         public IEnumerable<ITestResult<T>> Failed { get { return All.Where(t => !t.IsSuccess); } }
-        public void AssertIsNotFailed()
+        public void AssertAllPassed()
         {
             // Make a detailed message with all the failures ....
             var failures = Failed.ToList();
@@ -114,7 +122,7 @@ namespace PolyTest.Tree.Fluent
                 }
                 throw new TestExecutionAssertFailedException(message.ToString());
             }
-            
+
         }
 
 
@@ -126,15 +134,18 @@ namespace PolyTest.Tree.Fluent
 
     internal class TestExecutionAssertFailedException : Exception
     {
-        public TestExecutionAssertFailedException(string message) : base(message)
+        public TestExecutionAssertFailedException(string message)
+            : base(message)
         {
         }
 
-        public TestExecutionAssertFailedException(string message, Exception innerException) : base(message, innerException)
+        public TestExecutionAssertFailedException(string message, Exception innerException)
+            : base(message, innerException)
         {
         }
 
-        protected TestExecutionAssertFailedException(SerializationInfo info, StreamingContext context) : base(info, context)
+        protected TestExecutionAssertFailedException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
         {
         }
     }
@@ -165,7 +176,7 @@ namespace PolyTest.Tree.Fluent
         }
 
 
-        public TestResult<T, TResult> Test<TResult>(Func<T, TResult> act, Action<TResult> assert)
+        internal TestResult<T, TResult> TestInternal<TResult>(Func<T, TResult> act, Action<TResult> assert)
         {
             try
             {
@@ -196,6 +207,11 @@ namespace PolyTest.Tree.Fluent
 
         }
 
+        public ITestResult<T, TResult> Test<TResult>(Func<T, TResult> act, Action<TResult> assert)
+        {
+            return TestInternal(act, assert);
+        }
+
         public override string ToString()
         {
             return string.Format("#{0} - {1}", Index, Description);
@@ -206,22 +222,22 @@ namespace PolyTest.Tree.Fluent
     {
         internal static TestResult<T, TResult> ArrangeFailed<T, TResult>(ITestTreeNode<T> testTreeNode, Exception exception)
         {
-            return new TestResult<T, TResult>(testTreeNode, hasResult:false, arrangeException: exception);
+            return new TestResult<T, TResult>(testTreeNode, hasResult: false, arrangeException: exception);
         }
 
         internal static TestResult<T, TResult> ActFailed<T, TResult>(ITestTreeNode<T> testTreeNode, Exception exception)
         {
-            return new TestResult<T, TResult>(testTreeNode, hasResult:false, actException: exception);
+            return new TestResult<T, TResult>(testTreeNode, hasResult: false, actException: exception);
         }
 
         internal static TestResult<T, TResult> AssertFailed<T, TResult>(ITestTreeNode<T> testTreeNode, TResult result, Exception exception)
         {
-            return new TestResult<T, TResult>(testTreeNode, hasResult:true, result : result, assertException: exception);
+            return new TestResult<T, TResult>(testTreeNode, hasResult: true, result: result, assertException: exception);
         }
 
         internal static TestResult<T, TResult> Success<T, TResult>(ITestTreeNode<T> testTreeNode, TResult result)
         {
-            return new TestResult<T, TResult>(testTreeNode, hasResult:true, result:result);
+            return new TestResult<T, TResult>(testTreeNode, hasResult: true, result: result);
         }
     }
 
@@ -328,7 +344,8 @@ namespace PolyTest.Tree.Fluent
             Exception arrangeException = null,
             Exception actException = null,
             Exception assertException = null
-            ) : base(testTreeNode, hasResult, result, arrangeException, actException, assertException)
+            )
+            : base(testTreeNode, hasResult, result, arrangeException, actException, assertException)
         {
             _result = result;
         }
