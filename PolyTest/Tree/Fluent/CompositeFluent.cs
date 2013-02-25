@@ -110,6 +110,10 @@ namespace PolyTest.Tree.Fluent
         public IEnumerable<ITestResult<T>> All { get { return _results.AsReadOnly(); } }
         public IEnumerable<ITestResult<T>> Passed { get { return All.Where(t => t.IsSuccess); } }
         public IEnumerable<ITestResult<T>> Failed { get { return All.Where(t => !t.IsSuccess); } }
+        /// <summary>
+        /// Assert that all tests passed.
+        /// </summary>
+        /// <exception cref="TestExecutionAssertFailedException">when a test or more did not pass</exception>
         public void AssertAllPassed()
         {
             var failureSummary = FailureSummary;
@@ -119,6 +123,10 @@ namespace PolyTest.Tree.Fluent
             }
         }
 
+        /// <summary>
+        /// Assert that all tests passed
+        /// </summary>
+        /// <param name="handleFailureSummary">action to execute if some tests did not passed. Will be passed a string which is a summary of the failing tests (report)</param>
         public void AssertAllPassed(Action<string> handleFailureSummary)
         {
             var failureSummary = FailureSummary;

@@ -55,8 +55,6 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Composites\Fluent\CompositeFluentTest.cs" />
-    <Compile Include="InitialStates\Fluent\InitialStateFluentTest.cs" />
-    <Compile Include="InitialStates\InitialStateTest.cs" />
     <Compile Include="Composites\CompositeTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestUtils\DummyAssert.cs" />

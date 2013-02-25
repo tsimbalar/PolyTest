@@ -16,7 +16,7 @@ namespace PolyTest.Tree
         /// <param name="parent">the parent for this component</param>
         /// <param name="mutation">which mutation this element introduces</param>
         public TestComposite(ITestComposite<T> parent, IMutation<T> mutation)
-            : base(parent, true)
+            : base(parent, true /*include itself in enumeration - to be ignored later if necessary*/)
         {
             if (parent == null) throw new ArgumentNullException("parent");
             if (mutation == null) throw new ArgumentNullException("mutation");
