@@ -17,11 +17,8 @@ namespace PolyTest.Tree.Fluent
                                          Func<ITestCompositeNestedFluent<T>, ITestCompositeFluent<T>> nestedAdd);
 
 
-        //void Walk(Action<ITestTreeNode<T>> action);
-
-
-        //IEnumerable<TResult> Walk<TResult>(Func<ITestTreeNode<T>, TResult> tranformation);
-
+        void ForEach(Action<ITestTreeNode<T>> action);
+        IEnumerable<TResult> Select<TResult>(Func<ITestTreeNode<T>, TResult> selector);
         ITestExecutionReport<T> Walk<TResult>(Func<T, TResult> act, Action<TResult> assert );
 
         IEnumerable<ITestTreeNode<T>> AsEnumerable();

@@ -55,33 +55,35 @@ namespace PolyTest.Tree.Fluent
             return this;
         }
 
-        public void Walk(Action<ITestTreeNode<T>> action)
+        public void ForEach(Action<ITestTreeNode<T>> action)
         {
-            foreach (var testTreeNode in this.AsEnumerable())
+            foreach (var testTreeNode in this.AsEnumerablePrivate())
             {
                 action(testTreeNode);
             }
         }
 
-        public IEnumerable<TResult> Walk<TResult>(Func<ITestTreeNode<T>, TResult> transformation)
+        public IEnumerable<TResult> Select<TResult>(Func<ITestTreeNode<T>, TResult> selector)
         {
-            foreach (var testNode in this.AsEnumerable())
-            {
-                yield return transformation(testNode);
-            }
+            return this.AsEnumerablePrivate().Select(selector);
         }
 
         public ITestExecutionReport<T> Walk<TResult>(Func<T, TResult> act, Action<TResult> assert)
         {
             var report = new TestExecutionReport<T>();
-            foreach (var testCase in this.AsEnumerable())
+            foreach (var testCase in this.AsEnumerablePrivate())
             {
-                report.Add(((TestTreeNode<T>)testCase).TestInternal(act, assert));
+                report.Add(testCase.TestInternal(act, assert));
             }
             return report;
         }
 
         public IEnumerable<ITestTreeNode<T>> AsEnumerable()
+        {
+            return AsEnumerablePrivate();
+        }
+
+        private IEnumerable<TestTreeNode<T>> AsEnumerablePrivate()
         {
             var resultEnumerable = _wrapped.Enumerate().Select((tc, i) => new TestTreeNode<T>(i, tc));
             return resultEnumerable;

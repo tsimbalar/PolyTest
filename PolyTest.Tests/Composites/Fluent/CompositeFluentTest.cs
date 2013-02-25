@@ -33,7 +33,6 @@ namespace PolyTest.Tests.Composites.Fluent
                                 .Consider("remove 2", d => { d.IntProperty -= 2; })
                         )
                  )
-                 .AsEnumerable().ToList()
                  .ForEach(t =>
                               {
                                   var init = t.Arrange();
@@ -67,7 +66,6 @@ namespace PolyTest.Tests.Composites.Fluent
                                 .Consider("remove 2", d => { d.IntProperty -= 2; })
                         )
                  )
-                 .AsEnumerable()
                  .Select(s =>
                              {
                                  var init = s.Arrange();
