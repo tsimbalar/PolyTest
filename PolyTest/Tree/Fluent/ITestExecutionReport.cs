@@ -10,5 +10,6 @@ namespace PolyTest.Tree.Fluent
         IEnumerable<ITestResult<T>> Passed { get; }
         IEnumerable<ITestResult<T>> Failed { get; }
         void AssertAllPassed();
+        void AssertAllPassed(Action<string> handleFailureSummary );
     }
 }

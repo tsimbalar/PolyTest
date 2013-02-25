@@ -112,19 +112,43 @@ namespace PolyTest.Tree.Fluent
         public IEnumerable<ITestResult<T>> Failed { get { return All.Where(t => !t.IsSuccess); } }
         public void AssertAllPassed()
         {
-            // Make a detailed message with all the failures ....
-            var failures = Failed.ToList();
-            if (failures.Any())
+            var failureSummary = FailureSummary;
+            if (failureSummary != null)
             {
-                StringBuilder message = new StringBuilder();
-                message.AppendFormat("{0}/{1} TestCases failed: \n", failures.Count, Count);
-                foreach (var testResult in failures)
-                {
-                    message.AppendFormat("-{0}\n", testResult);
-                }
-                throw new TestExecutionAssertFailedException(message.ToString());
+                throw new TestExecutionAssertFailedException(failureSummary);
             }
+        }
 
+        public void AssertAllPassed(Action<string> handleFailureSummary)
+        {
+            var failureSummary = FailureSummary;
+            if (failureSummary != null)
+            {
+                handleFailureSummary(failureSummary);
+            }
+        }
+
+        private string FailureSummary
+        {
+            get
+            {
+                // Make a detailed message with all the failures ....
+                var failures = Failed.ToList();
+                if (failures.Any())
+                {
+                    StringBuilder message = new StringBuilder();
+                    message.AppendFormat("{0}/{1} TestCases failed: \n", failures.Count, Count);
+                    foreach (var testResult in failures)
+                    {
+                        message.AppendFormat("-{0}\n", testResult);
+                    }
+                    return message.ToString();
+                }
+                else
+                {
+                    return null;
+                }
+            }
         }
 
 
