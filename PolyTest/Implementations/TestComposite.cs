@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 
-namespace PolyTest.Tree
+namespace PolyTest.Implementations
 {
     /// <summary>
     /// TestComposite, that is, a node with a collection of nodes, where each child node provide a mutation to apply to the parent

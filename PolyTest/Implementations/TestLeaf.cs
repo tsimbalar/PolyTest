@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 
-namespace PolyTest.Tree
+namespace PolyTest.Implementations
 {
     /// <summary>
     /// The bottom element of the tree, a test case with no children

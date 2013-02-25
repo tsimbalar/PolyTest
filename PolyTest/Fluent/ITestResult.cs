@@ -1,4 +1,4 @@
-namespace PolyTest.Tree.Fluent
+namespace PolyTest.Fluent
 {
     public interface ITestResult<T, out TResult> : ITestResult<T>
     {

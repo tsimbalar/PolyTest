@@ -1,6 +1,7 @@
 using System;
+using PolyTest.Implementations;
 
-namespace PolyTest.Tree.Fluent
+namespace PolyTest.Fluent
 {
     public static class TestTree
     {

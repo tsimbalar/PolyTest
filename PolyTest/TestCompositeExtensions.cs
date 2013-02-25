@@ -1,6 +1,6 @@
 using System;
 
-namespace PolyTest.Tree
+namespace PolyTest
 {
     /// <summary>
     /// Extensions to walk over the testcases of a tree of testcases, providing access to initialization method and description of the testcase

@@ -1,6 +1,6 @@
 using System;
 
-namespace PolyTest.Tree.Fluent
+namespace PolyTest.Fluent
 {
     public interface ITestTreeNode<T> : ITestCase<T>
     {

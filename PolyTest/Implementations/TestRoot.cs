@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 
-namespace PolyTest.Tree
+namespace PolyTest.Implementations
 {
     /// <summary>
     /// The root of the tree of testcases

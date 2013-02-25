@@ -1,7 +1,7 @@
 using System.Linq;
 using PolyTest.Examples.CarExample.Models;
-using PolyTest.Tree.Fluent;
-using PolyTest.Tree.Fluent.Magic;
+using PolyTest.Fluent;
+using PolyTest.Fluent.Magic;
 using Xunit;
 
 namespace PolyTest.Examples.CarExample

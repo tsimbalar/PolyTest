@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace PolyTest.Tree.Fluent
+namespace PolyTest.Fluent
 {
     public interface ITestCompositeFluent<T> : IFluentInterface
     {

@@ -1,5 +1,5 @@
-﻿using PolyTest.Tests.TestUtils;
-using PolyTest.Tree;
+﻿using PolyTest.Implementations;
+using PolyTest.Tests.TestUtils;
 using Xunit;
 
 namespace PolyTest.Tests.Composites

@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PolyTest.Implementations;
 
 namespace PolyTest
 {
     /// <summary>
-    /// Entry point to interact with PolyTest
+    /// Entry point to interact with PolyTest basic components
     /// </summary>
     public static class Poly
     {

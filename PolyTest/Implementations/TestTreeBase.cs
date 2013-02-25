@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
-namespace PolyTest.Tree
+namespace PolyTest.Implementations
 {
     internal abstract class TestTreeBase<T> : ITestComponent<T>
     {

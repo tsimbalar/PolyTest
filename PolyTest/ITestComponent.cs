@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
-namespace PolyTest.Tree
+namespace PolyTest
 {
     /// <summary>
     /// The component that is the common part of every element in the tree

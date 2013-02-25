@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using PolyTest.Implementations;
 
-namespace PolyTest.Tree.Fluent.Magic
+namespace PolyTest.Fluent.Magic
 {
     public static class MagicExtensions
     {

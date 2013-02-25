@@ -1,4 +1,4 @@
-﻿namespace PolyTest.Tree
+namespace PolyTest
 {
     /// <summary>
     /// The composite in the tree, that is, a component with children

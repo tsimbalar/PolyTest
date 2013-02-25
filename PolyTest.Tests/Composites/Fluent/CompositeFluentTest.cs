@@ -1,8 +1,8 @@
 ﻿using System;
+using PolyTest.Fluent;
+using PolyTest.Fluent.Magic;
 using PolyTest.Tests.TestUtils;
 using System.Linq;
-using PolyTest.Tree.Fluent;
-using PolyTest.Tree.Fluent.Magic;
 using Xunit;
 
 namespace PolyTest.Tests.Composites.Fluent

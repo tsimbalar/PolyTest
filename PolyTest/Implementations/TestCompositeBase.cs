@@ -1,4 +1,4 @@
-﻿namespace PolyTest.Tree
+namespace PolyTest.Implementations
 {
     /// <summary>
     /// Default implementation of the ITestComposite&lt;T&gt;
