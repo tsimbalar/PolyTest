@@ -1,11 +1,11 @@
-﻿using System;
+using System;
+using System.Linq;
 using PolyTest.Fluent;
 using PolyTest.Fluent.Magic;
 using PolyTest.Tests.TestUtils;
-using System.Linq;
 using Xunit;
 
-namespace PolyTest.Tests.Composites.Fluent
+namespace PolyTest.Tests.Fluent
 {
     public class CompositeFluentTest
     {
