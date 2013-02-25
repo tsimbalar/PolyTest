@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PolyTest.Examples.InputValidationExample.Models;
+using PolyTest;
 using PolyTest.Fluent;
 using Xunit;
 

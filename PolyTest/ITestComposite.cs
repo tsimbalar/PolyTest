@@ -1,10 +1,14 @@
 namespace PolyTest
 {
     /// <summary>
-    /// The composite in the tree, that is, a component with children
+    ///  TestComposite, that is, a node with a collection of nodes, where each child node provide a mutation to apply to the parent
     /// </summary>
     public interface ITestComposite<T> : ITestComponent<T>
     {
+        /// <summary>
+        /// Add a child to this node
+        /// </summary>
+        /// <param name="child"></param>
         void Add(ITestComponent<T> child);
 
         /// <summary>

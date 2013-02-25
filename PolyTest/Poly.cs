@@ -9,6 +9,7 @@ namespace PolyTest
 {
     /// <summary>
     /// Entry point to interact with PolyTest basic components
+    /// This somehow acts as a static Factory
     /// </summary>
     public static class Poly
     {
