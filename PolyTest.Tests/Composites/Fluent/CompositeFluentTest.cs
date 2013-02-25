@@ -33,13 +33,13 @@ namespace PolyTest.Tests.Composites.Fluent
                                 .Consider("remove 2", d => { d.IntProperty -= 2; })
                         )
                  )
-                 .Walk((state) =>
-                            {
-                                var init = state.Arrange();
-                                sut.DoIt(init);
-                                DummyAssert.AssertIsNotFive(init.IntProperty, state.Description);
-                            })
-                 ;
+                 .AsEnumerable().ToList()
+                 .ForEach(t =>
+                              {
+                                  var init = t.Arrange();
+                                  sut.DoIt(init);
+                                  DummyAssert.AssertIsNotFive(init.IntProperty, t.Description);
+                              });
         }
 
 
@@ -67,7 +67,7 @@ namespace PolyTest.Tests.Composites.Fluent
                                 .Consider("remove 2", d => { d.IntProperty -= 2; })
                         )
                  )
-                 .Walk((state) => state)
+                 .AsEnumerable()
                  .Select(s =>
                              {
                                  var init = s.Arrange();

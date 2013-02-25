@@ -59,6 +59,7 @@
     <Compile Include="CarExample\Models\DieselEngine.cs" />
     <Compile Include="CarExample\Models\Engine.cs" />
     <Compile Include="CarExample\Models\Wheel.cs" />
+    <Compile Include="InputValidationExample\WithPolyTest_Magic.cs" />
     <Compile Include="InputValidationExample\Models\Input.cs" />
     <Compile Include="InputValidationExample\Models\Validator.cs" />
     <Compile Include="InputValidationExample\WithPolyTest_Composite_Basic.cs" />
