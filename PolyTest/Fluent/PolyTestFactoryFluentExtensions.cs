@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PolyTest.Implementations;
+using PolyTest.Implementations.Fluent;
 
 namespace PolyTest.Fluent
 {

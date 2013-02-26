@@ -39,7 +39,6 @@
   <ItemGroup>
     <Compile Include="Fluent\ITestCaseInformation.cs" />
     <Compile Include="Fluent\PolyTestFactoryFluentExtensions.cs" />
-    <Compile Include="Fluent\TestCompositeFluentNestedWrapper.cs" />
     <Compile Include="Fluent\ITestCompositeFluent.cs" />
     <Compile Include="Fluent\ITestCompositeNestedFluent.cs" />
     <Compile Include="Fluent\ITestExecutionReport.cs" />
@@ -47,12 +46,13 @@
     <Compile Include="Fluent\Magic\MagicExtensions.cs" />
     <Compile Include="Fluent\Magic\ReflectionHelper.cs" />
     <Compile Include="Fluent\TestCompositeFluentExtensions.cs" />
-    <Compile Include="Fluent\TestCompositeFluentWrapper.cs" />
     <Compile Include="Fluent\TestExecutionAssertFailedException.cs" />
-    <Compile Include="Fluent\TestExecutionReport.cs" />
-    <Compile Include="Fluent\TestResult.cs" />
-    <Compile Include="Fluent\TestResultFactory.cs" />
-    <Compile Include="Fluent\TestCaseItem.cs" />
+    <Compile Include="Implementations\Fluent\TestCaseItem.cs" />
+    <Compile Include="Implementations\Fluent\TestCompositeFluentNestedWrapper.cs" />
+    <Compile Include="Implementations\Fluent\TestCompositeFluentWrapper.cs" />
+    <Compile Include="Implementations\Fluent\TestExecutionReport.cs" />
+    <Compile Include="Implementations\Fluent\TestResult.cs" />
+    <Compile Include="Implementations\Fluent\TestResultFactory.cs" />
     <Compile Include="Implementations\Mutation.cs" />
     <Compile Include="Implementations\TestComposite.cs" />
     <Compile Include="Implementations\TestCompositeBase.cs" />

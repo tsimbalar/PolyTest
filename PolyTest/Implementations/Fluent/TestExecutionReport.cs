@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using PolyTest.Fluent;
 
-namespace PolyTest.Fluent
+namespace PolyTest.Implementations.Fluent
 {
     internal class TestExecutionReport<T> : ITestExecutionReport<T>
     {

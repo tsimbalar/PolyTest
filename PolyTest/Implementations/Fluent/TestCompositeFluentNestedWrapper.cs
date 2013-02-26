@@ -1,4 +1,6 @@
-namespace PolyTest.Fluent
+using PolyTest.Fluent;
+
+namespace PolyTest.Implementations.Fluent
 {
     internal class TestCompositeFluentNestedWrapper<T> : TestCompositeFluentWrapper<T>, ITestCompositeNestedFluent<T>
     {

@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using PolyTest.Implementations;
+using PolyTest.Fluent;
 
-namespace PolyTest.Fluent
+namespace PolyTest.Implementations.Fluent
 {
     internal class TestCompositeFluentWrapper<T> : ITestCompositeFluent<T>
     {

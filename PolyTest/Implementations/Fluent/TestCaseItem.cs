@@ -1,6 +1,7 @@
 using System;
+using PolyTest.Fluent;
 
-namespace PolyTest.Fluent
+namespace PolyTest.Implementations.Fluent
 {
     internal class TestCaseItem<T> : ITestCaseInformation, ITestCase<T>
     {
