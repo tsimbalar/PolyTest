@@ -2,12 +2,12 @@ using System;
 
 namespace PolyTest.Fluent
 {
-    internal class TestCaseFluent<T> : ITestCaseFluent<T>
+    internal class TestCaseItem<T> : ITestCaseInformation, ITestCase<T>
     {
         private readonly int _index;
         private readonly ITestCase<T> _testCase;
 
-        public TestCaseFluent(int index, ITestCase<T> testCase)
+        public TestCaseItem(int index, ITestCase<T> testCase)
         {
             if (testCase == null) throw new ArgumentNullException("testCase");
             _index = index;
@@ -42,9 +42,9 @@ namespace PolyTest.Fluent
                     }
                     catch (Exception e)
                     {
-                        return TestResult.AssertFailed(this, result, e);
+                        return TestResult.AssertFailed<T, TResult>(this, result, e);
                     }
-                    return TestResult.Success(this, result);
+                    return TestResult.Success<T, TResult>(this, result);
                 }
                 catch (Exception e)
                 {
@@ -62,5 +62,12 @@ namespace PolyTest.Fluent
         {
             return string.Format("#{0} - {1}", Index, Description);
         }
+    }
+
+    public interface ITestCaseInformation
+    {
+        string Description { get; }
+
+        int Index { get; }
     }
 }

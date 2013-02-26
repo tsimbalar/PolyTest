@@ -53,7 +53,7 @@ namespace PolyTest.Fluent
             return this;
         }
 
-        public void ForEach(Action<ITestCaseFluent<T>> action)
+        public void ForEach(Action<ITestCase<T>> action)
         {
             foreach (var testTreeNode in this.AsEnumerablePrivate())
             {
@@ -61,7 +61,7 @@ namespace PolyTest.Fluent
             }
         }
 
-        public IEnumerable<TResult> Select<TResult>(Func<ITestCaseFluent<T>, TResult> selector)
+        public IEnumerable<TResult> Select<TResult>(Func<ITestCase<T>, TResult> selector)
         {
             return this.AsEnumerablePrivate().Select(selector);
         }
@@ -76,14 +76,14 @@ namespace PolyTest.Fluent
             return report;
         }
 
-        public IEnumerable<ITestCaseFluent<T>> AsEnumerable()
+        public IEnumerable<ITestCase<T>> AsEnumerable()
         {
             return AsEnumerablePrivate();
         }
 
-        private IEnumerable<TestCaseFluent<T>> AsEnumerablePrivate()
+        private IEnumerable<TestCaseItem<T>> AsEnumerablePrivate()
         {
-            var resultEnumerable = _wrapped.Enumerate().Select((tc, i) => new TestCaseFluent<T>(i, tc));
+            var resultEnumerable = _wrapped.Enumerate().Select((tc, i) => new TestCaseItem<T>(i, tc));
             return resultEnumerable;
         }
 

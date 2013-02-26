@@ -17,10 +17,10 @@ namespace PolyTest.Fluent
                                          Func<ITestCompositeNestedFluent<T>, ITestCompositeFluent<T>> nestedAdd);
 
 
-        void ForEach(Action<ITestCaseFluent<T>> action);
-        IEnumerable<TResult> Select<TResult>(Func<ITestCaseFluent<T>, TResult> selector);
+        void ForEach(Action<ITestCase<T>> action);
+        IEnumerable<TResult> Select<TResult>(Func<ITestCase<T>, TResult> selector);
         ITestExecutionReport<T> Walk<TResult>(Func<T, TResult> act, Action<TResult> assert );
 
-        IEnumerable<ITestCaseFluent<T>> AsEnumerable();
+        IEnumerable<ITestCase<T>> AsEnumerable();
     }
 }
