@@ -15,7 +15,7 @@ namespace PolyTest.Tests.Fluent
             // Arrange
             var sut = new FakeSut();
 
-            TestTree.From("starting with 5", () => new DummyItem(5))
+            Poly.Factory.From("starting with 5", () => new DummyItem(5))
                  .Consider("add 2", d => { d.IntProperty = d.IntProperty + 2; })
                  .Consider("add 4", d => { d.IntProperty = d.IntProperty + 4; })
                  .Consider("add 1", d => { d.IntProperty++; },
@@ -48,7 +48,7 @@ namespace PolyTest.Tests.Fluent
             // Arrange
             var sut = new FakeSut();
             var results =
-            TestTree.From("starting with 5", () => new DummyItem(5))
+            Poly.Factory.From("starting with 5", () => new DummyItem(5))
                  .Consider("add 2", d => { d.IntProperty = d.IntProperty + 2; })
                  .Consider("add 4", d => { d.IntProperty = d.IntProperty + 4; })
                  .Consider("add 1", d => { d.IntProperty++; },
@@ -84,7 +84,7 @@ namespace PolyTest.Tests.Fluent
         {
             // Arrange
             var sut = new FakeSut();
-            TestTree.From("starting with 5", () => new DummyItem(5))
+            Poly.Factory.From("starting with 5", () => new DummyItem(5))
                  .Consider("add 2", d => { d.IntProperty = d.IntProperty + 2; })
                  .Consider("add 4", d => { d.IntProperty = d.IntProperty + 4; })
                  .Consider("add 1", d => { d.IntProperty++; },
@@ -121,7 +121,7 @@ namespace PolyTest.Tests.Fluent
             // Arrange
             var sut = new FakeSut();
 
-            TestTree.From("starting with 5", () => new DummyItem(5))
+            Poly.Factory.From("starting with 5", () => new DummyItem(5))
                     .With(d => d.IntProperty, 6)
                     .With(d => d.IntProperty, 3,
                         opt => opt
