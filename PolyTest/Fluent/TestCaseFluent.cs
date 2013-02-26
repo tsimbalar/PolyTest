@@ -2,12 +2,12 @@ using System;
 
 namespace PolyTest.Fluent
 {
-    internal class TestTreeNode<T> : ITestTreeNode<T>
+    internal class TestCaseFluent<T> : ITestCaseFluent<T>
     {
         private readonly int _index;
         private readonly ITestCase<T> _testCase;
 
-        public TestTreeNode(int index, ITestCase<T> testCase)
+        public TestCaseFluent(int index, ITestCase<T> testCase)
         {
             if (testCase == null) throw new ArgumentNullException("testCase");
             _index = index;
@@ -27,7 +27,7 @@ namespace PolyTest.Fluent
         }
 
 
-        internal TestResult<T, TResult> TestInternal<TResult>(Func<T, TResult> act, Action<TResult> assert)
+        internal TestResult<T, TResult> Test<TResult>(Func<T, TResult> act, Action<TResult> assert)
         {
             try
             {
@@ -56,11 +56,6 @@ namespace PolyTest.Fluent
                 return TestResult.ArrangeFailed<T, TResult>(this, e);
             }
 
-        }
-
-        public ITestResult<T, TResult> Test<TResult>(Func<T, TResult> act, Action<TResult> assert)
-        {
-            return TestInternal(act, assert);
         }
 
         public override string ToString()

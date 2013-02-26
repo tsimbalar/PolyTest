@@ -3,7 +3,7 @@ using PolyTest.Implementations;
 
 namespace PolyTest.Fluent
 {
-    public static class TestComponentExtensions
+    public static class TestComponsiteExtensions
     {
         public static ITestCompositeFluent<T> Consider<T>(this ITestCompositeFluent<T> tree,
                                                           string mutationDescr, Action<T> mutationAction)
