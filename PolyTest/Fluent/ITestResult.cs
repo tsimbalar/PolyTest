@@ -1,17 +1,11 @@
 namespace PolyTest.Fluent
 {
-    
-    public interface ITestResult<T>
+    public interface ITestResult<TResult>
     {
-        object Result { get; }
+        TResult Result { get; }
         ITestCaseInformation TestCase { get; }
         bool IsSuccess { get; }
         bool HasResult { get; }
         string ResultMessage { get; }
-    }
-
-    public interface ITestResult<T, out TResult> : ITestResult<T>
-    {
-        new TResult Result { get; }
     }
 }

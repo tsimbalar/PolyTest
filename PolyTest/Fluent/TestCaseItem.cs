@@ -27,7 +27,7 @@ namespace PolyTest.Fluent
         }
 
 
-        internal TestResult<T, TResult> Test<TResult>(Func<T, TResult> act, Action<TResult> assert)
+        internal TestResult<TResult> Test<TResult>(Func<T, TResult> act, Action<TResult> assert)
         {
             try
             {
@@ -42,18 +42,18 @@ namespace PolyTest.Fluent
                     }
                     catch (Exception e)
                     {
-                        return TestResult.AssertFailed<T, TResult>(this, result, e);
+                        return TestResultFactory.AssertFailed(this, result, e);
                     }
-                    return TestResult.Success<T, TResult>(this, result);
+                    return TestResultFactory.Success(this, result);
                 }
                 catch (Exception e)
                 {
-                    return TestResult.ActFailed<T, TResult>(this, e);
+                    return TestResultFactory.ActFailed<TResult>(this, e);
                 }
             }
             catch (Exception e)
             {
-                return TestResult.ArrangeFailed<T, TResult>(this, e);
+                return TestResultFactory.ArrangeFailed<TResult>(this, e);
             }
 
         }
@@ -62,12 +62,5 @@ namespace PolyTest.Fluent
         {
             return string.Format("#{0} - {1}", Index, Description);
         }
-    }
-
-    public interface ITestCaseInformation
-    {
-        string Description { get; }
-
-        int Index { get; }
     }
 }

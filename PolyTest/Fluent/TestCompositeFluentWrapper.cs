@@ -66,12 +66,13 @@ namespace PolyTest.Fluent
             return this.AsEnumerablePrivate().Select(selector);
         }
 
-        public ITestExecutionReport<T> Walk<TResult>(Func<T, TResult> act, Action<TResult> assert)
+        public ITestExecutionReport<TResult> Walk<TResult>(Func<T, TResult> act, Action<TResult> assert)
         {
-            var report = new TestExecutionReport<T>();
+            var report = new TestExecutionReport<TResult>();
             foreach (var testCase in this.AsEnumerablePrivate())
             {
-                report.Add(testCase.Test(act, assert));
+                var result = testCase.Test(act, assert);
+                report.Add(result);
             }
             return report;
         }
