@@ -1,6 +1,6 @@
 namespace PolyTest.Fluent
 {
-    public interface ITestResult<TResult>
+    public interface ITestResult<out TResult>
     {
         TResult Result { get; }
         ITestCaseInformation TestCase { get; }

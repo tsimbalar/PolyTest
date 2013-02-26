@@ -45,7 +45,7 @@
     <Compile Include="Fluent\ITestResult.cs" />
     <Compile Include="Fluent\Magic\MagicExtensions.cs" />
     <Compile Include="Fluent\Magic\ReflectionHelper.cs" />
-    <Compile Include="Fluent\TestComponsiteExtensions.cs" />
+    <Compile Include="Fluent\TestCompositeFluentExtensions.cs" />
     <Compile Include="Fluent\TestCompositeFluentWrapper.cs" />
     <Compile Include="Fluent\TestExecutionAssertFailedException.cs" />
     <Compile Include="Fluent\TestExecutionReport.cs" />

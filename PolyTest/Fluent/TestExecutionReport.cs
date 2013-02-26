@@ -58,7 +58,7 @@ namespace PolyTest.Fluent
                 var failures = Failed.ToList();
                 if (failures.Any())
                 {
-                    StringBuilder message = new StringBuilder();
+                    var message = new StringBuilder();
                     message.AppendFormat("{0}/{1} TestCases failed: \n", failures.Count, Count);
                     foreach (var testResult in failures)
                     {
