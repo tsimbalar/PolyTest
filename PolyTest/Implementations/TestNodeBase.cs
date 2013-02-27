@@ -2,7 +2,11 @@ using System.Collections.Generic;
 
 namespace PolyTest.Implementations
 {
-    internal abstract class TestTreeBase<T> : ITestComponent<T>
+    /// <summary>
+    /// Base class for all nodes of the tree
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    internal abstract class TestNodeBase<T> : ITestComponent<T>
     {
         private readonly ITestComposite<T> _parent;
         private readonly IList<ITestComponent<T>> _children ;
@@ -11,7 +15,7 @@ namespace PolyTest.Implementations
         /// Create a TestComponent
         /// </summary>
         /// <param name="parent">the parent of this node (can be null)</param>
-        protected TestTreeBase(ITestComposite<T> parent)
+        protected TestNodeBase(ITestComposite<T> parent)
         {
             _parent = parent;
             _children = new List<ITestComponent<T>>();
@@ -24,6 +28,7 @@ namespace PolyTest.Implementations
 
         /// <summary>
         /// The Description for this element. Based on the parent's description (if there is a parent) and this node's description
+        /// This gives the full Path to the node
         /// </summary>
         public string Description
         {
@@ -40,6 +45,9 @@ namespace PolyTest.Implementations
             }
         }
 
+        /// <summary>
+        /// The description of this node only
+        /// </summary>
         protected abstract string NodeDescription { get; }
 
         public IEnumerable<ITestComponent<T>> Children { get { return _children; } }

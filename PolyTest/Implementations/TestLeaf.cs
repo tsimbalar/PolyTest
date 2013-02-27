@@ -6,7 +6,7 @@ namespace PolyTest.Implementations
     /// The bottom element of the tree, a test case with no children
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    internal class TestLeaf<T> : TestTreeBase<T>
+    internal class TestLeaf<T> : TestNodeBase<T>
     {
         private readonly IMutation<T> _mutation;
 

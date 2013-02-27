@@ -5,18 +5,9 @@ namespace PolyTest.Implementations
     /// Takes care of adding children and enumerating over its children
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    internal abstract class TestCompositeBase<T> : TestTreeBase<T>, ITestComposite<T>
+    internal abstract class TestCompositeBase<T> : TestNodeBase<T>, ITestComposite<T>
     {
         private bool _includeSelfInEnumeration;
-
-        /// <summary>
-        /// Creates a composite
-        /// </summary>
-        /// <param name="parent">the parent of this node</param>
-        protected TestCompositeBase(ITestComposite<T> parent)
-            : this(parent, true)
-        {
-        }
 
         /// <summary>
         /// Creates a composite

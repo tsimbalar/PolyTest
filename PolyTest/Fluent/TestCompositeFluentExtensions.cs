@@ -1,21 +1,20 @@
 using System;
-using PolyTest.Implementations;
 
 namespace PolyTest.Fluent
 {
     public static class TestCompositeFluentExtensions
     {
-        public static ITestCompositeFluent<T> Consider<T>(this ITestCompositeFluent<T> tree,
+        public static ITestCompositeFluent<T> Consider<T>(this ITestCompositeFluent<T> parent,
                                                           string mutationDescr, Action<T> mutationAction)
         {
-            return tree.Consider(new Mutation<T>(mutationDescr, mutationAction));
+            return parent.Consider(Poly.Factory.Mutation(mutationDescr, mutationAction));
         }
 
-        public static ITestCompositeFluent<T> Consider<T>(this ITestCompositeFluent<T> tree,
+        public static ITestCompositeFluent<T> Consider<T>(this ITestCompositeFluent<T> parent,
                                                           string mutationDescription, Action<T> mutationAction,
                                                           Func<ITestCompositeNestedFluent<T>, ITestCompositeFluent<T>> nestedAdd)
         {
-            return tree.Consider(new Mutation<T>(mutationDescription, mutationAction), nestedAdd);
+            return parent.Consider(Poly.Factory.Mutation(mutationDescription, mutationAction), nestedAdd);
         }
     }
 }

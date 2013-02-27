@@ -38,6 +38,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fluent\ITestCaseInformation.cs" />
+    <Compile Include="Fluent\ITestRootFluent.cs" />
     <Compile Include="Fluent\PolyTestFactoryFluentExtensions.cs" />
     <Compile Include="Fluent\ITestCompositeFluent.cs" />
     <Compile Include="Fluent\ITestCompositeNestedFluent.cs" />
@@ -53,12 +54,13 @@
     <Compile Include="Implementations\Fluent\TestExecutionReport.cs" />
     <Compile Include="Implementations\Fluent\TestResult.cs" />
     <Compile Include="Implementations\Fluent\TestResultFactory.cs" />
+    <Compile Include="Implementations\Fluent\TestRootFluentWrapper.cs" />
     <Compile Include="Implementations\Mutation.cs" />
     <Compile Include="Implementations\TestComposite.cs" />
     <Compile Include="Implementations\TestCompositeBase.cs" />
     <Compile Include="Implementations\TestLeaf.cs" />
     <Compile Include="Implementations\TestRoot.cs" />
-    <Compile Include="Implementations\TestTreeBase.cs" />
+    <Compile Include="Implementations\TestNodeBase.cs" />
     <Compile Include="IMutation.cs" />
     <Compile Include="IPolyTestFactory.cs" />
     <Compile Include="ITestCase.cs" />

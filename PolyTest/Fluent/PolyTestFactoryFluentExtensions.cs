@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using PolyTest.Implementations;
 using PolyTest.Implementations.Fluent;
 
 namespace PolyTest.Fluent
@@ -13,9 +12,9 @@ namespace PolyTest.Fluent
         /// <summary>
         /// Entry point for the Fluent interface
         /// </summary>
-        public static ITestCompositeFluent<T> From<T>(this IPolyTestFactory factory, string initialStateDescription, Func<T> setup)
+        public static ITestRootFluent<T> From<T>(this IPolyTestFactory factory, string initialStateDescription, Func<T> setup)
         {
-            return new TestCompositeFluentWrapper<T>(new TestRoot<T>(initialStateDescription, setup));
+            return new TestRootFluentWrapper<T>(Poly.Factory.Root(initialStateDescription, setup));
         }
     }
 }
