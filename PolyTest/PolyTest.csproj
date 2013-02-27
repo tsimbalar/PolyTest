@@ -68,7 +68,7 @@
     <Compile Include="ITestComposite.cs" />
     <Compile Include="netfx\System\IFluentInterface.cs" />
     <Compile Include="Poly.cs" />
-    <Compile Include="PolyTestFactory.cs" />
+    <Compile Include="PolyDefaultTestFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestCompositeExtensions.cs" />
   </ItemGroup>
