@@ -33,7 +33,7 @@ namespace PolyTest.Examples.InputValidationExample
             // Arrange
             var sut = MakeSUT();
 
-            Poly.Factory.From("Starting with valid input", () => MakeValidInput())
+            Poly.Create.From("Starting with valid input", () => MakeValidInput())
                     .Consider("with null name", input => input.Name = null)
                     .Consider("with empty name", input => input.Name = String.Empty)
                     .Consider("with tab Name", input => input.Name = "\t")
@@ -52,7 +52,7 @@ namespace PolyTest.Examples.InputValidationExample
             // Arrange
             var sut = MakeSUT();
 
-            Poly.Factory.From("Starting with valid input", () => MakeValidInput())
+            Poly.Create.From("Starting with valid input", () => MakeValidInput())
                 .Consider("with HasCheezburger true", input => input.HasCheezburger = true,
                     fromThere => fromThere.IgnoreSelf("we don't care about the case with HasCheezburger true and Cheezburger not specified")
                         .Consider("with no cheezburger", input => input.Cheezburger = null)

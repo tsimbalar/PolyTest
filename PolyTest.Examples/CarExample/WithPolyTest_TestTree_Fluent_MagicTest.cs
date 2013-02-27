@@ -22,7 +22,7 @@ namespace PolyTest.Examples.CarExample
         public void ValidationExampleTest()
         {
             var sut = new CarValidator();
-            Poly.Factory.From("A car with all the proper attributes", 
+            Poly.Create.From("A car with all the proper attributes", 
                             () => MakeValidCar())
                     .With(c => c.NumberOfDoors, 0)
                     .With(c => c.NumberOfDoors, -1)
@@ -47,7 +47,7 @@ namespace PolyTest.Examples.CarExample
         public void ValidationWheelsExampleTest()
         {
             var sut = new CarValidator();
-            Poly.Factory.From("Valid Car", 
+            Poly.Create.From("Valid Car", 
                             () => MakeValidCar())
                     .Consider("No wheels !",
                                 c => c.Wheels.Clear())

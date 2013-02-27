@@ -92,7 +92,7 @@ namespace PolyTest.Fluent.Magic
         {
             var propertyName = ReflectionHelper.GetFullPropertyName(propertyAccessor);
             string mutationDescription = string.Format("setting {0} = {1}", propertyName, newValue);
-            var mutation = Poly.Factory.Mutation<T>(mutationDescription, d => ReflectionHelper.Set(d, propertyAccessor, newValue));
+            var mutation = Poly.Create.Mutation<T>(mutationDescription, d => ReflectionHelper.Set(d, propertyAccessor, newValue));
             return mutation;
         }
 
@@ -101,7 +101,7 @@ namespace PolyTest.Fluent.Magic
         {
             var propertyName = ReflectionHelper.GetFullPropertyName(propertyAccessor);
             string mutationDescription = string.Format("setting {0} = {1}", propertyName, humanFriendlyDisplayValue);
-            var mutation = Poly.Factory.Mutation<T>(mutationDescription, d => ReflectionHelper.Set(d, propertyAccessor, newValue));
+            var mutation = Poly.Create.Mutation<T>(mutationDescription, d => ReflectionHelper.Set(d, propertyAccessor, newValue));
             return mutation;
         }
 
@@ -114,7 +114,7 @@ namespace PolyTest.Fluent.Magic
         {
             var propertyName = ReflectionHelper.GetFullPropertyName(propertyAccessor);
             string mutationDescription = string.Format("setting {0} = \"{1}\" ({2})", propertyName, newValue, valueDescription);
-            var mutation = Poly.Factory.Mutation<T>(mutationDescription, d => ReflectionHelper.Set(d, propertyAccessor, newValue));
+            var mutation = Poly.Create.Mutation<T>(mutationDescription, d => ReflectionHelper.Set(d, propertyAccessor, newValue));
             return mutation;
         }
     }

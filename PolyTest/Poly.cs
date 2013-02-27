@@ -11,10 +11,10 @@ namespace PolyTest
     /// </summary>
     public static class Poly
     {
-        private static readonly IPolyTestFactory _factory = new PolyTestFactory();  
-        public static IPolyTestFactory Factory
+        private static readonly IPolyTestFactory FactoryInstance = new PolyTestFactory();  
+        public static IPolyTestFactory Create
         {
-            get { return _factory; }
+            get { return FactoryInstance; }
         }
     }
 }

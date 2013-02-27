@@ -33,26 +33,26 @@ namespace PolyTest.Examples.InputValidationExample
         public void Validate_with_invalidated_valid_input_must_be_invalid()
         {
             // Arrange
-            var validRoot = Poly.Factory.Root("Starting with valid input", () => MakeValidInput());
+            var validRoot = Poly.Create.Root("Starting with valid input", () => MakeValidInput());
 
-            var nullNameMutation = Poly.Factory.Mutation<Input>("with null name", input => input.Name = null);
-            var nullNameLeaf = Poly.Factory.Leaf(validRoot, nullNameMutation);
+            var nullNameMutation = Poly.Create.Mutation<Input>("with null name", input => input.Name = null);
+            var nullNameLeaf = Poly.Create.Leaf(validRoot, nullNameMutation);
             validRoot.Add(nullNameLeaf);
 
-            var emptyNameMutation = Poly.Factory.Mutation<Input>("with empty name", input => input.Name = String.Empty);
-            var emptyNameLeaf = Poly.Factory.Leaf(validRoot, emptyNameMutation);
+            var emptyNameMutation = Poly.Create.Mutation<Input>("with empty name", input => input.Name = String.Empty);
+            var emptyNameLeaf = Poly.Create.Leaf(validRoot, emptyNameMutation);
             validRoot.Add(emptyNameLeaf);
 
-            var tabNameMutation = Poly.Factory.Mutation<Input>("with tab Name", input => input.Name = "\t");
-            var tabNameLeaf = Poly.Factory.Leaf(validRoot, tabNameMutation);
+            var tabNameMutation = Poly.Create.Mutation<Input>("with tab Name", input => input.Name = "\t");
+            var tabNameLeaf = Poly.Create.Leaf(validRoot, tabNameMutation);
             validRoot.Add(tabNameLeaf);
 
-            var spaceNameMutation = Poly.Factory.Mutation<Input>("with space Name", input => input.Name = " ");
-            var spaceNameLeaf = Poly.Factory.Leaf(validRoot, spaceNameMutation);
+            var spaceNameMutation = Poly.Create.Mutation<Input>("with space Name", input => input.Name = " ");
+            var spaceNameLeaf = Poly.Create.Leaf(validRoot, spaceNameMutation);
             validRoot.Add(spaceNameLeaf);
 
-            var minusOneAgeMutation = Poly.Factory.Mutation<Input>("with Age -1", input => input.Age = -1);
-            var minusOneAgeLeaf = Poly.Factory.Leaf(validRoot, minusOneAgeMutation);
+            var minusOneAgeMutation = Poly.Create.Mutation<Input>("with Age -1", input => input.Age = -1);
+            var minusOneAgeLeaf = Poly.Create.Leaf(validRoot, minusOneAgeMutation);
             validRoot.Add(minusOneAgeLeaf);
 
             var sut = MakeSUT();
@@ -72,14 +72,14 @@ namespace PolyTest.Examples.InputValidationExample
         public void Validate_with_invalidated_valid_Cheezburger_input_must_be_invalid()
         {
             // Arrange
-            var validRoot = Poly.Factory.Root("Starting with valid input", () => MakeValidInput());
+            var validRoot = Poly.Create.Root("Starting with valid input", () => MakeValidInput());
 
-            var hasCheezburgerMutation = Poly.Factory.Mutation<Input>("with HasCheezburger true", input => input.HasCheezburger = true);
-            var intermediaryNodeWithHasCheezburgerTrue = Poly.Factory.Composite(validRoot, hasCheezburgerMutation);
+            var hasCheezburgerMutation = Poly.Create.Mutation<Input>("with HasCheezburger true", input => input.HasCheezburger = true);
+            var intermediaryNodeWithHasCheezburgerTrue = Poly.Create.Composite(validRoot, hasCheezburgerMutation);
             intermediaryNodeWithHasCheezburgerTrue.IncludeSelfInEnumeration = false; //we don't care about the case with HasCheezburger true and Cheezburger not specified
 
-            var cheezburgerNullMutation = Poly.Factory.Mutation<Input>("with no cheezburger", input => input.Cheezburger = null);
-            var cheezburgerNullLeaf = Poly.Factory.Leaf(intermediaryNodeWithHasCheezburgerTrue, cheezburgerNullMutation);
+            var cheezburgerNullMutation = Poly.Create.Mutation<Input>("with no cheezburger", input => input.Cheezburger = null);
+            var cheezburgerNullLeaf = Poly.Create.Leaf(intermediaryNodeWithHasCheezburgerTrue, cheezburgerNullMutation);
             intermediaryNodeWithHasCheezburgerTrue.Add(cheezburgerNullLeaf);
             
             validRoot.Add(intermediaryNodeWithHasCheezburgerTrue);
