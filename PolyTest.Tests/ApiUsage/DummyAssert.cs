@@ -2,7 +2,7 @@
 
 using Xunit;
 
-namespace PolyTest.Tests.TestUtils
+namespace PolyTest.Tests.ApiUsage
 {
     public static class DummyAssert
     {

@@ -5,7 +5,7 @@ using PolyTest.Fluent.Magic;
 using PolyTest.Tests.TestUtils;
 using Xunit;
 
-namespace PolyTest.Tests.Fluent
+namespace PolyTest.Tests.ApiUsage.Fluent
 {
     public class CompositeFluentTest
     {

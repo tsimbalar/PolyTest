@@ -2,7 +2,7 @@ using PolyTest.Implementations;
 using PolyTest.Tests.TestUtils;
 using Xunit;
 
-namespace PolyTest.Tests
+namespace PolyTest.Tests.ApiUsage
 {
     public class CompositeTest
     {
