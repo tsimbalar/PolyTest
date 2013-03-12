@@ -56,6 +56,7 @@
   <ItemGroup>
     <Compile Include="CompositeTest.cs" />
     <Compile Include="Fluent\CompositeFluentTest.cs" />
+    <Compile Include="Implementations\MutationTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestUtils\DummyAssert.cs" />
     <Compile Include="TestUtils\DummyItem.cs" />
