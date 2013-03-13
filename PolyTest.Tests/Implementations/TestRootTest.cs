@@ -3,7 +3,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PolyTest.Implementations;
-using PolyTest.Tests.ApiUsage;
 using Xunit;
 
 namespace PolyTest.Tests.Implementations
@@ -17,7 +16,7 @@ namespace PolyTest.Tests.Implementations
 
             // Act & Assert
             Assert.Throws<ArgumentNullException>(() => 
-                new TestRoot<DummyItem>(null, () => new DummyItem(1, false))
+                new TestRoot<ClassToTest>(null, () => new ClassToTest(1))
             );
         }
 
@@ -41,7 +40,7 @@ namespace PolyTest.Tests.Implementations
 
             // Act & Assert
             Assert.Throws<ArgumentNullException>(() =>
-                new TestRoot<DummyItem>("some text", null)
+                new TestRoot<ClassToTest>("some text", null)
                 );
         }
 
@@ -79,15 +78,15 @@ namespace PolyTest.Tests.Implementations
             var actual = sut.Enumerate();
 
             // Assert
-            Assert.Equal(Enumerable.Empty<ITestCase<DummyItem>>(), actual);
+            Assert.Equal(Enumerable.Empty<ITestCase<ClassToTest>>(), actual);
         }
 
         [Fact]
         public void Arrange_returns_result_of_call_setupFunction()
         {
             // Arrange
-            var valueToReturn = new DummyItem(666, false);
-            Func<DummyItem> setupFunction = () => valueToReturn;
+            var valueToReturn = new ClassToTest(666);
+            Func<ClassToTest> setupFunction = () => valueToReturn;
             var sut = MakeSut(setup:setupFunction);
 
             // Act
@@ -102,7 +101,7 @@ namespace PolyTest.Tests.Implementations
         public void Add_adds_item_to_Children()
         {
             // Arrange
-            var child = new DummyTestComponent<DummyItem>();
+            var child = new DummyTestComponent<ClassToTest>();
             var sut = MakeSut();
 
             // Act
@@ -117,7 +116,7 @@ namespace PolyTest.Tests.Implementations
         {
             // Arrange
             var sut = MakeSut();
-            var child = new DummyTestComponent<DummyItem>();
+            var child = new DummyTestComponent<ClassToTest>();
             sut.Add(child);
 
             // Act
@@ -129,11 +128,11 @@ namespace PolyTest.Tests.Implementations
 
         #region Test Helper Methods
 
-        private static TestRoot<DummyItem> MakeSut(string description = "any description", Func<DummyItem> setup = null )
+        private static TestRoot<ClassToTest> MakeSut(string description = "any description", Func<ClassToTest> setup = null )
         {
-            setup = setup ?? ( ()=> new DummyItem(1, true));
+            setup = setup ?? ( ()=> new ClassToTest(1));
 
-            return new TestRoot<DummyItem>(description, setup);
+            return new TestRoot<ClassToTest>(description, setup);
         } 
 
         #endregion

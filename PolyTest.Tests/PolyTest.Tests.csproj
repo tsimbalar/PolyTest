@@ -63,6 +63,7 @@
     <Compile Include="Implementations\DummyTestComponent.cs" />
     <Compile Include="Implementations\DummyTestComposite.cs" />
     <Compile Include="Implementations\MutationTest.cs" />
+    <Compile Include="Implementations\TestCompositeTest.cs" />
     <Compile Include="Implementations\TestLeafTest.cs" />
     <Compile Include="Implementations\TestRootTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
