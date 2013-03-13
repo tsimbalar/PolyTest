@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using PolyTest.Fluent;
 using PolyTest.Fluent.Magic;
-using PolyTest.Tests.TestUtils;
 using Xunit;
 
 namespace PolyTest.Tests.ApiUsage.Fluent

@@ -3,7 +3,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PolyTest.Implementations;
-using PolyTest.Tests.TestUtils;
 using Xunit;
 
 namespace PolyTest.Tests.Implementations
@@ -17,7 +16,7 @@ namespace PolyTest.Tests.Implementations
 
             // Act & Assert
             Assert.Throws<ArgumentNullException>(() =>
-                             new TestLeaf<DummyItem>(null, new DummyMutation<DummyItem>("the mutation"))
+                             new TestLeaf<ClassToTest>(null, new DummyMutation<ClassToTest>("the mutation"))
                 );
         }
 
@@ -28,7 +27,7 @@ namespace PolyTest.Tests.Implementations
 
             // Act & Assert
             Assert.Throws<ArgumentNullException>(() =>
-                             new TestLeaf<DummyItem>(new DummyTestComposite<DummyItem>("parent"), null)
+                             new TestLeaf<ClassToTest>(new DummyTestComposite<ClassToTest>("parent"), null)
                 );
         }
 
@@ -61,9 +60,9 @@ namespace PolyTest.Tests.Implementations
         {
             // Arrange
             var mutationDescription = "la super description";
-            var theMutation = new DummyMutation<DummyItem>(mutationDescription);
+            var theMutation = new DummyMutation<ClassToTest>(mutationDescription);
             var parentDescription = "parent description";
-            var theParent = new DummyTestComposite<DummyItem>(parentDescription);
+            var theParent = new DummyTestComposite<ClassToTest>(parentDescription);
             var sut = MakeSut(theParent, theMutation);
             var expectedDescription = parentDescription + " AND " + mutationDescription;
 
@@ -78,11 +77,11 @@ namespace PolyTest.Tests.Implementations
         public void Arrange_returns_result_of_applying_mutation_to_parent_Arrange()
         {
             // Arrange
-            var parentArrangement = new DummyItem(4, true);
-            var theParent = new DummyTestComposite<DummyItem>();
+            var parentArrangement = new ClassToTest(4);
+            var theParent = new DummyTestComposite<ClassToTest>();
             theParent.StubbedArrange = () => parentArrangement;
-            var theMutation = new DummyMutation<DummyItem>();
-            DummyItem itemPassedToMutationApply = null;
+            var theMutation = new DummyMutation<ClassToTest>();
+            ClassToTest itemPassedToMutationApply = null;
             theMutation.StubbedApply = d => itemPassedToMutationApply = d;
             var sut = MakeSut(theParent, theMutation);
             
@@ -110,12 +109,12 @@ namespace PolyTest.Tests.Implementations
 
         #region Test Helper Methods
 
-        private TestLeaf<DummyItem> MakeSut(ITestComposite<DummyItem> parent = null, IMutation<DummyItem> mutation = null)
+        private TestLeaf<ClassToTest> MakeSut(ITestComposite<ClassToTest> parent = null, IMutation<ClassToTest> mutation = null)
         {
-            parent = parent ?? new DummyTestComposite<DummyItem>();
-            mutation = mutation ?? new DummyMutation<DummyItem>();
+            parent = parent ?? new DummyTestComposite<ClassToTest>();
+            mutation = mutation ?? new DummyMutation<ClassToTest>();
 
-            return new TestLeaf<DummyItem>(parent, mutation);
+            return new TestLeaf<ClassToTest>(parent, mutation);
         }
 
         #endregion

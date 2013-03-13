@@ -1,4 +1,4 @@
-﻿namespace PolyTest.Tests.TestUtils
+namespace PolyTest.Tests.ApiUsage
 {
     public class DummyItem
     {

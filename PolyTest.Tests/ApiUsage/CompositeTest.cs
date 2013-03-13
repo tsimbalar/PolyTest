@@ -1,5 +1,4 @@
 using PolyTest.Implementations;
-using PolyTest.Tests.TestUtils;
 using Xunit;
 
 namespace PolyTest.Tests.ApiUsage

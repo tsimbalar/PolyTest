@@ -55,7 +55,9 @@
   </Choose>
   <ItemGroup>
     <Compile Include="ApiUsage\CompositeTest.cs" />
+    <Compile Include="ApiUsage\DummyItem.cs" />
     <Compile Include="ApiUsage\Fluent\CompositeFluentTest.cs" />
+    <Compile Include="Implementations\ClassToTest.cs" />
     <Compile Include="Implementations\DummyMutation.cs" />
     <Compile Include="Implementations\DummyTestCase.cs" />
     <Compile Include="Implementations\DummyTestComponent.cs" />
@@ -65,7 +67,6 @@
     <Compile Include="Implementations\TestRootTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ApiUsage\DummyAssert.cs" />
-    <Compile Include="TestUtils\DummyItem.cs" />
     <Compile Include="ApiUsage\FakeSut.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -77,6 +78,7 @@
       <Name>PolyTest</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

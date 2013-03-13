@@ -1,6 +1,4 @@
 ﻿
-using PolyTest.Tests.TestUtils;
-
 namespace PolyTest.Tests.ApiUsage
 {
     #region Sut to test our tests (sic)

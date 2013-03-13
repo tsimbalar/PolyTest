@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PolyTest.Implementations;
-using PolyTest.Tests.TestUtils;
 using Xunit;
 
 namespace PolyTest.Tests.Implementations
@@ -18,7 +17,7 @@ namespace PolyTest.Tests.Implementations
 
             // Act & Assert
             Assert.Throws<ArgumentNullException>(() =>
-                new Mutation<DummyItem>(null, d => d.IntProperty = 2)
+                new Mutation<ClassToTest>(null, d => d.IntProperty = 2)
             );
         }
 
@@ -29,7 +28,7 @@ namespace PolyTest.Tests.Implementations
 
             // Act & Assert
             Assert.Throws<ArgumentNullException>(() =>
-                new Mutation<DummyItem>("someString", null)
+                new Mutation<ClassToTest>("someString", null)
             );
         }
 
@@ -40,7 +39,7 @@ namespace PolyTest.Tests.Implementations
             var someString = "any string";
             
             // Act
-            var sut = new Mutation<DummyItem>(someString, d => d.IntProperty = 2);
+            var sut = new Mutation<ClassToTest>(someString, d => d.IntProperty = 2);
 
             // Assert
             Assert.Equal(someString, sut.Description);
@@ -51,8 +50,8 @@ namespace PolyTest.Tests.Implementations
         {
             // Arrange
             var initialValue = 4;
-            var initial = new DummyItem(initial: initialValue, initialBool: false);
-            var sut = new Mutation<DummyItem>("some string", d => d.IntProperty += 2);
+            var initial = new ClassToTest(initialValue);
+            var sut = new Mutation<ClassToTest>("some string", d => d.IntProperty += 2);
 
             // Act
            sut.Apply(initial);
