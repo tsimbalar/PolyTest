@@ -79,7 +79,7 @@ namespace PolyTest.Tests.Implementations
             var actual = sut.Enumerate();
 
             // Assert
-            Assert.False(actual.Any(), "Should return empty list after building the object");
+            Assert.Equal(Enumerable.Empty<ITestCase<DummyItem>>(), actual);
         }
 
         [Fact]

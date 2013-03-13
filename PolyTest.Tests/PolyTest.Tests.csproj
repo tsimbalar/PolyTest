@@ -56,9 +56,12 @@
   <ItemGroup>
     <Compile Include="ApiUsage\CompositeTest.cs" />
     <Compile Include="ApiUsage\Fluent\CompositeFluentTest.cs" />
+    <Compile Include="Implementations\DummyMutation.cs" />
     <Compile Include="Implementations\DummyTestCase.cs" />
     <Compile Include="Implementations\DummyTestComponent.cs" />
+    <Compile Include="Implementations\DummyTestComposite.cs" />
     <Compile Include="Implementations\MutationTest.cs" />
+    <Compile Include="Implementations\TestLeafTest.cs" />
     <Compile Include="Implementations\TestRootTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ApiUsage\DummyAssert.cs" />
