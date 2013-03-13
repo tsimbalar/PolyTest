@@ -1,4 +1,4 @@
-﻿namespace PolyTest.Tests.Implementations
+namespace PolyTest.Tests.Implementations.TestUtils
 {
     internal class ClassToTest
     {

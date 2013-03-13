@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PolyTest.Implementations;
+using PolyTest.Tests.Implementations.TestUtils;
 using Xunit;
 
 namespace PolyTest.Tests.Implementations
