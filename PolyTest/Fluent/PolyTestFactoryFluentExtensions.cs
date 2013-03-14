@@ -14,7 +14,7 @@ namespace PolyTest.Fluent
         /// </summary>
         public static ITestRootFluent<T> From<T>(this IPolyTestFactory factory, string initialStateDescription, Func<T> setup)
         {
-            return new TestRootFluentWrapper<T>(Poly.Create.Root(initialStateDescription, setup));
+            return new TestRootFluentWrapper<T>(factory.Root(initialStateDescription, setup));
         }
     }
 }

@@ -15,23 +15,7 @@ namespace PolyTest.Implementations.Fluent
             _wrapped = wrapped;
         }
 
-        public string Description { get { return _wrapped.Description; } }
-        public T Arrange()
-        {
-            return _wrapped.Arrange();
-        }
-
-        public IEnumerable<ITestCase<T>> Enumerate()
-        {
-            return _wrapped.Enumerate();
-        }
-
-        public void Add(ITestComponent<T> child)
-        {
-            _wrapped.Add(child);
-        }
-
-        public bool IncludeSelfInEnumeration
+        protected bool IncludeSelfInEnumeration
         {
             get { return _wrapped.IncludeSelfInEnumeration; }
             set { _wrapped.IncludeSelfInEnumeration = value; }
