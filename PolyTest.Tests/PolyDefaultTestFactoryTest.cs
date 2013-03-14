@@ -46,7 +46,7 @@ namespace PolyTest.Tests
         public void Mutation_returns_a_Mutation_with_Apply_calling_mutationAction()
         {
             // Arrange
-            ClassToTest instanceToMutate = new ClassToTest(initialValue:5);
+            var instanceToMutate = new ClassToTest(initialValue:5);
             ClassToTest mutatedInstance = null;
             Action<ClassToTest> mutationAction = (c) => { mutatedInstance = c; };
             var sut = MakeSut();
@@ -62,7 +62,48 @@ namespace PolyTest.Tests
 
         #region Root<>()
 
+        [Fact]
+        public void Root_returns_a_TestRoot()
+        {
+            // Arrange
+            var sut = MakeSut();
 
+            // Act
+            var actual = sut.Root("whatever", () => new ClassToTest(2));
+
+            // Assert
+            Assert.IsType<TestRoot<ClassToTest>>(actual);
+        }
+
+        [Fact]
+        public void Root_returns_TestRoot_with_Description()
+        {
+            // Arrange
+            var expectedDescription = "some description";
+            var sut = MakeSut();
+
+            // Act
+            var actual = sut.Root(expectedDescription, () => new ClassToTest(4));
+
+            // Assert
+            Assert.Equal(expectedDescription, actual.Description);
+        }
+
+        [Fact]
+        public void Root_returns_TestRoot_with_Arrange_calling_setupFunction()
+        {
+            // Arrange
+            var arrangeReturn = new ClassToTest(3);
+            Func<ClassToTest> setUpFunction = () => arrangeReturn;
+            var sut = MakeSut();
+            var root = sut.Root("whatever", setUpFunction);
+
+            // Act
+            var actual = root.Arrange();
+
+            // Assert
+            Assert.Same(arrangeReturn, actual);
+        }
 
         #endregion
 
