@@ -1,6 +1,6 @@
 using System;
 
-namespace PolyTest.Tests.Implementations.TestUtils
+namespace PolyTest.Tests.TestUtils
 {
     public class DummyTestCase<T> : ITestCase<T>
     {

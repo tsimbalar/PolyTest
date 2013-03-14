@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace PolyTest.Tests.Implementations.TestUtils
+namespace PolyTest.Tests.TestUtils
 {
     public class DummyTestComposite<T> : ITestComposite<T>
     {

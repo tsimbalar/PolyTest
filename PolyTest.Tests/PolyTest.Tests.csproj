@@ -61,14 +61,16 @@
     <Compile Include="Implementations\TestCompositeTest.cs" />
     <Compile Include="Implementations\TestLeafTest.cs" />
     <Compile Include="Implementations\TestRootTest.cs" />
-    <Compile Include="Implementations\TestUtils\ClassToTest.cs" />
-    <Compile Include="Implementations\TestUtils\DummyMutation.cs" />
-    <Compile Include="Implementations\TestUtils\DummyTestCase.cs" />
-    <Compile Include="Implementations\TestUtils\DummyTestComponent.cs" />
-    <Compile Include="Implementations\TestUtils\DummyTestComposite.cs" />
+    <Compile Include="PolyDefaultTestFactoryTest.cs" />
+    <Compile Include="PolyTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ApiUsage\DummyAssert.cs" />
     <Compile Include="ApiUsage\FakeSut.cs" />
+    <Compile Include="TestUtils\ClassToTest.cs" />
+    <Compile Include="TestUtils\DummyMutation.cs" />
+    <Compile Include="TestUtils\DummyTestCase.cs" />
+    <Compile Include="TestUtils\DummyTestComponent.cs" />
+    <Compile Include="TestUtils\DummyTestComposite.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

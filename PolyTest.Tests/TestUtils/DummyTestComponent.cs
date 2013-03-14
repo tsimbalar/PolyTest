@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PolyTest.Tests.Implementations.TestUtils
+namespace PolyTest.Tests.TestUtils
 {
     public class DummyTestComponent<T> : ITestComponent<T>
     {
