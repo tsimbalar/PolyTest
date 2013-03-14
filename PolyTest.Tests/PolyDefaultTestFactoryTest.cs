@@ -107,6 +107,61 @@ namespace PolyTest.Tests
 
         #endregion
 
+        #region Leaf<>()
+
+        [Fact]
+        public void Leaf_returns_a_TestLeaf()
+        {
+            // Arrange
+            var sut = MakeSut();
+
+            // Act
+            var actual = sut.Leaf(new DummyTestComposite<ClassToTest>(), new DummyMutation<ClassToTest>());
+
+            // Assert
+            Assert.IsType<TestLeaf<ClassToTest>>(actual);
+        }
+
+        [Fact]
+        public void Leaf_with_ConditionToTest_returns_a_TestLeaf_with_Description_from_parent_AND_its_own()
+        {
+            // Arrange
+            var parentDescription = "PARENT DESCRIPTION";
+            var mutationDescription = "MUTATION DESCRIPTION";
+            var sut = MakeSut();
+            
+            // Act
+            var actual = sut.Leaf(new DummyTestComposite<ClassToTest>(parentDescription), new DummyMutation<ClassToTest>(mutationDescription));
+
+            // Assert
+            Assert.Equal(parentDescription + " AND " + mutationDescription, actual.Description);
+        }
+
+        [Fact]
+        public void Leaf_with_ConditionToTest_returns_a_TestLeaf_with_Arrange_from_parent_Arrange_AND_its_own()
+        {
+            // Arrange
+            var sut = MakeSut();
+            var arrangeReturn = new ClassToTest(5);
+            var parent = new DummyTestComposite<ClassToTest>();
+            parent.StubbedArrange = () => arrangeReturn;
+            var mutationNewIntProperty = 666;
+            var mutation = new DummyMutation<ClassToTest>();
+            mutation.StubbedApply = c => c.IntProperty = mutationNewIntProperty;
+            var leaf = sut.Leaf(parent, mutation);
+
+            // Act
+            var actual = leaf.Arrange();
+
+            // Assert
+            Assert.Same(arrangeReturn, actual);
+            Assert.Equal(actual.IntProperty, mutationNewIntProperty);
+        }
+
+        #endregion
+
+
+
         #region Test Helper Methods
 
         PolyDefaultTestFactory MakeSut()
