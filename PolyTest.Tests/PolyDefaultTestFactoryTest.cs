@@ -160,7 +160,59 @@ namespace PolyTest.Tests
 
         #endregion
 
+        #region Composite<>()
 
+
+        [Fact]
+        public void Composite_returns_a_TestComposite()
+        {
+            // Arrange
+            var sut = MakeSut();
+
+            // Act
+            var actual = sut.Composite(new DummyTestComposite<ClassToTest>(), new DummyMutation<ClassToTest>());
+
+            // Assert
+            Assert.IsType<TestComposite<ClassToTest>>(actual);
+        }
+
+        [Fact]
+        public void Composite_with_ConditionToTest_returns_a_TestComposite_with_Description_from_parent_AND_its_own()
+        {
+            // Arrange
+            var parentDescription = "PARENT DESCRIPTION";
+            var mutationDescription = "MUTATION DESCRIPTION";
+            var sut = MakeSut();
+
+            // Act
+            var actual = sut.Composite(new DummyTestComposite<ClassToTest>(parentDescription), new DummyMutation<ClassToTest>(mutationDescription));
+
+            // Assert
+            Assert.Equal(parentDescription + " AND " + mutationDescription, actual.Description);
+        }
+
+        [Fact]
+        public void Composite_with_ConditionToTest_returns_a_TestComposite_with_Arrange_from_parent_Arrange_AND_its_own()
+        {
+            // Arrange
+            var sut = MakeSut();
+            var arrangeReturn = new ClassToTest(5);
+            var parent = new DummyTestComposite<ClassToTest>();
+            parent.StubbedArrange = () => arrangeReturn;
+            var mutationNewIntProperty = 666;
+            var mutation = new DummyMutation<ClassToTest>();
+            mutation.StubbedApply = c => c.IntProperty = mutationNewIntProperty;
+            var composite = sut.Composite(parent, mutation);
+
+            // Act
+            var actual = composite.Arrange();
+
+            // Assert
+            Assert.Same(arrangeReturn, actual);
+            Assert.Equal(actual.IntProperty, mutationNewIntProperty);
+        }
+
+        #endregion
 
         #region Test Helper Methods
 
