@@ -57,6 +57,7 @@
     <Compile Include="ApiUsage\CompositeTest.cs" />
     <Compile Include="ApiUsage\DummyItem.cs" />
     <Compile Include="ApiUsage\Fluent\CompositeFluentTest.cs" />
+    <Compile Include="Implementations\Fluent\TestCaseItemTest.cs" />
     <Compile Include="Implementations\MutationTest.cs" />
     <Compile Include="Implementations\TestCompositeTest.cs" />
     <Compile Include="Implementations\TestLeafTest.cs" />
@@ -82,9 +83,7 @@
       <Name>PolyTest</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Implementations\Fluent\" />
-  </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

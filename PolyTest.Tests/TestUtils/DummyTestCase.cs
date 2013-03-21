@@ -30,9 +30,11 @@ namespace PolyTest.Tests.TestUtils
         }
 
         public string Description { get { return _description; } }
+
+        public Func<T> StubbedArrange { get; set; }
         public T Arrange()
         {
-            throw new NotImplementedException();
+            return StubbedArrange();
         }
     }
 }

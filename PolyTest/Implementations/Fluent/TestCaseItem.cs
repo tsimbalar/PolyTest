@@ -30,33 +30,40 @@ namespace PolyTest.Implementations.Fluent
 
         internal TestResult<TResult> Test<TResult>(Func<T, TResult> act, Action<TResult> assert)
         {
+            T init;
             try
             {
-                var init = Arrange();
-                try
-                {
-                    var result = act(init);
-
-                    try
-                    {
-                        assert(result);
-                    }
-                    catch (Exception e)
-                    {
-                        return TestResultFactory.AssertFailed(this, result, e);
-                    }
-                    return TestResultFactory.Success(this, result);
-                }
-                catch (Exception e)
-                {
-                    return TestResultFactory.ActFailed<TResult>(this, e);
-                }
+                init = Arrange();
             }
             catch (Exception e)
             {
                 return TestResultFactory.ArrangeFailed<TResult>(this, e);
             }
 
+
+            TResult result;
+            try
+            {
+                result = act(init);
+
+            }
+            catch (Exception e)
+            {
+                return TestResultFactory.ActFailed<TResult>(this, e);
+            }
+
+
+            try
+            {
+                assert(result);
+            }
+            catch (Exception e)
+            {
+                return TestResultFactory.AssertFailed(this, result, e);
+            }
+
+            // we reached this part . We are safe !
+            return TestResultFactory.Success(this, result);
         }
 
         public override string ToString()
