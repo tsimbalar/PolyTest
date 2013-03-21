@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using PolyTest.Implementations.Fluent;
@@ -66,7 +65,7 @@ namespace PolyTest.Tests.Implementations.Fluent
         }
 
         [Fact]
-        public void ToString_with_ConditionToTest_returns_string_with_Index_and_Description()
+        public void ToString_returns_string_with_Index_and_Description()
         {
             // Arrange
             var index = 469;
@@ -221,23 +220,5 @@ namespace PolyTest.Tests.Implementations.Fluent
         }
 
         #endregion
-    }
-
-    public class DummyException : Exception
-    {
-        public DummyException(string message)
-            : base(message)
-        {
-        }
-
-        public DummyException(string message, Exception innerException)
-            : base(message, innerException)
-        {
-        }
-
-        protected DummyException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
-        {
-        }
     }
 }

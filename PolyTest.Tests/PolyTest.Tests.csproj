@@ -69,6 +69,7 @@
     <Compile Include="ApiUsage\FakeSut.cs" />
     <Compile Include="TestCompositeExtensionsTest.cs" />
     <Compile Include="TestUtils\ClassToTest.cs" />
+    <Compile Include="TestUtils\DummyException.cs" />
     <Compile Include="TestUtils\DummyMutation.cs" />
     <Compile Include="TestUtils\DummyTestCase.cs" />
     <Compile Include="TestUtils\DummyTestComponent.cs" />
