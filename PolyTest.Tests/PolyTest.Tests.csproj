@@ -57,6 +57,7 @@
     <Compile Include="ApiUsage\CompositeTest.cs" />
     <Compile Include="ApiUsage\DummyItem.cs" />
     <Compile Include="ApiUsage\Fluent\CompositeFluentTest.cs" />
+    <Compile Include="Fluent\PolyTestFactoryFluentExtensionsTest.cs" />
     <Compile Include="Implementations\Fluent\TestCaseItemTest.cs" />
     <Compile Include="Implementations\MutationTest.cs" />
     <Compile Include="Implementations\TestCompositeTest.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="TestUtils\ClassToTest.cs" />
     <Compile Include="TestUtils\DummyException.cs" />
     <Compile Include="TestUtils\DummyMutation.cs" />
+    <Compile Include="TestUtils\DummyPolyTestFactory.cs" />
     <Compile Include="TestUtils\DummyTestCase.cs" />
     <Compile Include="TestUtils\DummyTestComponent.cs" />
     <Compile Include="TestUtils\DummyTestComposite.cs" />

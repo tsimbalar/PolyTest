@@ -8,6 +8,8 @@ namespace PolyTest.Implementations.Fluent
     internal class TestCompositeFluentWrapper<T> : ITestCompositeFluent<T>
     {
         private readonly ITestComposite<T> _wrapped;
+        // visible for testing only
+        internal ITestComposite<T> Wrapped { get { return _wrapped; } } 
 
         public TestCompositeFluentWrapper(ITestComposite<T> wrapped)
         {
