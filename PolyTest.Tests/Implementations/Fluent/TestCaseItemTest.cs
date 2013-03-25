@@ -212,7 +212,7 @@ namespace PolyTest.Tests.Implementations.Fluent
 
 
         #region Test Helper Methods
-        private TestCaseItem<ClassToTest> MakeSut(int index = 3, ITestCase<ClassToTest> testCase = null)
+        private static TestCaseItem<ClassToTest> MakeSut(int index = 3, ITestCase<ClassToTest> testCase = null)
         {
 
             testCase = testCase ?? new DummyTestCase<ClassToTest>("dumm test case");

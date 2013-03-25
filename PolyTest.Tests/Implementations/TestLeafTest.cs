@@ -110,7 +110,7 @@ namespace PolyTest.Tests.Implementations
 
         #region Test Helper Methods
 
-        private TestLeaf<ClassToTest> MakeSut(ITestComposite<ClassToTest> parent = null, IMutation<ClassToTest> mutation = null)
+        private static TestLeaf<ClassToTest> MakeSut(ITestComposite<ClassToTest> parent = null, IMutation<ClassToTest> mutation = null)
         {
             parent = parent ?? new DummyTestComposite<ClassToTest>();
             mutation = mutation ?? new DummyMutation<ClassToTest>();

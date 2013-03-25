@@ -216,7 +216,7 @@ namespace PolyTest.Tests
 
         #region Test Helper Methods
 
-        PolyDefaultTestFactory MakeSut()
+        private static PolyDefaultTestFactory MakeSut()
         {
             return new PolyDefaultTestFactory();
         }
