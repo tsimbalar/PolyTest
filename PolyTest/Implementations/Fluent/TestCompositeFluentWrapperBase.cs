@@ -5,13 +5,14 @@ using PolyTest.Fluent;
 
 namespace PolyTest.Implementations.Fluent
 {
-    internal class TestCompositeFluentWrapper<T> : ITestCompositeFluent<T>
+    internal abstract class TestCompositeFluentWrapperBase<T> : ITestCompositeFluent<T>
     {
         private readonly ITestComposite<T> _wrapped;
+        
         // visible for testing only
         internal ITestComposite<T> Wrapped { get { return _wrapped; } } 
 
-        public TestCompositeFluentWrapper(ITestComposite<T> wrapped)
+        protected TestCompositeFluentWrapperBase(ITestComposite<T> wrapped)
         {
             if (wrapped == null) throw new ArgumentNullException("wrapped");
             _wrapped = wrapped;
@@ -25,7 +26,7 @@ namespace PolyTest.Implementations.Fluent
 
         public ITestCompositeFluent<T> Consider(IMutation<T> mutation)
         {
-            this._wrapped.Add(new TestComposite<T>(this._wrapped, mutation));
+            this._wrapped.Add(Poly.Create.Composite(this._wrapped, mutation));
             return this;
         }
 
@@ -34,7 +35,7 @@ namespace PolyTest.Implementations.Fluent
             ITestCompositeNestedFluent<T> composite = new TestCompositeFluentNestedWrapper<T>(new TestComposite<T>(this._wrapped, mutation));
             var updatedComposite = nestedAdd(composite);
 
-            this._wrapped.Add(((TestCompositeFluentWrapper<T>)updatedComposite)._wrapped);
+            this._wrapped.Add(((TestCompositeFluentWrapperBase<T>)updatedComposite)._wrapped);
 
             return this;
         }

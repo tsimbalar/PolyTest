@@ -2,7 +2,7 @@ using PolyTest.Fluent;
 
 namespace PolyTest.Implementations.Fluent
 {
-    internal class TestCompositeFluentNestedWrapper<T> : TestCompositeFluentWrapper<T>, ITestCompositeNestedFluent<T>
+    internal class TestCompositeFluentNestedWrapper<T> : TestCompositeFluentWrapperBase<T>, ITestCompositeNestedFluent<T>
     {
         public TestCompositeFluentNestedWrapper(ITestComposite<T> wrapped)
             : base(wrapped)

@@ -50,7 +50,7 @@
     <Compile Include="Fluent\TestExecutionAssertFailedException.cs" />
     <Compile Include="Implementations\Fluent\TestCaseItem.cs" />
     <Compile Include="Implementations\Fluent\TestCompositeFluentNestedWrapper.cs" />
-    <Compile Include="Implementations\Fluent\TestCompositeFluentWrapper.cs" />
+    <Compile Include="Implementations\Fluent\TestCompositeFluentWrapperBase.cs" />
     <Compile Include="Implementations\Fluent\TestExecutionReport.cs" />
     <Compile Include="Implementations\Fluent\TestResult.cs" />
     <Compile Include="Implementations\Fluent\TestResultFactory.cs" />
