@@ -35,7 +35,17 @@ namespace PolyTest.Implementations.Fluent
             ITestCompositeNestedFluent<T> composite = new TestCompositeFluentNestedWrapper<T>(new TestComposite<T>(this._wrapped, mutation));
             var updatedComposite = nestedAdd(composite);
 
-            this._wrapped.Add(((TestCompositeFluentWrapperBase<T>)updatedComposite)._wrapped);
+            if (updatedComposite == null)
+            {
+                throw new InvalidOperationException("nestedAdd returned null");
+            }
+            var compositeWithNewNodes = updatedComposite as TestCompositeFluentWrapperBase<T>;
+            if (compositeWithNewNodes == null)
+            {
+                throw new InvalidOperationException(string.Format("Expected nestedAdd to return an instance of type {0}. It returned : {1}", typeof(TestCompositeFluentWrapperBase<T>), updatedComposite.GetType()));
+            }
+
+            this._wrapped.Add(compositeWithNewNodes._wrapped);
 
             return this;
         }

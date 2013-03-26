@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PolyTest.Implementations;
 using PolyTest.Implementations.Fluent;
 using PolyTest.Tests.TestUtils;
+using PolyTest.Tests.TestUtils.Fluent;
 using Xunit;
 
 namespace PolyTest.Tests.Implementations.Fluent
@@ -58,7 +58,7 @@ namespace PolyTest.Tests.Implementations.Fluent
             // Arrange
             var sut = MakeSut();
             var mutationToAdd = new DummyMutation<ClassToTest>();
-            
+
             // Act
             var actual = sut.Consider(mutationToAdd);
 
@@ -67,22 +67,88 @@ namespace PolyTest.Tests.Implementations.Fluent
         }
 
         [Fact]
-        public void Consider_with_ConditionToTest_adds_TestComposite_to_wrapped()
+        public void Consider_adds_TestComposite_to_wrapped()
         {
             // Arrange
             var wrapped = new DummyTestComposite<ClassToTest>();
             var sut = MakeSut(wrapped);
             var mutationToAdd = new DummyMutation<ClassToTest>();
-            
+
             // Act
             sut.Consider(mutationToAdd);
 
             // Assert
             Assert.IsType<TestComposite<ClassToTest>>(wrapped.Children.Single());
-            var actualChild = (TestComposite<ClassToTest>) wrapped.Children.Single();
-            Assert.Equal(wrapped.Description + " AND " +  mutationToAdd.Description, actualChild.Description);
+            var actualChild = (TestComposite<ClassToTest>)wrapped.Children.Single();
+            Assert.Equal(wrapped.Description + " AND " + mutationToAdd.Description, actualChild.Description);
         }
 
+        [Fact]
+        public void Consider_with_nested_returns_self()
+        {
+            // Arrange
+            var sut = MakeSut();
+            var mutationToAdd = new DummyMutation<ClassToTest>();
+
+            // Act
+            var actual = sut.Consider(mutationToAdd, c => c);
+
+            // Assert
+            Assert.Same(sut, actual);
+        }
+
+        [Fact]
+        public void Consider_with_nested_adds_Nested_children()
+        {
+            // Arrange
+            var wrapped = new DummyTestComposite<ClassToTest>();
+            var sut = MakeSut(wrapped);
+            var mutationToAdd = new DummyMutation<ClassToTest>();
+            var nestedMutation = new DummyMutation<ClassToTest>();
+
+            // Act
+            sut.Consider(mutationToAdd, c => c.Consider(nestedMutation));
+
+            // Assert
+            Assert.IsType<TestComposite<ClassToTest>>(wrapped.Children.Single());
+            var actualChild = (TestComposite<ClassToTest>)wrapped.Children.Single();
+            Assert.Equal(wrapped.Description + " AND " + mutationToAdd.Description, actualChild.Description);
+            var grandChild = (TestComposite<ClassToTest>)actualChild.Children.Single();
+            Assert.Equal(wrapped.Description + " AND " + mutationToAdd.Description + " AND " + nestedMutation.Description, grandChild.Description);
+        }
+
+        [Fact]
+        public void Consider_with_nestedAdd_returning_null_throws_InvalidOperationException()
+        {
+            // Arrange
+            var sut = MakeSut();
+            var mutationToAdd = new DummyMutation<ClassToTest>();
+
+            // Act & Assert
+            var actualException =  Assert.Throws<InvalidOperationException>(() =>
+                             sut.Consider(mutationToAdd, t=> null)
+                );
+            Assert.Equal("nestedAdd returned null", actualException.Message);
+        }
+
+        [Fact]
+        public void Consider_with_nestedAdd_returning_not_TestCompositeFluentWrapperBase_throws_InvalidOperationException()
+        {
+            // Arrange
+            var sut = MakeSut();
+            var mutationToAdd = new DummyMutation<ClassToTest>();
+            var nestedAddResult = new DummyTestCompositeFluent<ClassToTest>();
+
+            // Act & Assert
+            var actualException = Assert.Throws<InvalidOperationException>(() =>
+                             sut.Consider(mutationToAdd, t => nestedAddResult)
+                );
+            var expectedMessage =
+                String.Format("Expected nestedAdd to return an instance of type {0}. It returned : {1}",
+                              typeof(TestCompositeFluentWrapperBase<ClassToTest>), typeof(DummyTestCompositeFluent<ClassToTest>)
+                    );
+            Assert.Equal(expectedMessage, actualException.Message);
+        }
 
 
         private TestRootFluentWrapper<ClassToTest> MakeSut(ITestComposite<ClassToTest> wrapped = null)
