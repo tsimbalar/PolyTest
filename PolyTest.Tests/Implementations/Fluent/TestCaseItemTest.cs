@@ -129,7 +129,9 @@ namespace PolyTest.Tests.Implementations.Fluent
                 act: c =>
                          {
                              throw actException;
+                             #pragma warning disable 162 // "Unreachable code detected" - need it for the type inference to work
                              return c;
+                             #pragma warning restore 162
                          },
                 assert: a => {/* do nothing*/}
                 );

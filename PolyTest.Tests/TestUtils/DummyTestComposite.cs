@@ -6,12 +6,14 @@ namespace PolyTest.Tests.TestUtils
     public class DummyTestComposite<T> : ITestComposite<T>
     {
         private readonly string _description;
-        private readonly List<ITestComponent<T>> _children; 
+        private readonly List<ITestComponent<T>> _children;
+        private readonly List<ITestCase<T>> _testCases; 
 
         public DummyTestComposite(string description= "dummy test composite description")
         {
             _description = description;
             _children = new List<ITestComponent<T>>();
+            _testCases = new List<ITestCase<T>>();
         }
 
         public string Description { get { return _description; } }
@@ -20,12 +22,17 @@ namespace PolyTest.Tests.TestUtils
             return StubbedArrange();
         }
 
+
+        /// <summary>
+        /// In this version, ENumerate will enumerate over this list ...
+        /// </summary>
+        public List<ITestCase<T>> TestCases { get { return _testCases; } }
         public IEnumerable<ITestCase<T>> Enumerate()
         {
-            throw new NotImplementedException();
+            return TestCases;
         }
 
-        
+
         public IEnumerable<ITestComponent<T>> Children { get { return _children; } }
 
         public void Add(ITestComponent<T> child)
