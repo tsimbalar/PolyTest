@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace PolyTest.Fluent
 {
-    public interface ITestExecutionReport<T> : IFluentInterface
+    public interface ITestExecutionReport<out T> : IFluentInterface
     {
         int Count { get; }
         IEnumerable<ITestResult<T>> All { get; }

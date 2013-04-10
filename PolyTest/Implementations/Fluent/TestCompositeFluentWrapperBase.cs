@@ -8,9 +8,9 @@ namespace PolyTest.Implementations.Fluent
     internal abstract class TestCompositeFluentWrapperBase<T> : ITestCompositeFluent<T>
     {
         private readonly ITestComposite<T> _wrapped;
-        
+
         // visible for testing only
-        internal ITestComposite<T> Wrapped { get { return _wrapped; } } 
+        internal ITestComposite<T> Wrapped { get { return _wrapped; } }
 
         protected TestCompositeFluentWrapperBase(ITestComposite<T> wrapped)
         {
@@ -52,7 +52,7 @@ namespace PolyTest.Implementations.Fluent
 
         public void ForEach(Action<ITestCase<T>> action)
         {
-            foreach (var testTreeNode in this.AsEnumerablePrivate())
+            foreach (var testTreeNode in this.AsEnumerable())
             {
                 action(testTreeNode);
             }
@@ -60,15 +60,15 @@ namespace PolyTest.Implementations.Fluent
 
         public IEnumerable<TResult> Select<TResult>(Func<ITestCase<T>, TResult> selector)
         {
-            return this.AsEnumerablePrivate().Select(selector);
+            return this.AsEnumerable().Select(selector);
         }
 
         public ITestExecutionReport<TResult> Walk<TResult>(Func<T, TResult> act, Action<TResult> assert)
         {
             var report = new TestExecutionReport<TResult>();
-            foreach (var testCase in this.AsEnumerablePrivate())
+            foreach (var testCase in AsEnumerable().Select( (tc, i) => new {TestCase = tc, Index=i}))
             {
-                var result = testCase.Test(act, assert);
+                var result = TestRunner.Run(testCase.Index, testCase.TestCase, act, assert);
                 report.Add(result);
             }
             return report;
@@ -76,14 +76,7 @@ namespace PolyTest.Implementations.Fluent
 
         public IEnumerable<ITestCase<T>> AsEnumerable()
         {
-            return AsEnumerablePrivate();
+            return Wrapped.Enumerate();
         }
-
-        private IEnumerable<TestCaseItem<T>> AsEnumerablePrivate()
-        {
-            var resultEnumerable = _wrapped.Enumerate().Select((tc, i) => new TestCaseItem<T>(i, tc));
-            return resultEnumerable;
-        }
-
     }
 }

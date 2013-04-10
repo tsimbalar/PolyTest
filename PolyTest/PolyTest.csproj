@@ -48,6 +48,7 @@
     <Compile Include="Fluent\Magic\ReflectionHelper.cs" />
     <Compile Include="Fluent\TestCompositeFluentExtensions.cs" />
     <Compile Include="Fluent\TestExecutionAssertFailedException.cs" />
+    <Compile Include="Implementations\Fluent\TestCaseInformation.cs" />
     <Compile Include="Implementations\Fluent\TestCaseItem.cs" />
     <Compile Include="Implementations\Fluent\TestCompositeFluentNestedWrapper.cs" />
     <Compile Include="Implementations\Fluent\TestCompositeFluentWrapperBase.cs" />
@@ -55,6 +56,7 @@
     <Compile Include="Implementations\Fluent\TestResult.cs" />
     <Compile Include="Implementations\Fluent\TestResultFactory.cs" />
     <Compile Include="Implementations\Fluent\TestRootFluentWrapper.cs" />
+    <Compile Include="Implementations\Fluent\TestRunner.cs" />
     <Compile Include="Implementations\Mutation.cs" />
     <Compile Include="Implementations\TestComposite.cs" />
     <Compile Include="Implementations\TestCompositeBase.cs" />

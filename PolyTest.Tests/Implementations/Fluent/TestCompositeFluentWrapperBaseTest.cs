@@ -174,15 +174,10 @@ namespace PolyTest.Tests.Implementations.Fluent
         }
 
         [Fact]
-        public void ForEach_with_ConditionToTest_calls_action_once_per_element_in_wrapped_Enumerate()
+        public void ForEach_calls_action_once_per_element_in_wrapped_Enumerate()
         {
             // Arrange
-            var wrappedTestCases = new List<ITestCase<ClassToTest>>
-                                       {
-                                           new DummyTestCase<ClassToTest>("test case 1"),
-                                           new DummyTestCase<ClassToTest>("test case 2"),
-                                           new DummyTestCase<ClassToTest>("test case 3"),
-                                       };
+            var wrappedTestCases = MakeManyTestCases();
             var wrapped = new DummyTestComposite<ClassToTest>();
             wrapped.TestCases.AddRange(wrappedTestCases);
 
@@ -197,15 +192,10 @@ namespace PolyTest.Tests.Implementations.Fluent
         }
 
         [Fact]
-        public void Select_with_ConditionToTest_returns_wrapped_TestCases()
+        public void Select_returns_wrapped_TestCases()
         {
             // Arrange
-            var wrappedTestCases = new List<ITestCase<ClassToTest>>
-                                       {
-                                           new DummyTestCase<ClassToTest>("test case 1"),
-                                           new DummyTestCase<ClassToTest>("test case 2"),
-                                           new DummyTestCase<ClassToTest>("test case 3"),
-                                       };
+            var wrappedTestCases = MakeManyTestCases();
             var wrapped = new DummyTestComposite<ClassToTest>();
             wrapped.TestCases.AddRange(wrappedTestCases);
 
@@ -218,9 +208,95 @@ namespace PolyTest.Tests.Implementations.Fluent
             AssertAreEquivalent(wrappedTestCases, actual);
         }
 
+        [Fact]
+        public void Walk_calls_act_for_each_element_in_wrapped_Enumerate()
+        {
+            // Arrange
+            var wrappedTestCases = MakeManyTestCases();
+            var wrapped = new DummyTestComposite<ClassToTest>();
+            wrapped.TestCases.AddRange(wrappedTestCases);
+
+            var sut = MakeSut(wrapped);
+            var actCallCounter = 0;
+
+            // Act
+            var actual = sut.Walk(act: c =>
+                              {
+                                  actCallCounter = actCallCounter + 1;
+                                  return c;
+                              },
+                     assert: c => { }); // nothing to assert in this test
+
+            // Assert
+            Assert.Equal(wrappedTestCases.Count, actCallCounter);
+        }
+
+        [Fact]
+        public void Walk_calls_assert_for_each_element_in_wrapped_Enumerate()
+        {
+            // Arrange
+            var wrappedTestCases = MakeManyTestCases();
+            var wrapped = new DummyTestComposite<ClassToTest>();
+            wrapped.TestCases.AddRange(wrappedTestCases);
+
+            var sut = MakeSut(wrapped);
+            var assertCallCounter = 0;
+
+            // Act
+            var actual = sut.Walk(
+                    act: c => c,
+                    assert: c => assertCallCounter++); // nothing to assert in this test
+
+            // Assert
+            Assert.Equal(wrappedTestCases.Count, assertCallCounter);
+        }
+
+        [Fact]
+        public void Walk_returns_a_TestExecutionReport()
+        {
+            // Arrange
+            var wrappedTestCases = MakeManyTestCases();
+            var wrapped = new DummyTestComposite<ClassToTest>();
+            wrapped.TestCases.AddRange(wrappedTestCases);
+            var sut = MakeSut(wrapped);
+
+            // Act
+            var actual = sut.Walk(
+                act: c => c,
+                assert: c => { }
+                );
+
+            // Assert
+            Assert.NotNull(actual);
+            Assert.IsType<TestExecutionReport<ClassToTest>>(actual);
+        }
+
+        [Fact]
+        public void Walk_returns_one_result_for_each_testCase()
+        {
+            // Arrange
+            var wrappedTestCases = MakeManyTestCases();
+            var wrapped = new DummyTestComposite<ClassToTest>();
+            wrapped.TestCases.AddRange(wrappedTestCases);
+            var sut = MakeSut(wrapped);
+
+            // Act
+            var actual = sut.Walk(
+                act: c => c,
+                assert: c => { }
+                );
+
+            // Assert
+            Assert.NotNull(actual);
+            Assert.Equal(wrappedTestCases.Count, actual.Count);
+            Assert.Equal(wrappedTestCases.Select(tc => tc.Description), actual.All.Select(tr=> tr.TestCase.Description));
+        }
+
+
+
         #region Test Helper Methods
 
-        private DummySubClassOfTestCompositeFluentWrapperBase<ClassToTest> MakeSut(ITestComposite<ClassToTest> wrapped = null)
+        private static DummySubClassOfTestCompositeFluentWrapperBase<ClassToTest> MakeSut(ITestComposite<ClassToTest> wrapped = null)
         {
             wrapped = wrapped ?? new DummyTestComposite<ClassToTest>();
             return new DummySubClassOfTestCompositeFluentWrapperBase<ClassToTest>(wrapped);
@@ -232,13 +308,32 @@ namespace PolyTest.Tests.Implementations.Fluent
         /// <typeparam name="T"></typeparam>
         /// <param name="expected"></param>
         /// <param name="actual"></param>
-        private void AssertAreEquivalent<T>(IEnumerable<ITestCase<T>> expected, IEnumerable<ITestCase<T>> actual)
+        private static void AssertAreEquivalent<T>(IEnumerable<ITestCase<T>> expected, IEnumerable<ITestCase<T>> actual)
         {
             // Just look a the Description to see if it's the same item
             Assert.Equal(
                 expected.Select(t => t.Description),
                 actual.Select(t => t.Description));
         }
+
+        private static DummyTestCase<ClassToTest> MakeTestCase(int identifier)
+        {
+            var testCase = new DummyTestCase<ClassToTest>(String.Format("test case {0}", identifier));
+            testCase.StubbedArrange = () => new ClassToTest(identifier);
+            return testCase;
+        }
+
+        private static List<DummyTestCase<ClassToTest>> MakeManyTestCases(int count = 3)
+        {
+            var result = new List<DummyTestCase<ClassToTest>>();
+            for (int i = 0; i < count; i++)
+            {
+                var indexForDisplay = i + 1;
+                var testCase = MakeTestCase(indexForDisplay);
+                result.Add(testCase);
+            }
+            return result;
+        } 
 
         /// <summary>
         /// We cannot test an abstract class, so we test a direct subclass

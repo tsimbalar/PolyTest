@@ -61,6 +61,7 @@
     <Compile Include="Implementations\Fluent\TestCaseItemTest.cs" />
     <Compile Include="Implementations\Fluent\TestCompositeFluentWrapperBaseTest.cs" />
     <Compile Include="Implementations\Fluent\TestRootFluentWrapperTest.cs" />
+    <Compile Include="Implementations\Fluent\TestRunnerTest.cs" />
     <Compile Include="Implementations\MutationTest.cs" />
     <Compile Include="Implementations\TestCompositeTest.cs" />
     <Compile Include="Implementations\TestLeafTest.cs" />
