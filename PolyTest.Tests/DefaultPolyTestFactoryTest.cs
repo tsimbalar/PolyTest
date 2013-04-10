@@ -9,7 +9,7 @@ using Xunit;
 
 namespace PolyTest.Tests
 {
-    public class PolyDefaultTestFactoryTest
+    public class DefaultPolyTestFactoryTest
     {
         #region Mutation<>()
 
@@ -216,9 +216,9 @@ namespace PolyTest.Tests
 
         #region Test Helper Methods
 
-        private static PolyDefaultTestFactory MakeSut()
+        private static DefaultPolyTestFactory MakeSut()
         {
-            return new PolyDefaultTestFactory();
+            return new DefaultPolyTestFactory();
         }
 
         #endregion

@@ -19,7 +19,7 @@ namespace PolyTest.Tests
             var actual = Poly.Create;
 
             // Assert
-            Assert.IsType<PolyDefaultTestFactory>(actual);
+            Assert.IsType<DefaultPolyTestFactory>(actual);
         }
 
         [Fact]

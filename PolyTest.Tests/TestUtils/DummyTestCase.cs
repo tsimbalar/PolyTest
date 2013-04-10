@@ -24,7 +24,7 @@ namespace PolyTest.Tests.TestUtils
 
         private readonly string _description;
 
-        public DummyTestCase(string description)
+        public DummyTestCase(string description = "Dummy test case")
         {
             _description = description;
         }

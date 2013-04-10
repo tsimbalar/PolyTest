@@ -3,7 +3,7 @@ using PolyTest.Implementations;
 
 namespace PolyTest
 {
-    internal class PolyDefaultTestFactory : IPolyTestFactory
+    internal class DefaultPolyTestFactory : IPolyTestFactory
     {
         public virtual IMutation<T> Mutation<T>(string mutationDescription, Action<T> mutationToApply)
         {

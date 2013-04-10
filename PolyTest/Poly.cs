@@ -11,7 +11,7 @@ namespace PolyTest
     /// </summary>
     public static class Poly
     {
-        private static readonly IPolyTestFactory FactoryInstance = new PolyDefaultTestFactory();  
+        private static readonly IPolyTestFactory FactoryInstance = new DefaultPolyTestFactory();  
         public static IPolyTestFactory Create
         {
             get { return FactoryInstance; }

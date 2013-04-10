@@ -53,21 +53,5 @@ namespace PolyTest.Tests
 
             public IEnumerable<ITestComponent<ClassToTest>> Children { get; private set; }
         }
-
-        private class DummyTestCase<T> : ITestCase<T>
-        {
-            private readonly string _description;
-
-            public DummyTestCase(string description = "Dummy test case")
-            {
-                _description = description;
-            }
-
-            public string Description { get { return _description; } }
-            public T Arrange()
-            {
-                throw new NotImplementedException();
-            }
-        }
     }
 }
