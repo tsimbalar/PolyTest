@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace PolyTest.Fluent
 {
-    public interface ITestCompositeFluent<T> : IFluentInterface
+    public interface ITestCompositeFluent<T> : IFluentInterface, IEnumerable<ITestCase<T>>
     {
         ITestCompositeFluent<T> Consider(IMutation<T> mutation);
 
@@ -15,8 +15,6 @@ namespace PolyTest.Fluent
         /// <returns></returns>
         ITestCompositeFluent<T> Consider(IMutation<T> mutation,
                                          Func<ITestCompositeNestedFluent<T>, ITestCompositeFluent<T>> nestedAdd);
-
-        IEnumerable<ITestCase<T>> Flatten();
 
 
         ITestExecutionReport<TResult> Walk<TResult>(Func<T, TResult> act, Action<TResult> assert);

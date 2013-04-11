@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using PolyTest.Fluent;
@@ -51,20 +52,25 @@ namespace PolyTest.Implementations.Fluent
         }
 
 
-        public IEnumerable<ITestCase<T>> Flatten()
-        {
-            return Wrapped.Enumerate();
-        }
-
         public ITestExecutionReport<TResult> Walk<TResult>(Func<T, TResult> act, Action<TResult> assert)
         {
             var report = new TestExecutionReport<TResult>();
-            foreach (var testCase in this.Flatten().Select((tc, i) => new { TestCase = tc, Index = i }))
+            foreach (var testCase in this.Select((tc, i) => new { TestCase = tc, Index = i }))
             {
                 var result = TestRunner.Run(testCase.Index, testCase.TestCase, act, assert);
                 report.Add(result);
             }
             return report;
+        }
+
+        public IEnumerator<ITestCase<T>> GetEnumerator()
+        {
+            return Wrapped.Enumerate().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

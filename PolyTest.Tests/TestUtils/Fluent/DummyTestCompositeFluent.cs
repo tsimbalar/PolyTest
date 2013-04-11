@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using PolyTest.Fluent;
 
@@ -34,6 +35,16 @@ namespace PolyTest.Tests.TestUtils.Fluent
         public IEnumerable<ITestCase<ClassToTest>> Flatten()
         {
             throw new NotImplementedException();
+        }
+
+        public IEnumerator<ITestCase<ClassToTest>> GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }
