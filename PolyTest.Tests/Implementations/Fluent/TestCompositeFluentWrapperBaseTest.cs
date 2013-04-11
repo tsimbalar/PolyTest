@@ -174,41 +174,6 @@ namespace PolyTest.Tests.Implementations.Fluent
         }
 
         [Fact]
-        public void ForEach_calls_action_once_per_element_in_wrapped_Enumerate()
-        {
-            // Arrange
-            var wrappedTestCases = MakeManyTestCases();
-            var wrapped = new DummyTestComposite<ClassToTest>();
-            wrapped.TestCases.AddRange(wrappedTestCases);
-
-            var sut = MakeSut(wrapped);
-            var testCasesActionWasCalledOn = new List<ITestCase<ClassToTest>>();
-
-            // Act
-            sut.ForEach(tc => testCasesActionWasCalledOn.Add(tc));
-
-            // Assert
-            AssertAreEquivalent(wrappedTestCases, testCasesActionWasCalledOn);
-        }
-
-        [Fact]
-        public void Select_returns_wrapped_TestCases()
-        {
-            // Arrange
-            var wrappedTestCases = MakeManyTestCases();
-            var wrapped = new DummyTestComposite<ClassToTest>();
-            wrapped.TestCases.AddRange(wrappedTestCases);
-
-            var sut = MakeSut(wrapped);
-
-            // Act
-            var actual = sut.Select(tc => tc);
-
-            // Assert
-            AssertAreEquivalent(wrappedTestCases, actual);
-        }
-
-        [Fact]
         public void Walk_calls_act_for_each_element_in_wrapped_Enumerate()
         {
             // Arrange

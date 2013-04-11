@@ -31,7 +31,7 @@ namespace PolyTest.Tests.TestUtils.Fluent
             throw new NotImplementedException();
         }
 
-        public IEnumerable<ITestCase<ClassToTest>> AsEnumerable()
+        public IEnumerable<ITestCase<ClassToTest>> Flatten()
         {
             throw new NotImplementedException();
         }

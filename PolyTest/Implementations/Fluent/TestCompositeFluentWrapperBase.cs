@@ -50,33 +50,21 @@ namespace PolyTest.Implementations.Fluent
             return this;
         }
 
-        public void ForEach(Action<ITestCase<T>> action)
-        {
-            foreach (var testTreeNode in this.AsEnumerable())
-            {
-                action(testTreeNode);
-            }
-        }
 
-        public IEnumerable<TResult> Select<TResult>(Func<ITestCase<T>, TResult> selector)
+        public IEnumerable<ITestCase<T>> Flatten()
         {
-            return this.AsEnumerable().Select(selector);
+            return Wrapped.Enumerate();
         }
 
         public ITestExecutionReport<TResult> Walk<TResult>(Func<T, TResult> act, Action<TResult> assert)
         {
             var report = new TestExecutionReport<TResult>();
-            foreach (var testCase in AsEnumerable().Select( (tc, i) => new {TestCase = tc, Index=i}))
+            foreach (var testCase in this.Flatten().Select((tc, i) => new { TestCase = tc, Index = i }))
             {
                 var result = TestRunner.Run(testCase.Index, testCase.TestCase, act, assert);
                 report.Add(result);
             }
             return report;
-        }
-
-        public IEnumerable<ITestCase<T>> AsEnumerable()
-        {
-            return Wrapped.Enumerate();
         }
     }
 }

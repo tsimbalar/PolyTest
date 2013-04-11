@@ -31,7 +31,7 @@ namespace PolyTest.Tests.ApiUsage.Fluent
                                 .Consider("add 4", d => { d.IntProperty += 4; })
                                 .Consider("remove 2", d => { d.IntProperty -= 2; })
                         )
-                 )
+                 ).Flatten().ToList()
                  .ForEach(t =>
                               {
                                   var init = t.Arrange();
@@ -65,6 +65,7 @@ namespace PolyTest.Tests.ApiUsage.Fluent
                                 .Consider("remove 2", d => { d.IntProperty -= 2; })
                         )
                  )
+                 .Flatten()
                  .Select(s =>
                              {
                                  var init = s.Arrange();
