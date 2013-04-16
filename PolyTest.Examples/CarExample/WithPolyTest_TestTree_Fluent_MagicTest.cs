@@ -36,10 +36,10 @@ namespace PolyTest.Examples.CarExample
                         fromHere => fromHere.IgnoreSelf("ignore case with only 'NeedsEngine = true'")
                             .WithNull(c => c.Engine)
                     )
-                    .Walk(
-                        act: o => sut.Validate(o),
-                        assert: actual => AssertIsInvalid(actual))
-                    .AssertAllPassed();
+                .Test(
+                    act: o => sut.Validate(o),
+                    assert: actual => AssertIsInvalid(actual))
+                .AssertAllPassed();
 
         }
 
@@ -53,10 +53,10 @@ namespace PolyTest.Examples.CarExample
                                 c => c.Wheels.Clear())
                     .Consider("1 more wheel !",
                                 c => c.Wheels.Add(new Wheel(c,5)))
-                    .Walk(
-                        act: o => sut.Validate(o),
-                        assert: actual => AssertIsInvalid(actual))
-                    .AssertAllPassed();
+                .Test(
+                    act: o => sut.Validate(o),
+                    assert: actual => AssertIsInvalid(actual))
+                .AssertAllPassed();
 
         }
 

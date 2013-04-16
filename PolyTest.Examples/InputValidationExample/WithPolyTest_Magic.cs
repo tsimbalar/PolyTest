@@ -36,7 +36,7 @@ namespace PolyTest.Examples.InputValidationExample
             Poly.Create.From("Starting with valid input", () => MakeValidInput())
                     .WithNullOrWhitespace(input=> input.Name)
                     .With(input=> input.Age, -1)    
-                    .Walk(
+                .Test(
                         act: input => sut.Validate(input),
                         assert: actual => AssertIsInvalid(actual)
                 )
@@ -50,11 +50,11 @@ namespace PolyTest.Examples.InputValidationExample
             var sut = MakeSUT();
 
             Poly.Create.From("Starting with valid input", () => MakeValidInput())
-                .WithTrue(input=> input.HasCheezburger,
-                    fromThere => fromThere.IgnoreSelf("we don't care about the case with HasCheezburger true and Cheezburger not specified")
-                                .WithNull(input=> input.Cheezburger)
-                )
-                .Walk(
+                    .WithTrue(input=> input.HasCheezburger,
+                        fromThere => fromThere.IgnoreSelf("we don't care about the case with HasCheezburger true and Cheezburger not specified")
+                                    .WithNull(input=> input.Cheezburger)
+                    )
+                .Test(
                     act: input => sut.Validate(input),
                     assert: actual => AssertIsInvalid(actual)
                 )

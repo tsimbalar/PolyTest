@@ -57,6 +57,7 @@
     <Compile Include="ApiUsage\CompositeTest.cs" />
     <Compile Include="ApiUsage\DummyItem.cs" />
     <Compile Include="ApiUsage\Fluent\CompositeFluentTest.cs" />
+    <Compile Include="Fluent\EnumerableOfITestCaseExtensionsTest.cs" />
     <Compile Include="Fluent\PolyTestFactoryFluentExtensionsTest.cs" />
     <Compile Include="Implementations\Fluent\TestCaseItemTest.cs" />
     <Compile Include="Implementations\Fluent\TestCompositeFluentWrapperBaseTest.cs" />

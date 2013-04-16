@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -173,90 +172,6 @@ namespace PolyTest.Tests.Implementations.Fluent
             Assert.Equal(expectedMessage, actualException.Message);
         }
 
-        [Fact]
-        public void Walk_calls_act_for_each_element_in_wrapped_Enumerate()
-        {
-            // Arrange
-            var wrappedTestCases = MakeManyTestCases();
-            var wrapped = new DummyTestComposite<ClassToTest>();
-            wrapped.TestCases.AddRange(wrappedTestCases);
-
-            var sut = MakeSut(wrapped);
-            var actCallCounter = 0;
-
-            // Act
-            var actual = sut.Walk(act: c =>
-                              {
-                                  actCallCounter = actCallCounter + 1;
-                                  return c;
-                              },
-                     assert: c => { }); // nothing to assert in this test
-
-            // Assert
-            Assert.Equal(wrappedTestCases.Count, actCallCounter);
-        }
-
-        [Fact]
-        public void Walk_calls_assert_for_each_element_in_wrapped_Enumerate()
-        {
-            // Arrange
-            var wrappedTestCases = MakeManyTestCases();
-            var wrapped = new DummyTestComposite<ClassToTest>();
-            wrapped.TestCases.AddRange(wrappedTestCases);
-
-            var sut = MakeSut(wrapped);
-            var assertCallCounter = 0;
-
-            // Act
-            var actual = sut.Walk(
-                    act: c => c,
-                    assert: c => assertCallCounter++); // nothing to assert in this test
-
-            // Assert
-            Assert.Equal(wrappedTestCases.Count, assertCallCounter);
-        }
-
-        [Fact]
-        public void Walk_returns_a_TestExecutionReport()
-        {
-            // Arrange
-            var wrappedTestCases = MakeManyTestCases();
-            var wrapped = new DummyTestComposite<ClassToTest>();
-            wrapped.TestCases.AddRange(wrappedTestCases);
-            var sut = MakeSut(wrapped);
-
-            // Act
-            var actual = sut.Walk(
-                act: c => c,
-                assert: c => { }
-                );
-
-            // Assert
-            Assert.NotNull(actual);
-            Assert.IsType<TestExecutionReport<ClassToTest>>(actual);
-        }
-
-        [Fact]
-        public void Walk_returns_one_result_for_each_testCase()
-        {
-            // Arrange
-            var wrappedTestCases = MakeManyTestCases();
-            var wrapped = new DummyTestComposite<ClassToTest>();
-            wrapped.TestCases.AddRange(wrappedTestCases);
-            var sut = MakeSut(wrapped);
-
-            // Act
-            var actual = sut.Walk(
-                act: c => c,
-                assert: c => { }
-                );
-
-            // Assert
-            Assert.NotNull(actual);
-            Assert.Equal(wrappedTestCases.Count, actual.Count);
-            Assert.Equal(wrappedTestCases.Select(tc => tc.Description), actual.All.Select(tr=> tr.TestCase.Description));
-        }
-
 
 
         #region Test Helper Methods
@@ -266,39 +181,7 @@ namespace PolyTest.Tests.Implementations.Fluent
             wrapped = wrapped ?? new DummyTestComposite<ClassToTest>();
             return new DummySubClassOfTestCompositeFluentWrapperBase<ClassToTest>(wrapped);
         }
-
-        /// <summary>
-        /// Compare 2 lists of test cases .. can be of different types, but we look at the inside ...
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="expected"></param>
-        /// <param name="actual"></param>
-        private static void AssertAreEquivalent<T>(IEnumerable<ITestCase<T>> expected, IEnumerable<ITestCase<T>> actual)
-        {
-            // Just look a the Description to see if it's the same item
-            Assert.Equal(
-                expected.Select(t => t.Description),
-                actual.Select(t => t.Description));
-        }
-
-        private static DummyTestCase<ClassToTest> MakeTestCase(int identifier)
-        {
-            var testCase = new DummyTestCase<ClassToTest>(String.Format("test case {0}", identifier));
-            testCase.StubbedArrange = () => new ClassToTest(identifier);
-            return testCase;
-        }
-
-        private static List<DummyTestCase<ClassToTest>> MakeManyTestCases(int count = 3)
-        {
-            var result = new List<DummyTestCase<ClassToTest>>();
-            for (int i = 0; i < count; i++)
-            {
-                var indexForDisplay = i + 1;
-                var testCase = MakeTestCase(indexForDisplay);
-                result.Add(testCase);
-            }
-            return result;
-        } 
+ 
 
         /// <summary>
         /// We cannot test an abstract class, so we test a direct subclass

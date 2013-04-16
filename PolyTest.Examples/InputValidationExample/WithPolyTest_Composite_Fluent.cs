@@ -39,7 +39,7 @@ namespace PolyTest.Examples.InputValidationExample
                     .Consider("with tab Name", input => input.Name = "\t")
                     .Consider("with space Name", input => input.Name = " ")
                     .Consider("with Age -1", input => input.Age = -1)
-                    .Walk(
+                .Test(
                         act: input => sut.Validate(input),
                         assert: actual => AssertIsInvalid(actual)
                 )
@@ -56,9 +56,8 @@ namespace PolyTest.Examples.InputValidationExample
                 .Consider("with HasCheezburger true", input => input.HasCheezburger = true,
                     fromThere => fromThere.IgnoreSelf("we don't care about the case with HasCheezburger true and Cheezburger not specified")
                         .Consider("with no cheezburger", input => input.Cheezburger = null)
- 
-                )
-                .Walk(
+                    )
+                .Test(
                     act: input => sut.Validate(input),
                     assert: actual => AssertIsInvalid(actual)
                 )

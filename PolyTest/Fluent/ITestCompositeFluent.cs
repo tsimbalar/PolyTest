@@ -15,8 +15,5 @@ namespace PolyTest.Fluent
         /// <returns></returns>
         ITestCompositeFluent<T> Consider(IMutation<T> mutation,
                                          Func<ITestCompositeNestedFluent<T>, ITestCompositeFluent<T>> nestedAdd);
-
-
-        ITestExecutionReport<TResult> Walk<TResult>(Func<T, TResult> act, Action<TResult> assert);
     }
 }

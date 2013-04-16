@@ -51,18 +51,6 @@ namespace PolyTest.Implementations.Fluent
             return this;
         }
 
-
-        public ITestExecutionReport<TResult> Walk<TResult>(Func<T, TResult> act, Action<TResult> assert)
-        {
-            var report = new TestExecutionReport<TResult>();
-            foreach (var testCase in this.Select((tc, i) => new { TestCase = tc, Index = i }))
-            {
-                var result = TestRunner.Run(testCase.Index, testCase.TestCase, act, assert);
-                report.Add(result);
-            }
-            return report;
-        }
-
         public IEnumerator<ITestCase<T>> GetEnumerator()
         {
             return Wrapped.Enumerate().GetEnumerator();

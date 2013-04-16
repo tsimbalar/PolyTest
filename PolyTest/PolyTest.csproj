@@ -37,6 +37,8 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DefaultPolyTestRunner.cs" />
+    <Compile Include="Fluent\EnumerableOfITestCaseExtensions.cs" />
     <Compile Include="Fluent\ITestCaseInformation.cs" />
     <Compile Include="Fluent\ITestRootFluent.cs" />
     <Compile Include="Fluent\PolyTestFactoryFluentExtensions.cs" />
@@ -65,6 +67,7 @@
     <Compile Include="Implementations\TestNodeBase.cs" />
     <Compile Include="IMutation.cs" />
     <Compile Include="IPolyTestFactory.cs" />
+    <Compile Include="IPolyTestRunner.cs" />
     <Compile Include="ITestCase.cs" />
     <Compile Include="ITestComponent.cs" />
     <Compile Include="ITestComposite.cs" />

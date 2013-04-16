@@ -102,7 +102,7 @@ namespace PolyTest.Tests.ApiUsage.Fluent
                                 //.ConsiderWithSubCases("remove 3", d => { d.IntProperty -= 3; })
                         )
                  )
-                 .Walk(
+                 .Test(
                      act: d => sut.DoIt(d),
                      assert: i => DummyAssert.AssertIsNotFive(i)
                      )
@@ -127,11 +127,13 @@ namespace PolyTest.Tests.ApiUsage.Fluent
                             .Consider("add 13", d => { d.IntProperty = d.IntProperty + 13; })
                             .Consider("remove 3", d => { d.IntProperty = d.IntProperty - 3; })
                             .With(d => d.BoolProperty, false)
-                )
-                .Walk(act: d => sut.DoIt(d), assert: a =>
-                                                         {
-                                                             DummyAssert.AssertIsNotFive(a);
-                                                         })
+                    )
+                .Test(
+                    act: d => sut.DoIt(d), 
+                    assert: a =>
+                            {
+                                DummyAssert.AssertIsNotFive(a);
+                            })
                 .AssertAllPassed();
 
         }
