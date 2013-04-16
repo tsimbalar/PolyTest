@@ -24,10 +24,5 @@ namespace PolyTest
         {
             get { return RunnerInstance; }
         }
-
-        //public static ITestExecutionReport<TResult> Test<T, TResult>(IEnumerable<ITestCase<T>> testCases, Func<T, TResult> act, Action<TResult> assert)
-        //{
-        //    return RunnerInstance.Execute(testCases, act, assert);
-        //}
     }
 }

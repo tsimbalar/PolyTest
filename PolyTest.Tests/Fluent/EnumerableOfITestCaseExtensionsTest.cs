@@ -82,7 +82,7 @@ namespace PolyTest.Tests.Fluent
             // Assert
             Assert.NotNull(actual);
             Assert.Equal(sut.Count(), actual.Count);
-            Assert.Equal(sut.Select(tc => tc.Description), actual.All.Select(tr => tr.TestCase.Description));
+            Assert.Equal(sut.Select(tc => tc.Description), actual.Select(tr => tr.TestCase.Description));
         }
 
 

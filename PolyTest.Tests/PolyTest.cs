@@ -11,7 +11,7 @@ namespace PolyTest.Tests
     {
 
         [Fact]
-        public void Poly_Create_returns_a_PolyDefaultTestFactory()
+        public void Poly_Create_returns_a_DefaultPolyTestFactory()
         {
             // Arrange
 
@@ -29,6 +29,30 @@ namespace PolyTest.Tests
             var firstObtained = Poly.Create;
             // Act
             var actual = Poly.Create;
+
+            // Assert
+            Assert.Same(firstObtained, actual);
+        }
+
+        [Fact]
+        public void Poly_Runner_returns_a_DefaultPolyTestRunner()
+        {
+            // Arrange
+
+            // Act
+            var actual = Poly.Runner;
+
+            // Assert
+            Assert.IsType<DefaultPolyTestRunner>(actual);
+        }
+
+        [Fact]
+        public void Poly_Runner_always_returns_same_TestRunner()
+        {
+            // Arrange
+            var firstObtained = Poly.Runner;
+            // Act
+            var actual = Poly.Runner;
 
             // Assert
             Assert.Same(firstObtained, actual);

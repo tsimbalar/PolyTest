@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,7 +23,7 @@ namespace PolyTest.Implementations.Fluent
 
 
         public int Count { get { return _results.Count; } }
-        public IEnumerable<ITestResult<T>> All { get { return _results.AsReadOnly(); } }
+        private IEnumerable<ITestResult<T>> All { get { return _results.AsReadOnly(); } }
         public IEnumerable<ITestResult<T>> Passed { get { return All.Where(t => t.IsSuccess); } }
         public IEnumerable<ITestResult<T>> Failed { get { return All.Where(t => !t.IsSuccess); } }
         /// <summary>
@@ -75,9 +76,19 @@ namespace PolyTest.Implementations.Fluent
         }
 
 
+        public IEnumerator<ITestResult<T>> GetEnumerator()
+        {
+            return All.GetEnumerator();
+        }
+
         public override string ToString()
         {
             return string.Join("\n", _results);
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }
